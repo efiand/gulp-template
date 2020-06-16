@@ -1,0 +1,141 @@
+html {
+	--color-paper: #ffffff;
+	--color-paper-30: rgba(255, 255, 255, 0.3);
+	--color-text: #000000;
+	--color-text-30: rgba(0, 0, 0, 0.3);
+	--color-text-accent: #000000;
+	--color-text-accent-strong: #ffc700;
+	--color-text-light: #444444;
+	--color-bg: #f0f0f0;
+	--color-bg-medium: #ebebeb;
+	--color-bg-dark: #dcdcdc;
+	--color-bg-accent: #ffe17f;
+	--color-select: #af4fff;
+	--color-status-error: #ff3d3d;
+	--color-status-warning: #fd912e;
+	--color-status-success: #08af00;
+	--font-basic: "Rubik", "Arial", sans-serif;
+	--font-accent: "Raleway", "Arial", sans-serif;
+	--focus-outline: 2px solid var(--color-select);
+	min-width: 320px;
+	overflow-y: scroll;
+	overflow-anchor: none;
+	scroll-behavior: smooth;
+	font-size: 16px;
+	line-height: 1.166667;
+	font-family: var(--font-basic);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: antialiased;
+	color: var(--color-text);
+	-webkit-tap-highlight-color: transparent;
+}
+
+body {
+	margin: 0;
+}
+
+a,
+button,
+input,
+select,
+textarea {
+	font-family: inherit;
+	transition-property: color, opacity, background-color, border-color, box-shadow;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+
+	&:disabled {
+		cursor: not-allowed;
+	}
+}
+
+a {
+	text-decoration-skip-ink: none;
+	color: inherit;
+}
+
+button {
+	font-family: inherit;
+	color: inherit;
+	border: none;
+}
+
+/* По большей части эти свойства не нужны */
+/* Списки для контентных блоков будут сделаны исходя из дизайна проекта */
+ul,
+ol {
+	padding: 0;
+	list-style: none;
+}
+
+input {
+	box-sizing: border-box;
+	font: inherit;
+	border: none;
+	-webkit-text-fill-color: currentColor;
+	box-shadow: none;
+
+	&[type="number"] {
+		appearance: textfield;
+
+		&::-webkit-outer-spin-button,
+		&::-webkit-inner-spin-button {
+			appearance: none;
+		}
+	}
+
+	&:-webkit-autofill {
+		box-shadow: none;
+	}
+
+	&::-webkit-search-decoration,
+	&::-webkit-search-cancel-button,
+	&::-webkit-search-results-button,
+	&::-webkit-search-results-decoration {
+		display: none;
+	}
+
+	&::placeholder {
+		opacity: 0.3;
+	}
+
+	&:disabled {
+		opacity: 0.3;
+	}
+}
+
+textarea {
+	overflow: auto;
+	resize: vertical;
+}
+
+img {
+	max-width: 100%;
+	object-fit: contain;
+}
+
+svg {
+	fill: currentColor;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+wbr::after {
+	content: "\A";
+	white-space: pre;
+}
+
+:focus {
+	outline: var(--focus-outline);
+
+	@supports selector(:focus-visible) {
+		outline: none;
+	}
+
+	&-visible {
+		outline: var(--focus-outline);
+	}
+}

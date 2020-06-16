@@ -1,0 +1,21 @@
+.centerer {
+	box-sizing: border-box;
+	margin-right: 40px;
+	margin-left: 40px;
+
+	@media (--desktop) {
+		width: 1200px;
+		margin-right: auto;
+		margin-left: auto;
+	}
+}
+
+.hidden,
+.no-js-hidden {
+	display: none;
+}
+
+.visually-hidden {
+	position: fixed;
+	transform: scale(0);
+}

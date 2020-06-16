@@ -1,0 +1,13 @@
+<picture class="picture {{ cssMix }}">
+	{% if src2x %}
+		<source type="image/webp" srcset="{{ src | dropExt }}.webp, {{ src2x | dropExt }}.webp 2x">
+		<img src="{{ src }}" alt="{{ alt }}" srcset="{{ src2x }} 2x">
+	{% else %}
+		<source type="image/webp" srcset="{{ src | dropExt }}.webp">
+		{% if width and height %}
+			<img src="{{ src }}" alt="{{ alt }}" width="{{ width }}" height="{{ height }}">
+		{% else %}
+			<img src="{{ src }}" alt="{{ alt }}">
+		{% endif %}
+	{% endif %}
+</picture>
