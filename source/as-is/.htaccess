@@ -1,0 +1,23 @@
+AddDefaultCharset UTF-8
+Options All -Indexes +FollowSymLinks
+ErrorDocument 404 https://%{HTTP_HOST}/error404
+
+RewriteEngine On
+
+RewriteCond %{HTTPS} =off
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [QSA,L]
+
+# с www на без www
+RewriteCond %{HTTP_HOST} ^www\.(.*) [NC]
+RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+# убираем слэш на конце
+RewriteCond %{REQUEST_URI} (.*)/$
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+# ЧПУ
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^.*$ / [L]
