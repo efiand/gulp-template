@@ -1,6 +1,7 @@
 const { src, dest } = require(`gulp`);
-const { plumber, uglify, rename } = require(`gulp-load-plugins`)();
+const { plumber, rename } = require(`gulp-load-plugins`)();
 const { babel: babelConfig } = require(`../../package.json`);
+const TerserPlugin = require(`terser-webpack-plugin`);
 
 const js = () => src(`source/js/entries/*.js`)
 	.pipe(plumber())
@@ -10,21 +11,24 @@ const js = () => src(`source/js/entries/*.js`)
 		module: {
 			rules: [
 				{
-					test: /\.js$/,
 					exclude: /node_modules/,
+					test: /\.js$/,
 					use: {
 						loader: `babel-loader`,
 						options: babelConfig
 					}
 				}
 			]
+		},
+		optimization: {
+			minimize: true,
+			minimizer: [
+				new TerserPlugin({
+					parallel: true
+				})
+			]
 		}
 	}, require(`webpack`)))
-	.pipe(uglify({
-		output: {
-			comments: false
-		}
-	}))
 	.pipe(rename({ suffix: `.min` }))
 	.pipe(dest(`build/js`));
 
