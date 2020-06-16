@@ -1,13 +1,25 @@
 const { src, dest } = require(`gulp`);
-const { plumber, babel, uglify, rename } = require(`gulp-load-plugins`)();
+const { plumber, uglify, rename } = require(`gulp-load-plugins`)();
+const { babel: babelConfig } = require(`../../package.json`);
 
 const js = () => src(`source/js/entries/*.js`)
 	.pipe(plumber())
 	.pipe(require(`vinyl-named`)())
 	.pipe(require(`webpack-stream`)({
-		mode: `production`
+		mode: `production`,
+		module: {
+			rules: [
+				{
+					test: /\.js$/,
+					exclude: /node_modules/,
+					use: {
+						loader: `babel-loader`,
+						options: babelConfig
+					}
+				}
+			]
+		}
 	}, require(`webpack`)))
-	.pipe(babel())
 	.pipe(uglify({
 		output: {
 			comments: false
