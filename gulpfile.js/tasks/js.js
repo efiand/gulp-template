@@ -1,5 +1,5 @@
 const { src, dest } = require(`gulp`);
-const { plumber, rename } = require(`gulp-load-plugins`)();
+const { plumber } = require(`gulp-load-plugins`)();
 const { babel: babelConfig } = require(`../../package.json`);
 const TerserPlugin = require(`terser-webpack-plugin`);
 
@@ -27,9 +27,11 @@ const js = () => src(`source/js/entries/*.js`)
 					parallel: true
 				})
 			]
+		},
+		output: {
+			filename: `[name].min.js`
 		}
 	}, require(`webpack`)))
-	.pipe(rename({ suffix: `.min` }))
 	.pipe(dest(`build/js`));
 
 module.exports = js;
