@@ -6,6 +6,7 @@
 		"autoprefixer": "^9.7.4",
 		"babel-eslint": "^10.1.0",
 		"babel-loader": "^8.1.0",
+		"bem-validate": "^1.1.2",
 		"browser-sync": "^2.26.7",
 		"cross-env": "^7.0.2",
 		"cssnano": "^4.1.10",
@@ -43,7 +44,7 @@
 	},
 	"scripts": {
 		"start": "gulp",
-		"test": "gulp test",
+		"test": "gulp test && bem-validate build/**/*.html",
 		"build": "cross-env NODE_ENV=production gulp build",
 		"deploy": "gh-pages -d build"
 	},
