@@ -36,7 +36,7 @@
 		"precommit": "^1.2.2",
 		"require-dir": "^1.2.0",
 		"stylelint": "^12.0.1",
-		"stylelint-efiand": "^0.1.10",
+		"stylelint-efiand": "^0.1.14",
 		"terser-webpack-plugin": "^3.0.5",
 		"vinyl-named": "^1.1.0",
 		"webpack": "^4.41.5",
