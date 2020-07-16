@@ -1,7 +1,7 @@
 const { src } = require(`gulp`);
 const { plumber, eslint: eslintPlugin, lintspaces } = require(`gulp-load-plugins`)();
 
-const eslint = () => src([`source/js/**/*.js`, `gulpfile.js/**/*.js`])
+const eslint = () => src([`source/**/*.js`, `gulpfile.js/**/*.js`])
 	.pipe(plumber())
 	.pipe(eslintPlugin({
 		fix: false
