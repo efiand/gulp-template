@@ -31,8 +31,8 @@ const server = () => {
 
 	watch(`source/**/*.twig`, series(twighint, html, reload));
 	watch(`source/less/**/*.less`, series(stylelint, css, reload));
-	watch(`source/**/*.js`, series(eslint, js, reload));
-	watch(`gulpfile.js/**/*.js`, series(eslint));
+	watch(`source/js/**/*.js`, series(eslint, js, reload));
+	watch([`source/data/**/*.js`, `gulpfile.js/**/*.js`], series(eslint));
 	watch(`source/sprite/*.svg`, series(sprite, reload));
 	watch(`source/img/**/*.{svg,png,jpg}`, series(img, reload));
 	watch(copySource, series(copy, reload));

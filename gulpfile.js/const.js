@@ -7,6 +7,11 @@ module.exports = {
 		`source/as-is/**/.*`,
 		`source/as-is/**/*.*`
 	],
+	eslintSource: [
+		`gulpfile.js/**/*.js`,
+		`source/data/**/*.js`,
+		`source/js/**/*.js`
+	],
 	svgoConfig: {
 		plugins: [
 			{ removeViewBox: false },
