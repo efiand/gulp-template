@@ -34,6 +34,7 @@
 		"gulp-webp": "^4.0.1",
 		"imagemin-jpegoptim": "^7.0.0",
 		"mqpacker": "^7.0.0",
+		"nodemon": "2.0.4",
 		"precommit": "^1.2.2",
 		"require-dir": "^1.2.0",
 		"stylelint": "^13.6.1",
@@ -44,10 +45,11 @@
 		"webpack-stream": "^5.2.1"
 	},
 	"scripts": {
+		"build": "cross-env NODE_ENV=production gulp build && bem-validate build/**/*.html",
+		"deploy": "gh-pages -d build",
+		"server": "nodemon ./gulpfile.js/server.js",
 		"start": "gulp",
-		"test": "gulp test && bem-validate build/**/*.html",
-		"build": "cross-env NODE_ENV=production gulp build",
-		"deploy": "gh-pages -d build"
+		"test": "gulp test"
 	},
 	"precommit": [
 		"yarn test"
@@ -67,5 +69,9 @@
 				"@babel/preset-env"
 			]
 		]
+	},
+	"dependencies": {
+		"express": "4.17.1",
+		"twig": "1.15.2"
 	}
 }

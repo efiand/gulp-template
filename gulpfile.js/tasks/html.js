@@ -1,20 +1,13 @@
 const { src, dest } = require(`gulp`);
 const { plumber, data, twig, htmlmin, w3cHtmlValidator } = require(`gulp-load-plugins`)();
 const { DIST } = require(`../const`);
-const { getJSON } = require(`../utils`);
-const isDev = !process.env.NODE_ENV;
+const { preparePageData } = require(`../utils`);
 
 const html = () => src(`source/twig/pages/**/*.twig`)
 	.pipe(plumber())
 	.pipe(data((file) => {
 		const page = file.path.replace(/\\/g, `/`).replace(/^.*?twig\/pages\/(.*)\.twig$/, `$1`);
-
-		return {
-			isDev,
-			page,
-			pathToRoot: page.replace(/[^/]/g, ``).replace(/\//g, `../`),
-			...getJSON(`../source/data`, { isDev, page })
-		};
+		return preparePageData(page);
 	}))
 	.pipe(twig())
 	.pipe(htmlmin({
