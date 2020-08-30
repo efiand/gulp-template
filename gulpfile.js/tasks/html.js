@@ -1,6 +1,6 @@
 const { src, dest } = require(`gulp`);
 const { plumber, data, twig, htmlmin, w3cHtmlValidator } = require(`gulp-load-plugins`)();
-const { dist } = require(`../const`);
+const { DIST } = require(`../const`);
 const { getJSON } = require(`../utils`);
 
 const html = () => src(`source/twig/pages/**/*.twig`)
@@ -35,7 +35,7 @@ const html = () => src(`source/twig/pages/**/*.twig`)
 		trimCustomFragments: true,
 		useShortDoctype: true
 	}))
-	.pipe(dest(dist))
+	.pipe(dest(DIST))
 	.pipe(w3cHtmlValidator())
 	.pipe(w3cHtmlValidator.reporter());
 

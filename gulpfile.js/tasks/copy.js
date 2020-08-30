@@ -1,9 +1,9 @@
 // Копирование не нуждающихся в обработке исходников в билд
 
 const { src, dest } = require(`gulp`);
-const { copySource, dist } = require(`../const`);
+const { COPY_SOURCE, DIST } = require(`../const`);
 
-const copy = () => src(copySource)
-	.pipe(dest(dist));
+const copy = () => src(COPY_SOURCE)
+	.pipe(dest(DIST));
 
 module.exports = copy;

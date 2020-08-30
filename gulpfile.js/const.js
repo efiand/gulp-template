@@ -3,17 +3,17 @@ const svgoPrecision = {
 };
 
 module.exports = {
-	copySource: [
+	COPY_SOURCE: [
 		`source/as-is/**/.*`,
 		`source/as-is/**/*.*`
 	],
-	dist: `public`,
-	eslintSource: [
+	DIST: `public`,
+	ESLINT_SOURCE: [
 		`gulpfile.js/**/*.js`,
 		`source/data/**/*.js`,
 		`source/js/**/*.js`
 	],
-	svgoConfig: {
+	SVGO_CONFIG: {
 		plugins: [
 			{ removeViewBox: false },
 			{ removeTitle: true },
