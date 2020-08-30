@@ -62,4 +62,5 @@ export const renderTemplate = (str, data) => {
 export const splitNumByGroups = (num) => num.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, `$1,`);
 
 // Выводит число с ведущим нулём
-export const formatWithLead0 = (num) => `${num < 10 ? 0 : ``}${num}`;
+const TWO_DIGIT = 10;
+export const formatWithLead0 = (num) => `${num < TWO_DIGIT ? 0 : ``}${num}`;
