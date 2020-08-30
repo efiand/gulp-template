@@ -1,5 +1,6 @@
 const { src, dest } = require(`gulp`);
 const { plumber, less, postcss, rename } = require(`gulp-load-plugins`)();
+const { dist } = require(`../const`);
 
 const css = () => src(`source/less/entries/*.less`)
 	.pipe(plumber())
@@ -12,6 +13,6 @@ const css = () => src(`source/less/entries/*.less`)
 	.pipe(rename({
 		suffix: `.min`
 	}))
-	.pipe(dest(`build/css`));
+	.pipe(dest(`${dist}/css`));
 
 module.exports = css;

@@ -7,6 +7,7 @@ module.exports = {
 		`source/as-is/**/.*`,
 		`source/as-is/**/*.*`
 	],
+	dist: `public`,
 	eslintSource: [
 		`gulpfile.js/**/*.js`,
 		`source/data/**/*.js`,

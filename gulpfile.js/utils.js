@@ -1,16 +1,13 @@
 module.exports = {
 	getJSON(src, { isDev, page }) {
-		let data = {};
 		try {
 			const dataSrc = require(src);
 			if (typeof dataSrc.get === `function`) {
-				data = dataSrc.get({ isDev, page });
-			} else {
-				data = dataSrc;
+				return dataSrc.get({ isDev, page });
 			}
+			return dataSrc;
 		} catch (err) {
-			data = {};
+			return {};
 		}
-		return data;
 	}
 };

@@ -7,5 +7,6 @@ __MACOS*
 build
 node_modules
 npm-debug.*
+public
 Thumbs.db
 vendor
