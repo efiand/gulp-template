@@ -2,7 +2,9 @@ const { series, watch } = require(`gulp`);
 const tasks = require(`require-dir`)(`.`);
 const { twighint, stylelint, eslint, copy, html, css, js, img, sprite } = tasks;
 const browserSync = require(`browser-sync`).create();
-const { COPY_SOURCE } = require(`../const`);
+const { COPY_SOURCE, DIST } = require(`../const`);
+
+const extraOpts = process.env.NODE_ENV === `server` ? { proxy: `http://localhost:5000` } : { server: DIST };
 
 const reload = (done) => {
 	browserSync.reload();
@@ -11,9 +13,9 @@ const reload = (done) => {
 
 const server = () => {
 	browserSync.init({
+		...extraOpts,
 		cors: true,
 		notify: false,
-		proxy: `http://localhost:5000`,
 		ui: false
 	});
 

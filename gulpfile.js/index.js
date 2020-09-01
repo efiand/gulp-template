@@ -10,4 +10,5 @@ const build = series(parallel(test, clean), parallel(copy, css, js, img, sprite)
 
 exports.test = test;
 exports.build = series(build, html);
-exports.default = series(build, server);
+exports.server = series(build, server);
+exports.default = series(build, html, server);
