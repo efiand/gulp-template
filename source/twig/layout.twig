@@ -8,14 +8,15 @@
 	<meta name="HandheldFriendly" content="True">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="canonical" href="{{ url }}">
+	<link rel="preload" href="fonts/roboto.woff2" as="font" crossorigin="anonymous">
 	<meta name="format-detection" content="telephone=no">
 </head>
 <body>
-	<header></header>
+	{% include 'partials/header.twig' %}
 	<main>
 		{% block main %}{% endblock %}
 	</main>
-	<footer></footer>
+	{% include 'partials/footer.twig' %}
 	<script src="js/script.min.js"></script>
 </body>
 </html>
