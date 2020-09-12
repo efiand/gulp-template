@@ -10968,14 +10968,14 @@ stylehacks@^4.0.0:
     postcss "^7.0.0"
     postcss-selector-parser "^3.0.0"
 
-stylelint-efiand@0.1.14:
-  version "0.1.14"
-  resolved "https://registry.yarnpkg.com/stylelint-efiand/-/stylelint-efiand-0.1.14.tgz#4c32f302420558c8f2e74d58dcca494c9d3cdacd"
-  integrity sha512-GlcO0LifemOfiZ0dkszhtiIWywCADdTVwtbqxqWu0UDk+CAEH6sm9OxeSx6DCTAC7KP8gEaM571Eyk400GBLIA==
+stylelint-efiand@0.1.15:
+  version "0.1.15"
+  resolved "https://registry.yarnpkg.com/stylelint-efiand/-/stylelint-efiand-0.1.15.tgz#91a759c31866a0342ca9be6768901d3f9615f20f"
+  integrity sha512-A4IkwmI3dq9bLIJooX5pPusg77j0p4bL7QcsdSkbq4E/Qa/WgDxhupQlKP7Vmv8Yq7t/jg54cd0WBJ7gFfYJlQ==
   dependencies:
-    stylelint-order "^4.1.0"
+    stylelint-order "4.1.0"
 
-stylelint-order@^4.1.0:
+stylelint-order@4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/stylelint-order/-/stylelint-order-4.1.0.tgz#692d05b7d0c235ac66fcf5ea1d9e5f08a76747f6"
   integrity sha512-sVTikaDvMqg2aJjh4r48jsdfmqLT+nqB1MOsaBnvM3OwLx4S+WXcsxsgk5w18h/OZoxZCxuyXMh61iBHcj9Qiw==
