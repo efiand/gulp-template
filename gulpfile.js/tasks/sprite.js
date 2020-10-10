@@ -1,14 +1,14 @@
 const { src, dest } = require(`gulp`);
 const { plumber, imagemin, svgstore, rename } = require(`gulp-load-plugins`)();
-const { DIST, SVGO_CONFIG } = require(`../const`);
+const { Sources, Dests, Configs } = require(`../const`);
 
-const sprite = () => src(`source/sprite/*.svg`)
+const sprite = () => src(Sources.SPRITE)
 	.pipe(plumber())
-	.pipe(imagemin([imagemin.svgo(SVGO_CONFIG)]))
+	.pipe(imagemin([imagemin.svgo(Configs.SVGO)]))
 	.pipe(svgstore({
 		inlineSvg: true
 	}))
 	.pipe(rename(`sprite.min.svg`))
-	.pipe(dest(`${DIST}/img`));
+	.pipe(dest(Dests.IMG));
 
 module.exports = sprite;

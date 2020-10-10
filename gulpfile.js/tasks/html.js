@@ -1,9 +1,9 @@
 const { src, dest } = require(`gulp`);
 const { plumber, data, twig, htmlmin, w3cHtmlValidator } = require(`gulp-load-plugins`)();
-const { DIST } = require(`../const`);
+const { Sources, Dests } = require(`../const`);
 const { preparePageData } = require(`../utils`);
 
-const html = () => src(`source/twig/pages/**/*.twig`)
+const html = () => src(Sources.HTML)
 	.pipe(plumber())
 	.pipe(data((file) => {
 		const page = file.path.replace(/\\/g, `/`).replace(/^.*?twig\/pages\/(.*)\.twig$/, `$1`);
@@ -28,7 +28,7 @@ const html = () => src(`source/twig/pages/**/*.twig`)
 		trimCustomFragments: true,
 		useShortDoctype: true
 	}))
-	.pipe(dest(DIST))
+	.pipe(dest(Dests.MAIN))
 	.pipe(w3cHtmlValidator())
 	.pipe(w3cHtmlValidator.reporter());
 

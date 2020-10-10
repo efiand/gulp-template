@@ -1,11 +1,11 @@
 const { src, dest } = require(`gulp`);
 const { plumber } = require(`gulp-load-plugins`)();
-const { DIST } = require(`../const`);
+const { Sources, Dests } = require(`../const`);
 
-const js = () => src(`source/js/entries/*.js`)
+const js = () => src(Sources.JS)
 	.pipe(plumber())
 	.pipe(require(`vinyl-named`)())
 	.pipe(require(`webpack-stream`)(require(`../../webpack.config`), require(`webpack`)))
-	.pipe(dest(`${DIST}/js`));
+	.pipe(dest(Dests.JS));
 
 module.exports = js;

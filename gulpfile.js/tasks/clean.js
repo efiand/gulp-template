@@ -1,7 +1,7 @@
 // Очистка каталога билда перед сборкой
 
-const { DIST } = require(`../const`);
+const { Dests } = require(`../const`);
 
-const clean = () => require(`del`)(DIST);
+const clean = () => require(`del`)(Dests.MAIN);
 
 module.exports = clean;

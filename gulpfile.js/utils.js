@@ -1,10 +1,10 @@
-const isDev = !process.env.NODE_ENV;
+const { Sources, IS_DEV } = require(`./const`);
 
 const getJSON = (src, page) => {
 	try {
 		const dataSrc = require(src);
 		if (typeof dataSrc.get === `function`) {
-			return dataSrc.get({ isDev, page });
+			return dataSrc.get({ page });
 		}
 		return dataSrc;
 	} catch (err) {
@@ -13,10 +13,10 @@ const getJSON = (src, page) => {
 };
 
 const preparePageData = (page) => ({
-	isDev,
+	IS_DEV,
 	page,
 	pathToRoot: page.replace(/[^/]/g, ``).replace(/\//g, `../`),
-	...getJSON(`../source/data`, page)
+	...getJSON(`../${Sources.DATA}`, page)
 });
 
 module.exports = {

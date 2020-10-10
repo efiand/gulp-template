@@ -1,22 +1,21 @@
 const { src, dest } = require(`gulp`);
 const { changed, plumber, if: gulpIf, imagemin, webp } = require(`gulp-load-plugins`)();
-const { DIST, SVGO_CONFIG } = require(`../const`);
+const { Sources, Dests, Configs, IS_DEV } = require(`../const`);
+const QUALITY = 80;
 
-const img = () => src(`source/img/**/*.{svg,png,jpg}`)
-	.pipe(changed(`${DIST}/img`))
+const img = () => src(Sources.IMG)
+	.pipe(changed(Dests.IMG))
 	.pipe(plumber())
-	.pipe(gulpIf(Boolean(process.env.NODE_ENV), imagemin([
-		imagemin.svgo(SVGO_CONFIG),
+	.pipe(gulpIf(!IS_DEV, imagemin([
+		imagemin.svgo(Configs.SVGO),
 		imagemin.optipng(),
 		require(`imagemin-jpegoptim`)({
-			max: 80,
+			max: QUALITY,
 			progressive: true
 		})
 	])))
-	.pipe(dest(`${DIST}/img`))
-	.pipe(webp({
-		quality: 90
-	}))
-	.pipe(dest(`${DIST}/img`));
+	.pipe(dest(Dests.IMG))
+	.pipe(webp({ quality: QUALITY }))
+	.pipe(dest(Dests.IMG));
 
 module.exports = img;

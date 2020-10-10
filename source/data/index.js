@@ -1,20 +1,13 @@
-const pages = [
-	{
-		page: `index`,
-		title: `Главная`
-	},
-	{
-		hideInMenu: true,
-		page: `404`,
-		title: `Страница не найдена`
-	}
-];
+'use strict';
+
+const commonData = require(`./common`);
 
 module.exports = {
 	get({ page }) {
 		return {
-			title: pages.find((item) => item.page === page).title,
-			url: `/${page}.html`
+			...commonData,
+			CURRENT_PAGE: commonData.PAGES.find((item) => item.page === page),
+			URL: `/${page}.html`
 		};
 	}
 };

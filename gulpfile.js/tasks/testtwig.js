@@ -1,7 +1,7 @@
 const { src } = require(`gulp`);
 const { plumber, htmlhint, lintspaces } = require(`gulp-load-plugins`)();
 
-const twighint = () => src(`source/twig/**/*.twig`)
+const testtwig = () => src(`source/twig/**/*.twig`)
 	.pipe(plumber())
 	.pipe(htmlhint({
 		'alt-require': true,
@@ -36,4 +36,4 @@ const twighint = () => src(`source/twig/**/*.twig`)
 	}))
 	.pipe(lintspaces.reporter());
 
-module.exports = twighint;
+module.exports = testtwig;

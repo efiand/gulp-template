@@ -47,8 +47,6 @@
 	"scripts": {
 		"build": "cross-env NODE_ENV=production gulp build",
 		"deploy": "gh-pages -d build",
-		"dev": "cross-env NODE_ENV=server gulp server",
-		"server": "nodemon ./gulpfile.js/server.js",
 		"start": "gulp",
 		"test": "gulp test"
 	},

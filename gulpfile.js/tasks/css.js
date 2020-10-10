@@ -1,26 +1,23 @@
 const { src, dest } = require(`gulp`);
 const { cssBase64, less, plumber, postcss, rename } = require(`gulp-load-plugins`)();
-const { DIST } = require(`../const`);
+const { Sources, Dests, Configs } = require(`../const`);
 
-const css = () => src(`source/less/entries/*.less`)
+const css = () => src(Sources.CSS)
 	.pipe(plumber())
 	.pipe(less())
 	.pipe(postcss([
-		require(`mqpacker`),
 		require(`autoprefixer`),
 		require(`cssnano`)
 	]))
 	.pipe(cssBase64({
-		baseDir: `../../sprite`,
+		baseDir: `../../icons`,
 		extensionsAllowed: [
 			`.svg`,
 			`.png`
 		],
 		maxWeightResource: 10000
 	}))
-	.pipe(rename({
-		suffix: `.min`
-	}))
-	.pipe(dest(`${DIST}/css`));
+	.pipe(rename(Configs.RENAME))
+	.pipe(dest(Dests.CSS));
 
 module.exports = css;

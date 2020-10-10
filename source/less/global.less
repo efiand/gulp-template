@@ -1,4 +1,7 @@
-:root {
+html {
+	--color-black: #000000;
+	--color-white: #ffffff;
+	--font: "Open Sans", "Arial", sans-serif;
 	--icon-fb: url("fb.svg");
 	--icon-insta: url("insta.svg");
 	--icon-telegram: url("telegram.svg");
@@ -7,22 +10,25 @@
 	--icon-whatsapp: url("whatsapp.svg");
 	--icon-youtube: url("youtube.svg");
 	min-width: 320px;
-	font-family: @font-base;
+	font-family: var(--font);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: antialiased;
+	-webkit-tap-highlight-color: transparent;
 }
 
 body {
 	margin: 0;
-	// overflow-x: hidden;
 	overflow-y: scroll; // чтобы содержимое не скакало влево-вправо при быстрой смене страниц
 }
 
 a,
-button {
-	-webkit-tap-highlight-color: transparent;
-	outline: none;
-	transition-property: color, opacity, background-color, border-color, box-shadow;
+button,
+input {
+	font: inherit;
+	text-decoration-skip-ink: none;
+	color: inherit;
+	background-color: transparent;
+	transition-property: color, opacity, background-color, border, box-shadow;
 	transition-duration: 0.3s;
 	transition-timing-function: ease-in-out;
 
@@ -31,17 +37,8 @@ button {
 	}
 }
 
-a {
-	text-decoration-skip-ink: none;
-	color: inherit;
-}
-
 button {
 	box-sizing: content-box;
-	padding: 0;
-	font: inherit;
-	background-color: transparent;
-	border: none;
 	cursor: pointer;
 	user-select: none;
 }
@@ -49,27 +46,18 @@ button {
 input {
 	box-sizing: border-box;
 	width: 100%;
-	font: inherit;
 	-webkit-text-fill-color: currentColor;
 	box-shadow: none;
-	transition-property: color, background-color, border, box-shadow;
-	transition-duration: 0.3s;
-	transition-timing-function: ease-in-out;
 	appearance: none;
 }
 
 img {
 	max-width: 100%;
 	height: auto;
-	color: transparent;
 }
 
 svg {
 	fill: currentColor;
-}
-
-iframe {
-	border: none;
 }
 
 table {

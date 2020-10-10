@@ -1,10 +1,39 @@
 const { series, watch } = require(`gulp`);
 const tasks = require(`require-dir`)(`.`);
-const { twighint, stylelint, eslint, copy, html, css, js, img, sprite } = tasks;
+const { testtwig, testless, testjs, copy, html, css, js, img, sprite } = tasks;
+const express = require(`express`);
 const browserSync = require(`browser-sync`).create();
-const { COPY_SOURCE, DIST } = require(`../const`);
+const { stat } = require(`fs`).promises;
+const { preparePageData } = require(`../utils`);
+const { Sources, Dests, Paths, IS_DEV } = require(`../const`);
+const DEFAULT_PORT = 5000;
+const HttpCode = {
+	NOT_FOUND: 404,
+	OK: 200
+};
 
-const extraOpts = process.env.NODE_ENV === `server` ? { proxy: `http://localhost:5000` } : { server: DIST };
+if (IS_DEV) {
+	const app = express();
+	app.set(`views`, `./${Paths.TWIG}`);
+	app.set(`view engine`, `twig`);
+	app.use(express.static(Dests.MAIN));
+
+	app.use(async (req, res) => {
+		const page = req.path.slice(1).replace(/\.html$/, ``) || `index`;
+		try {
+			await stat(`./${Paths.TWIG_PAGES}/${page}.twig`);
+			res
+				.status(HttpCode.OK)
+				.render(`pages/${page}`, preparePageData(page));
+		} catch (err) {
+			res
+				.status(HttpCode.NOT_FOUND)
+				.redirect(`/404.html`);
+		}
+	});
+
+	app.listen(DEFAULT_PORT);
+}
 
 const reload = (done) => {
 	browserSync.reload();
@@ -13,19 +42,20 @@ const reload = (done) => {
 
 const server = () => {
 	browserSync.init({
-		...extraOpts,
 		cors: true,
 		notify: false,
+		proxy: `http://localhost:${DEFAULT_PORT}`,
 		ui: false
 	});
 
-	watch(`source/**/*.twig`, series(twighint, html, reload));
-	watch(`source/less/**/*.less`, series(stylelint, css, reload));
-	watch(`source/js/**/*.js`, series(eslint, js, reload));
-	watch([`source/data/**/*.js`, `gulpfile.js/**/*.js`], series(eslint));
-	watch(`source/sprite/*.svg`, series(sprite, css, reload));
-	watch(`source/img/**/*.{svg,png,jpg}`, series(img, reload));
-	watch(COPY_SOURCE, series(copy, reload));
+	watch(Sources.HTML, reload);
+	watch(Sources.TEST_TWIG, series(testtwig, html, reload));
+	watch(Sources.TEST_LESS, series(testless, css, reload));
+	watch(Paths.JS_GLOB, series(testjs, js, reload));
+	watch(Paths.GULP_GLOB, series(testjs));
+	watch(Sources.ICONS, series(sprite, css, reload));
+	watch(Sources.IMG, series(img, reload));
+	watch(Sources.COPY, series(copy, reload));
 };
 
 module.exports = server;
