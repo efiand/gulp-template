@@ -1,13 +1,14 @@
 const { src, dest } = require(`gulp`);
 const { changed, plumber, if: gulpIf, imagemin, webp } = require(`gulp-load-plugins`)();
-const { Sources, Dests, Configs, IS_DEV } = require(`../const`);
+const { config } = require(`pineglade-config`);
+const { Sources, Dests, IS_DEV } = require(`../const`);
 const QUALITY = 80;
 
 const img = () => src(Sources.IMG)
 	.pipe(changed(Dests.IMG))
 	.pipe(plumber())
 	.pipe(gulpIf(!IS_DEV, imagemin([
-		imagemin.svgo(Configs.SVGO),
+		imagemin.svgo(config.SVGO),
 		imagemin.optipng(),
 		require(`imagemin-jpegoptim`)({
 			max: QUALITY,
