@@ -1,4 +1,4 @@
-const { Sources, IS_DEV } = require(`./const`);
+const { Sources, isDev } = require(`./const`);
 
 const getJSON = (src, page) => {
 	try {
@@ -13,7 +13,7 @@ const getJSON = (src, page) => {
 };
 
 const preparePageData = (page) => ({
-	IS_DEV,
+	isDev,
 	page,
 	pathToRoot: page.replace(/[^/]/g, ``).replace(/\//g, `../`),
 	...getJSON(`../${Sources.DATA}`, page)

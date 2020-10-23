@@ -5,14 +5,14 @@ const express = require(`express`);
 const browserSync = require(`browser-sync`).create();
 const { stat } = require(`fs`).promises;
 const { preparePageData } = require(`../utils`);
-const { Sources, Dests, Paths, IS_DEV } = require(`../const`);
+const { Sources, Dests, Paths, isDev } = require(`../const`);
 const DEFAULT_PORT = 5000;
 const HttpCode = {
 	NOT_FOUND: 404,
 	OK: 200
 };
 
-if (IS_DEV) {
+if (isDev) {
 	const app = express();
 	app.set(`views`, `./${Paths.TWIG}`);
 	app.set(`view engine`, `twig`);

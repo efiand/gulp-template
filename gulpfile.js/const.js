@@ -51,7 +51,7 @@ const Dests = {
 module.exports = {
 	Configs,
 	Dests,
-	IS_DEV: process.env.NODE_ENV !== `production`,
 	Paths,
-	Sources
+	Sources,
+	isDev: process.env.NODE_ENV === `development`
 };

@@ -1,9 +1,10 @@
 const { src } = require(`gulp`);
-const { plumber, htmlhint, lintspaces } = require(`gulp-load-plugins`)();
+const { if: gulpIf, plumber, htmlhint, lintspaces } = require(`gulp-load-plugins`)();
 const { codeguide } = require(`pineglade-config`);
+const { isDev } = require(`../const`);
 
 const testtwig = () => src(`source/twig/**/*.twig`)
-	.pipe(plumber())
+	.pipe(gulpIf(isDev, plumber()))
 	.pipe(htmlhint(codeguide.htmlhint))
 	.pipe(htmlhint.reporter())
 	.pipe(lintspaces({ editorconfig: `.editorconfig` }))
