@@ -1,29 +1,13 @@
-const { babel: babelConfig } = require(`./package.json`);
-const TerserPlugin = require(`terser-webpack-plugin`);
+const { babel } = require(`./package.json`);
 
 module.exports = {
 	mode: `production`,
 	module: {
-		rules: [
-			{
-				exclude: /node_modules/,
-				test: /\.js$/,
-				use: {
-					loader: `babel-loader`,
-					options: babelConfig
-				}
-			}
-		]
+		rules: [{
+			test: /\.js$/,
+			use: { loader: `babel-loader`, options: babel }
+		}]
 	},
-	optimization: {
-		minimize: true,
-		minimizer: [
-			new TerserPlugin({
-				parallel: true
-			})
-		]
-	},
-	output: {
-		filename: `[name].min.js`
-	}
+	optimization: { minimize: true },
+	output: { filename: `[name].min.js` }
 };

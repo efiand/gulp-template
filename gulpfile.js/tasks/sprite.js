@@ -1,10 +1,10 @@
 const { src, dest } = require(`gulp`);
-const { plumber, imagemin, svgstore, rename } = require(`gulp-load-plugins`)();
-const { Sources, Dests, Configs } = require(`../const`);
+const { imagemin, svgstore, rename } = require(`gulp-load-plugins`)();
+const { config } = require(`pineglade-config`);
+const { Sources, Dests } = require(`../const`);
 
 const sprite = () => src(Sources.SPRITE)
-	.pipe(plumber())
-	.pipe(imagemin([imagemin.svgo(Configs.SVGO)]))
+	.pipe(imagemin([imagemin.svgo(config.svgo)]))
 	.pipe(svgstore({
 		inlineSvg: true
 	}))

@@ -1,9 +1,8 @@
 const { src, dest } = require(`gulp`);
-const { cssBase64, less, plumber, postcss, rename } = require(`gulp-load-plugins`)();
+const { cssBase64, less, postcss, rename } = require(`gulp-load-plugins`)();
 const { Sources, Dests, Configs } = require(`../const`);
 
 const css = () => src(Sources.CSS)
-	.pipe(plumber())
 	.pipe(less())
 	.pipe(postcss([
 		require(`autoprefixer`),
