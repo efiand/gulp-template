@@ -5,6 +5,7 @@ const { Sources, Dests, Configs } = require(`../const`);
 const css = () => src(Sources.CSS)
 	.pipe(less())
 	.pipe(postcss([
+		require(`mqpacker`),
 		require(`autoprefixer`),
 		require(`cssnano`)
 	]))

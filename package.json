@@ -34,6 +34,7 @@
 		"mqpacker": "7.0.0",
 		"nodemon": "2.0.6",
 		"pineglade-config": "0.1.0",
+		"postcss": "8.1.4",
 		"precommit": "1.2.2",
 		"require-dir": "1.2.0",
 		"stylelint": "13.7.2",
