@@ -59,7 +59,7 @@ export const renderTemplate = (str, data) => {
 };
 
 // Возвращает строковое представление числа с отделением тысячных разрядов пробелом
-export const splitNumByGroups = (num) => num.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, `$1,`);
+export const splitNumByGroups = (num) => num.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, `$1 `);
 
 // Выводит число с ведущим нулём
 const TWO_DIGIT = 10;
