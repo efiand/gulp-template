@@ -1,3 +1,7 @@
 {
-	"extends": "pineglade"
+	"extends": "pineglade",
+	"rules": {
+		"line-comment-position": "off",
+		"no-inline-comments": "off"
+	}
 }

@@ -1,0 +1,18 @@
+{
+	"PAGES": [
+		{
+			"page": "index",
+			"title": "Главная"
+		},
+		{
+			"hideInMenu": true,
+			"page": "404",
+			"title": "Страница не найдена"
+		},
+		{
+			"hideInMenu": true,
+			"page": "blank",
+			"title": "Страница в разработке"
+		}
+	]
+}

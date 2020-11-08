@@ -1,19 +1,22 @@
 html {
 	--color-black: #000000;
 	--color-white: #ffffff;
+	--color-accent: #00796b;
+	--color-accent-lite: #b2dfdb;
 	--font: "Open Sans", "Arial", sans-serif;
-	--icon-fb: url("fb.svg");
-	--icon-insta: url("insta.svg");
-	--icon-telegram: url("telegram.svg");
-	--icon-viber: url("viber.svg");
-	--icon-vk: url("vk.svg");
-	--icon-whatsapp: url("whatsapp.svg");
-	--icon-youtube: url("youtube.svg");
+	--icon-fb: url("sprite/fb.svg");
+	--icon-insta: url("sprite/insta.svg");
+	--icon-telegram: url("sprite/telegram.svg");
+	--icon-viber: url("sprite/viber.svg");
+	--icon-vk: url("sprite/vk.svg");
+	--icon-whatsapp: url("sprite/whatsapp.svg");
+	--icon-youtube: url("sprite/youtube.svg");
 	min-width: 320px;
 	font-family: var(--font);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: antialiased;
 	-webkit-tap-highlight-color: transparent;
+	scroll-behavior: smooth;
 }
 
 body {
@@ -31,6 +34,10 @@ input {
 	transition-property: color, opacity, background-color, border, box-shadow;
 	transition-duration: 0.3s;
 	transition-timing-function: ease-in-out;
+
+	html:not(.a11y) & {
+		outline: none;
+	}
 
 	&::-moz-focus-inner {
 		border: none;

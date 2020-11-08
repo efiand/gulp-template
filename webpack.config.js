@@ -8,6 +8,5 @@ module.exports = {
 			use: { loader: `babel-loader`, options: babel }
 		}]
 	},
-	optimization: { minimize: true },
-	output: { filename: `[name].min.js` }
+	optimization: { minimize: true }
 };

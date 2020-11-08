@@ -1,0 +1,21 @@
+.custom-scrollbar {
+	scrollbar-color: var(--color-accent) var(--color-accent-lite);
+	scrollbar-width: thin;
+
+	&::-webkit-scrollbar-track {
+		background-color: var(--color-accent-lite);
+		border: 3px solid var(--color-white);
+	}
+
+	&::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+		background-color: var(--color-accent-lite);
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--color-accent);
+		border: none;
+		border-radius: 2px;
+	}
+}
