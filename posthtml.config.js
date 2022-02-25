@@ -24,6 +24,10 @@ module.exports = () => ({
 			return parser(ServerUtil.renderNjk(render(tree), data));
 		})(),
 		require('posthtml-w3c')(),
-		require('htmlnano')({ collapseWhitespace: 'aggressive' })
+		require('htmlnano')({ collapseWhitespace: 'aggressive' }),
+		(() => (tree) => {
+			const html = render(tree).replace(/\/dt><dd/g, '/dt> <dd');
+			return parser(html);
+		})()
 	]
 });

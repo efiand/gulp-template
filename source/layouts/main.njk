@@ -21,8 +21,8 @@
 			{% endblock %}
 		</main>
 
-		<footer class="page__footer">
-		</footer>
+		{% set cssMix = "page__footer" %}
+		{% include getComponentPath("page-footer") %}
 
 		{% if isDev %}
 			<ul hidden>

@@ -24,11 +24,15 @@ module.exports = {
 	},
 	renderNjk(template = '', data = {}) {
 		const env = nunjucks.configure('source', { autoescape: false });
+
 		env.addExtension('WithExtension', new WithExtension());
-		env.addGlobal('getContext', function getContext() {
-			return this.ctx; // eslint-disable-line
+
+		env.addGlobal('getContext', function getContext(key = null, global = false) {
+			const ctx = global ? data : this.ctx; // eslint-disable-line
+			return key ? ctx[key] : ctx;
 		});
-		env.addGlobal('getGlobal', (key) => data[key]);
+		env.addGlobal('getComponentPath', (componentName) => `components/${componentName}/${componentName}.njk`);
+
 		env.addFilter('keys', Object.keys);
 		for (const utilName of Object.keys(Util)) {
 			env.addFilter(utilName, Util[utilName]);
