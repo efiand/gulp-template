@@ -5,10 +5,14 @@ const { ServerUtil } = require('./source/lib/index.cjs');
 const layoutsDir = `${__dirname}/source/layouts`;
 const isDev = process.env.NODE_ENV === 'development';
 
+const getPage = (tree) => tree.options.from.replace(/^.*pages(\\+|\/+)(.*)\.njk$/, '$2');
+
 module.exports = () => ({
 	plugins: [
 		(() => async (tree) => {
-			const page = tree.options.from.replace(/^.*pages(\\+|\/+)(.*)\.njk$/, '$2');
+			// Сборка шаблонизатором Nunjucks
+
+			const page = getPage(tree);
 			let data = {
 				errors: [],
 				isDev,
@@ -23,10 +27,17 @@ module.exports = () => ({
 
 			return parser(ServerUtil.renderNjk(render(tree), data));
 		})(),
-		require('posthtml-w3c')(),
 		require('htmlnano')({ collapseWhitespace: 'aggressive' }),
-		(() => (tree) => {
-			const html = render(tree).replace(/\/dt><dd/g, '/dt> <dd');
+		(() => async (tree) => {
+			// Доводка после всех плагинов
+			const html = render(tree)
+				.replace(/\/dt><dd/g, '/dt> <dd'); // Инлайновые <dt> и <dd>, важен пробел между ними
+
+			const validationMessage = await ServerUtil.validateHtml(html, `${getPage(tree)}.html`);
+			if (validationMessage) {
+				ServerUtil.log(validationMessage);
+			}
+
 			return parser(html);
 		})()
 	]

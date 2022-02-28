@@ -1,69 +1,71 @@
 {
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env"
-      ]
-    ]
-  },
-  "browserslist": [
-    "last 6 version",
-    "not dead",
-    "not IE 11"
-  ],
-  "devDependencies": {
-    "@allmarkedup/nunjucks-with": "0.1.2",
-    "@babel/core": "7.17.5",
-    "@babel/eslint-parser": "7.17.0",
-    "@babel/preset-env": "7.16.11",
-    "autoprefixer": "10.4.2",
-    "babel-loader": "8.2.3",
-    "browser-sync": "2.27.7",
-    "cross-env": "7.0.3",
-    "cssnano": "5.0.15",
-    "del": "6.0.0",
-    "eslint": "8.6.0",
-    "gulp": "4.0.2",
-    "gulp-clean": "0.4.0",
-    "gulp-eslint": "6.0.0",
-    "gulp-html-bem-validator": "1.0.5",
-    "gulp-imagemin": "8.0.0",
-    "gulp-lintspaces": "1.0.1",
-    "gulp-postcss": "9.0.1",
-    "gulp-posthtml": "3.0.5",
-    "gulp-rename": "2.0.0",
-    "gulp-svg-sprite": "1.5.0",
-    "gulp-webp": "4.0.1",
-    "htmlnano": "1.1.1",
-    "imagemin-mozjpeg": "10.0.0",
-    "imagemin-pngquant": "9.0.2",
-    "imagemin-svgo": "10.0.1",
-    "nunjucks": "3.2.3",
-    "pineglade-pp": "1.0.5",
-    "postcss-base64": "0.7.1",
-    "postcss-bem-linter": "3.3.0",
-    "postcss-custom-media": "8.0.0",
-    "postcss-easy-import": "3.0.0",
-    "postcss-nested": "5.0.6",
-    "postcss-reporter": "7.0.5",
-    "postcss-sort-media-queries": "4.2.1",
-    "posthtml-w3c": "0.9.1",
-    "pre-commit": "1.2.2",
-    "stylelint": "14.0.0",
-    "stylelint-order": "5.0.0",
-    "terser-webpack-plugin": "5.3.0",
-    "vinyl-named": "1.1.0",
-    "webpack": "5.66.0",
-    "webpack-stream": "7.0.0"
-  },
-  "name": "gulp-template",
-  "pre-commit": "test",
-  "private": true,
-  "scripts": {
-    "dev": "cross-env NODE_ENV=development gulp",
-    "build": "cross-env NODE_ENV=production gulp build",
+	"babel": {
+		"presets": [
+			[
+				"@babel/preset-env"
+			]
+		]
+	},
+	"browserslist": [
+		"last 6 version",
+		"not dead",
+		"not IE 11"
+	],
+	"devDependencies": {
+		"@allmarkedup/nunjucks-with": "0.1.2",
+		"@babel/core": "7.17.5",
+		"@babel/eslint-parser": "7.17.0",
+		"@babel/preset-env": "7.16.11",
+		"autoprefixer": "10.4.2",
+		"babel-loader": "8.2.3",
+		"browser-sync": "2.27.7",
+		"chalk": "4.1.2",
+		"cross-env": "7.0.3",
+		"cssnano": "5.0.15",
+		"del": "6.0.0",
+		"eslint": "8.6.0",
+		"gulp": "4.0.2",
+		"gulp-clean": "0.4.0",
+		"gulp-eslint": "6.0.0",
+		"gulp-html-bem-validator": "1.0.5",
+		"gulp-imagemin": "8.0.0",
+		"gulp-lintspaces": "1.0.1",
+		"gulp-postcss": "9.0.1",
+		"gulp-posthtml": "3.0.5",
+		"gulp-rename": "2.0.0",
+		"gulp-svg-sprite": "1.5.0",
+		"gulp-webp": "4.0.1",
+		"html-validate": "6.5.0",
+		"htmlnano": "1.1.1",
+		"imagemin-mozjpeg": "10.0.0",
+		"imagemin-pngquant": "9.0.2",
+		"imagemin-svgo": "10.0.1",
+		"node-fetch": "2.6.7",
+		"nunjucks": "3.2.3",
+		"pineglade-pp": "1.0.5",
+		"postcss-base64": "0.7.1",
+		"postcss-bem-linter": "3.3.0",
+		"postcss-custom-media": "8.0.0",
+		"postcss-easy-import": "3.0.0",
+		"postcss-nested": "5.0.6",
+		"postcss-reporter": "7.0.5",
+		"postcss-sort-media-queries": "4.2.1",
+		"pre-commit": "1.2.2",
+		"stylelint": "14.0.0",
+		"stylelint-order": "5.0.0",
+		"terser-webpack-plugin": "5.3.0",
+		"vinyl-named": "1.1.0",
+		"webpack": "5.66.0",
+		"webpack-stream": "7.0.0"
+	},
+	"name": "gulp-template",
+	"pre-commit": "test",
+	"private": true,
+	"scripts": {
+		"build": "cross-env NODE_ENV=production gulp build",
+		"dev": "cross-env NODE_ENV=development gulp",
 		"start": "npm run dev",
-    "test": "gulp test"
-  },
-  "type": "module"
+		"test": "cross-env NODE_ENV=development gulp test"
+	},
+	"type": "module"
 }
