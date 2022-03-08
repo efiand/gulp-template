@@ -13,7 +13,14 @@ module.exports = {
 		},
 		'postcss-sort-media-queries': {},
 		autoprefixer: {},
-		cssnano: {},
+		cssnano: {
+			preset: [
+				'default',
+				{
+					cssDeclarationSorter: false
+				}
+			]
+		},
 		'postcss-reporter': {
 			clearAllMessages: true,
 			throwError: process.env.NODE_ENV !== 'development'
