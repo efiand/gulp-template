@@ -1,3 +1,5 @@
+import { getScrollbarWidth } from 'pineglade-modal';
+
 export const Breakpoint = {
 	DESKTOP: 1280,
 	TABLET: 768
@@ -12,8 +14,7 @@ const setBreakpoint = () => {
 		breakpoint = 'tablet';
 	}
 	if (window.breakpoint !== breakpoint) {
-		const scrollbarWidth = Math.max(window.innerWidth - document.documentElement.clientWidth, 0);
-		document.documentElement.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
+		document.documentElement.style.setProperty('--scrollbar-width', getScrollbarWidth());
 
 		window.breakpoint = breakpoint;
 		window.dispatchEvent(screenChangeEvent);
