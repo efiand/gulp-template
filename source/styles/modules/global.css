@@ -68,13 +68,27 @@ ol {
 	list-style: none;
 }
 
-input {
+input,
+textarea {
 	box-sizing: border-box;
 	font: inherit;
-	border: none;
 	-webkit-text-fill-color: currentColor;
 	box-shadow: none;
 
+	&:disabled {
+		opacity: 0.3;
+	}
+
+	&:-webkit-autofill {
+		box-shadow: none;
+	}
+
+	&::placeholder {
+		opacity: 0.3;
+	}
+}
+
+input {
 	&[type="number"] {
 		appearance: textfield;
 
@@ -84,23 +98,11 @@ input {
 		}
 	}
 
-	&:-webkit-autofill {
-		box-shadow: none;
-	}
-
 	&::-webkit-search-decoration,
 	&::-webkit-search-cancel-button,
 	&::-webkit-search-results-button,
 	&::-webkit-search-results-decoration {
 		display: none;
-	}
-
-	&::placeholder {
-		opacity: 0.3;
-	}
-
-	&:disabled {
-		opacity: 0.3;
 	}
 }
 
