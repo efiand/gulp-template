@@ -1,7 +1,7 @@
 const render = require('posthtml-render');
 const parser = require('posthtml-parser');
 const { getPosthtmlW3c } = require('pineglade-w3c');
-const { ServerUtil } = require('./source/lib/index.cjs');
+const ServerUtil = require('./source/lib/server-util.cjs');
 
 const layoutsDir = `${__dirname}/source/layouts`;
 const isDev = process.env.NODE_ENV === 'development';
