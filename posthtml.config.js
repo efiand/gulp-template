@@ -6,7 +6,9 @@ const ServerUtil = require('./source/lib/server-util.cjs');
 const layoutsDir = `${__dirname}/source/layouts`;
 const isDev = process.env.NODE_ENV === 'development';
 
-const getPageName = (tree) => tree.options.from.replace(/^.*pages(\\+|\/+)(.*)\.njk$/, '$2');
+const getPageName = (tree) => tree.options.from
+	.replace(/^.*pages(\\+|\/+)(.*)\.njk$/, '$2')
+  .replace(/\\/g, '/');
 
 module.exports = () => ({
 	plugins: [
