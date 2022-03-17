@@ -40,7 +40,7 @@
 		"nunjucks": "3.2.3",
 		"pineglade-config": "0.2.2",
 		"pineglade-modal": "1.0.1",
-		"pineglade-pp": "1.0.6",
+		"pineglade-pp": "1.0.8",
 		"pineglade-w3c": "1.0.0",
 		"postcss-base64": "0.7.1",
 		"postcss-bem-linter": "3.3.0",
