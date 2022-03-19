@@ -1,3 +1,15 @@
+const isDev = process.env.NODE_ENV === 'development';
+const cssnano = isDev ? {} : {
+	cssnano: {
+		preset: [
+			'default',
+			{
+				cssDeclarationSorter: false
+			}
+		]
+	}
+};
+
 module.exports = {
 	plugins: {
 		stylelint: {},
@@ -8,22 +20,15 @@ module.exports = {
 		},
 		'postcss-nested': {},
 		'postcss-base64': {
-			extensions: ['.png'],
+			extensions: ['.svg', '.png'],
 			root: 'source/icons/'
 		},
 		'postcss-sort-media-queries': {},
 		autoprefixer: {},
-		cssnano: {
-			preset: [
-				'default',
-				{
-					cssDeclarationSorter: false
-				}
-			]
-		},
+		...cssnano,
 		'postcss-reporter': {
 			clearAllMessages: true,
-			throwError: process.env.NODE_ENV !== 'development'
+			throwError: !isDev
 		}
 	}
 };

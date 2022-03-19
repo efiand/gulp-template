@@ -8,7 +8,7 @@ const isDev = process.env.NODE_ENV === 'development';
 
 const getPageName = (tree) => tree.options.from
 	.replace(/^.*pages(\\+|\/+)(.*)\.njk$/, '$2')
-  .replace(/\\/g, '/');
+	.replace(/\\/g, '/');
 
 module.exports = () => ({
 	plugins: [
