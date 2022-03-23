@@ -132,12 +132,14 @@ wbr::after {
 
 :focus {
 	outline: var(--focus-outline);
+	outline-offset: 0;
 
 	@supports selector(:focus-visible) {
 		outline: none;
 	}
+}
 
-	&-visible {
-		outline: var(--focus-outline);
-	}
+:focus-visible {
+	outline: var(--focus-outline);
+	outline-offset: 0;
 }

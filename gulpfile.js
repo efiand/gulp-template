@@ -36,11 +36,12 @@ const Path = {
 	Watch: {
 		CSS: 'source/**/*.css',
 		HTML: 'source/**/*.njk',
-		ICONS: 'place/icons/**/*.{svg,png}',
-		IMG: 'place/images/**/*.{svg,png,jpg}',
+		ICONS_PLACE: 'place/icons/**/*.{svg,png}',
 		IMG_DEST: 'public/images/**/*.{png,jpg}',
+		IMG_PLACE: 'place/images/**/*.{svg,png,jpg}',
 		JS: ['*.{js,cjs}', 'source/**/*.{js,cjs}'],
 		PP: 'source/pixelperfect/*.{jpg,png,svg}',
+		PP_PLACE: 'place/pixelperfect/**/*.{png,jpg}',
 		SPRITE: 'source/icons/*.svg'
 	}
 };
@@ -65,27 +66,31 @@ const buildJS = () => src(Path.Build.JS)
 	.pipe(webpackStream(webpackConfig, webpack))
 	.pipe(dest(`${Path.DIST}/scripts`));
 
-const saveImages = () => src(Path.Watch.IMG)
-	.pipe(imagemin([
-		svgo(svgoConfig),
-		mozjpeg({
-			progressive: true,
-			quality: 75
-		}),
-		pngquant()
-	]))
+const optimizeImages = () => imagemin([
+	svgo(svgoConfig),
+	mozjpeg({
+		progressive: true,
+		quality: 75
+	}),
+	pngquant()
+]);
+
+const saveImages = () => src(Path.Watch.IMG_PLACE)
+	.pipe(optimizeImages())
 	.pipe(clean())
 	.pipe(dest(`${Path.DIST}/images`));
+
+const savePP = () => src(Path.Watch.PP_PLACE)
+	.pipe(optimizeImages())
+	.pipe(clean())
+	.pipe(dest('source/pixelperfect'));
 
 const createWebp = () => src(Path.Watch.IMG_DEST)
 	.pipe(webp({ quality: 80 }))
 	.pipe(dest(`${Path.DIST}/images`));
 
-const optimizeIcons = () => src(Path.Watch.ICONS)
-	.pipe(imagemin([
-		svgo(svgoConfig),
-		pngquant()
-	]))
+const optimizeIcons = () => src(Path.Watch.ICONS_PLACE)
+	.pipe(optimizeImages())
 	.pipe(clean())
 	.pipe(dest('source/icons'));
 
@@ -132,9 +137,10 @@ const startServer = () => {
 	watch('source/layouts/**/*.js', series(testJS, buildHTML, reload));
 	watch('source/{components,scripts,lib}/**/*.{js,cjs}', series(testJS, buildJS, reload));
 	watch('*.{js,cjs}', testJS);
-	watch(Path.Watch.IMG, saveImages);
+	watch(Path.Watch.PP_PLACE, savePP);
+	watch(Path.Watch.IMG_PLACE, saveImages);
 	watch(Path.Watch.IMG_DEST, series(createWebp, reload));
-	watch(Path.Watch.ICONS, series(optimizeIcons, buildCSS, reload));
+	watch(Path.Watch.ICONS_PLACE, series(optimizeIcons, buildCSS, reload));
 	watch(Path.Watch.SPRITE, series(buildSprite, reload));
 	watch(Path.Watch.PP, series(copyPP, reload));
 };
@@ -149,4 +155,4 @@ export const test = parallel(testHTML, testCSS, testJS);
 const prepare = parallel(test, cleanDest, saveImages, optimizeIcons);
 const compile = parallel(buildHTML, buildCSS, buildJS, createWebp, buildSprite);
 export const build = series(prepare, compile);
-export default series(build, copyPP, startServer);
+export default series(build, savePP, copyPP, startServer);
