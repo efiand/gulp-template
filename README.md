@@ -3,12 +3,14 @@
 
 ## Используемые инструменты
 
+* gulp - объединение задач и слежение за изменением файлов
 * posthtml + nunjucks - сборка из компонентов и тестирование HTML
 * postcss - сборка из компонентов и тестирование CSS
 * webpack + eslint - сборка из компонентов и тестирование JS
 * svgo, pngquant, mozjpeg, gulp-svg-sprite - оптимизация графики
-* [pineglade-pp](https://efiand.github.io/pineglade-pp/) - оптимизация достижения pixel perfect
-* gulp - объединение задач и слежение за изменением файлов
+* [pineglade-pp](https://www.npmjs.com/package/pineglade-pp) - оптимизация достижения pixel perfect
+* [pineglade-w3c](https://www.npmjs.com/package/pineglade-w3c) - онлайн-валидатор W3C с резервным оффлайн-валидатором
+* [pineglade-modal](https://www.npmjs.com/package/pineglade-modal) - библиотека для работы с модальными окнами
 
 
 ## Особенности реализации
