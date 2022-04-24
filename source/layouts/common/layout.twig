@@ -1,0 +1,29 @@
+{% from '../common/macro.twig' import component %}
+
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+	<head>
+		<meta charset="utf-8">
+		<meta content="ie=edge" http-equiv="x-ua-compatible">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>
+			{{ projectName }} : {{ title }}
+		</title>
+
+		<link rel="icon" href="{{ root }}favicon.ico">
+		<link href="{{ root }}styles/styles.min.css" rel="stylesheet">
+		{# <link rel="preload" href="{{ root }}fonts/ptsans.woff2" as="font"> #}
+	</head>
+	<body class="page">
+		{{ component('page-header', {}, 'page__header') }}
+
+		{% block main %}{% endblock %}
+
+		{{ component('page-footer', {}, 'page__footer') }}
+
+		{% if IS_DEV %}
+			<script src="{{ root }}scripts/dev.min.js"></script>
+		{% endif %}
+		<script src="{{ root }}scripts/scripts.min.js"></script>
+	</body>
+</html>

@@ -1,8 +1,16 @@
 import TerserPlugin from 'terser-webpack-plugin';
 
-export default {
-	mode: process.env.NODE_ENV,
-	optimization: {
+const mode = process.env.NODE_ENV;
+
+const options = {
+	mode,
+	output: {
+		filename: '[name].min.js'
+	}
+};
+
+if (mode === 'production') {
+	options.optimization = {
 		minimize: true,
 		minimizer: [
 			new TerserPlugin({
@@ -15,8 +23,7 @@ export default {
 				}
 			})
 		]
-	},
-	output: {
-		filename: '[name].min.js'
-	}
-};
+	};
+}
+
+export default options;

@@ -1,0 +1,13 @@
+{% from '../common/macro.twig' import getSrcset %}
+
+<picture {{ cssMix ? 'class="' ~ cssMix ~ '"' }}>
+	{% if webpset.length %}
+		<source type="image/webp" srcset="{{ getSrcset(webpset, 1) }}">
+	{% endif %}
+	<img
+		src="{{ srcset[0].url }}"
+		{{ srcset.length > 1 ? 'srcset="' ~ getSrcset(srcset, 2) ~ '"' }}
+		alt="{{ title|punctify }}"
+		loading="lazy"
+	/>
+</picture>

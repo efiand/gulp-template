@@ -1,15 +1,4 @@
-import Form from '../components/form/form.js';
-import { initModals } from 'pineglade-modal';
+import Form from './components/form.js';
+import { setupComponent } from './common/utils.js';
 
-export * from './modules/breakpoints.js';
-
-initModals();
-
-// Открываем все контролы, бессмысленные без наличия JS
-for (const noJsHiddenEl of document.querySelectorAll('.no-js-hidden')) {
-	noJsHiddenEl.classList.remove('no-js-hidden');
-}
-
-for (const formEl of document.querySelectorAll('.form')) {
-	new Form(formEl);
-}
+[['.form', Form]].forEach(setupComponent);

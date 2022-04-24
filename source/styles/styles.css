@@ -1,4 +1,3 @@
-@import url("modules/global.css");
-@import url("../components/**/*.css");
-@import url("modules/helpers.css");
-@import url("modules/fonts.css");
+@import url("common/fonts.css");
+@import url("common/global.css");
+@import url("components/*.css");

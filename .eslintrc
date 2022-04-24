@@ -2,13 +2,11 @@
 	"extends": "pineglade",
 	"overrides": [
 		{
-			"files": [
-				"source/layouts/**/*.js"
-			],
+			"files": "api/data/**/*.js",
 			"rules": {
 				"max-len": "off",
-				"max-lines-per-function": "off",
-				"no-unused-expressions": "off"
+				"max-lines": "off",
+				"max-lines-per-function": "off"
 			}
 		}
 	]
