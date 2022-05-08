@@ -36,6 +36,7 @@ import webpackConfig from './webpack.config.js';
 import webpackStream from 'webpack-stream';
 
 const IS_DEV = process.env.NODE_ENV === 'development';
+let store = {};
 
 const Entry = {
 	ICONS: 'source/icons/**/*.svg',
@@ -79,7 +80,8 @@ export const buildLayouts = () => src(Entry.LAYOUTS)
 
 		const data = await (IS_DEV ? fetch(`${API_URL}/${page}`).then((res) => res.json()) : getPageData(page));
 
-		return { ...data, IS_DEV };
+		store = { ...data, IS_DEV };
+		return store;
 	}))
 	.pipe(twig({
 		filters: [
@@ -93,6 +95,14 @@ export const buildLayouts = () => src(Entry.LAYOUTS)
 					return `${str}${sign}`;
 				},
 				name: 'punctify'
+			}
+		],
+		functions: [
+			{
+				func(key) {
+					return store.Term[key];
+				},
+				name: 'Term'
 			}
 		]
 	}))
