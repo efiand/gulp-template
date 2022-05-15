@@ -67,6 +67,7 @@ if (!IS_DEV) {
 
 const { src, dest, watch, series, parallel } = gulp;
 const checkLintspaces = () => lintspaces({ editorconfig: '.editorconfig' });
+const reportLintspaces = () => lintspaces.reporter({ breakOnWarning: !IS_DEV });
 const optimizeImages = () => imagemin([
 	svgo(svgoConfig),
 	mozjpeg({ progressive: true, quality: 75 }),
@@ -151,11 +152,11 @@ export const copyStatic = () => src(Entry.STATIC)
 
 export const lintLayouts = () => src([Watch.LAYOUTS, Entry.ICONS])
 	.pipe(checkLintspaces())
-	.pipe(lintspaces.reporter());
+	.pipe(reportLintspaces());
 
 export const lintStyles = () => src(Watch.STYLES)
 	.pipe(checkLintspaces())
-	.pipe(lintspaces.reporter())
+	.pipe(reportLintspaces())
 	.pipe(postcss([
 		stylelint(),
 		postcssBemLinter(),
@@ -164,7 +165,7 @@ export const lintStyles = () => src(Watch.STYLES)
 
 export const lintScripts = () => src([...Watch.ENGINE, Watch.SCRIPTS])
 	.pipe(checkLintspaces())
-	.pipe(lintspaces.reporter())
+	.pipe(reportLintspaces())
 	.pipe(eslint({ fix: false }))
 	.pipe(eslint.format())
 	.pipe(gulpIf(!IS_DEV, eslint.failAfterError()));
@@ -202,9 +203,9 @@ export const startApi = (done) => nodemon({
 	watch: ['api']
 }).on('start', done);
 
-export const lintSource = parallel(lintLayouts, lintStyles, lintScripts);
-export const lint = series(lintSource, buildLayouts);
+export const lint = parallel(lintLayouts, lintStyles, lintScripts);
+export const test = series(lint, buildLayouts);
 export const compile = parallel(buildLayouts, buildStyles, buildScripts, buildSprite, copyImages, copyStatic);
-export const build = series(parallel(lintSource, cleanDestination), compile);
+export const build = series(parallel(lint, cleanDestination), compile);
 export const dev = series(startApi, build, startServer);
 export default dev;
