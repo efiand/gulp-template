@@ -66,6 +66,7 @@
 		"build": "cross-env NODE_ENV=production gulp build",
 		"dev": "cross-env NODE_ENV=development gulp dev",
 		"lint": "cross-env NODE_ENV=test gulp lint",
+    "postinstall": "npx browserslist@latest --update-db",
 		"start": "cross-env NODE_ENV=production node api",
 		"test": "cross-env NODE_ENV=test gulp test"
 	},
