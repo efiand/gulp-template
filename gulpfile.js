@@ -40,7 +40,7 @@ let store = {};
 
 const Entry = {
 	ICONS: 'source/icons/**/*.svg',
-	IMAGES: ['source/images/**/*.{jpg,png,svg}'],
+	IMAGES: 'source/images/**/*.{jpg,png,svg}',
 	LAYOUTS: 'source/layouts/pages/**/*.twig',
 	MEDIAQUERIES: 'source/styles/common/mq.css',
 	SCRIPTS: ['source/scripts/*.js'],
@@ -61,7 +61,7 @@ const Destination = {
 	STYLES: 'build/styles'
 };
 if (!IS_DEV) {
-	Entry.IMAGES.push('!source/images/pixelperfect/**/*.{jpg,png,svg}');
+	Entry.STATIC.push('!source/static/pixelperfect/**/*.{jpg,png,svg}');
 	Entry.SCRIPTS.push('!source/scripts/dev.js');
 }
 
