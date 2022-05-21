@@ -10,7 +10,10 @@ module.exports = () => {
 	];
 
 	if (process.env.NODE_ENV === 'production') {
-		plugins.push(require('htmlnano')({ collapseWhitespace: 'aggressive' }));
+		plugins.push(require('htmlnano')({
+			collapseWhitespace: 'aggressive',
+			minifySvg: false
+		}));
 	}
 
 	return { plugins };
