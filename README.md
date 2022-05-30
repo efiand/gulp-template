@@ -7,13 +7,11 @@
 
 ## Используемые инструменты
 
-* gulp - объединение задач и слежение за изменением файлов.
-* twig + posthtml - сборка из компонентов и тестирование HTML.
-* postcss - сборка из компонентов и тестирование CSS.
-* webpack + eslint - сборка из компонентов и тестирование JS.
+* gulp - управление задачами и слежение за изменением файлов.
+* twig + posthtml + валидаторы HTML5 и БЭМ - сборка из компонентов и валидирование HTML.
+* less + postcss + stylelint - сборка из компонентов и линтинг CSS.
+* webpack + eslint - сборка из компонентов и линтинг JS.
 * svgo, pngquant, mozjpeg, gulp-svg-sprite - оптимизация графики.
-* [pineglade-pp](https://www.npmjs.com/package/pineglade-pp) - оптимизация достижения pixel perfect.
-* [pineglade-w3c](https://www.npmjs.com/package/pineglade-w3c) - онлайн-валидатор W3C с резервным оффлайн-валидатором.
 
 
 ## Особенности реализации
