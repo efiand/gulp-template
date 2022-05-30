@@ -1,0 +1,34 @@
+.sr-only {
+	position: fixed;
+	transform: scale(0);
+}
+
+.centerer {
+	box-sizing: border-box;
+
+	@media @desktop {
+		width: 1240px;
+		margin-right: auto;
+		margin-left: auto;
+	}
+}
+
+.adaptive-bg(@bg, @ext: 'jpg') {
+	@supports not (background-image: url("../img/@{bg}.webp")) {
+		background-image: url("../img/@{bg}.@{ext}");
+	}
+
+	@supports (background-image: url("../img/@{bg}.webp")) {
+		background-image: url("../img/@{bg}.webp");
+	}
+
+	@media @retina {
+		@supports not (background-image: url("../img/@{bg}@2x.webp")) {
+			background-image: url("../img/@{bg}@2x.@{ext}");
+		}
+
+		@supports (background-image: url("../img/@{bg}@2x.webp")) {
+			background-image: url("../img/@{bg}@2x.webp");
+		}
+	}
+}

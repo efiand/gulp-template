@@ -2,7 +2,6 @@ import { API_URL } from './api/common/const.js';
 import autoprefixer from 'autoprefixer';
 import bemValidator from 'gulp-html-bem-validator';
 import cssnano from 'cssnano';
-import customMedia from 'postcss-custom-media';
 import del from 'del';
 import eslint from 'gulp-eslint';
 import fetch from 'node-fetch';
@@ -11,6 +10,8 @@ import gulp from 'gulp';
 import gulpData from 'gulp-data';
 import gulpIf from 'gulp-if';
 import imagemin from 'gulp-imagemin';
+import less from 'gulp-less';
+import lessSyntax from 'postcss-less';
 import lintspaces from 'gulp-lintspaces';
 import mozjpeg from 'imagemin-mozjpeg';
 import mqpacker from 'postcss-sort-media-queries';
@@ -18,8 +19,6 @@ import nodemon from 'gulp-nodemon';
 import pngquant from 'imagemin-pngquant';
 import postcss from 'gulp-postcss';
 import postcssBemLinter from 'postcss-bem-linter';
-import postcssImport from 'postcss-easy-import';
-import postcssNested from 'postcss-nested';
 import postcssReporter from 'postcss-reporter';
 import posthtml from 'gulp-posthtml';
 import rename from 'gulp-rename';
@@ -42,17 +41,16 @@ const Entry = {
 	ICONS: 'source/icons/**/*.svg',
 	IMAGES: 'source/images/**/*.{jpg,png,svg}',
 	LAYOUTS: 'source/layouts/pages/**/*.twig',
-	MEDIAQUERIES: 'source/styles/common/mq.css',
 	SCRIPTS: ['source/scripts/*.js'],
 	STATIC: ['source/static/**/*', '!source/static/**/*.md'],
-	STYLES: 'source/styles/*.css'
+	STYLES: 'source/styles/*.less'
 };
 const Watch = {
 	API: 'api/restart.log',
 	ENGINE: ['api/**/*.js', '*.{js,cjs}'],
 	LAYOUTS: 'source/**/*.twig',
 	SCRIPTS: 'source/scripts/**/*.js',
-	STYLES: 'source/styles/**/*.css'
+	STYLES: 'source/styles/**/*.less'
 };
 const Destination = {
 	IMAGES: 'build/images',
@@ -112,11 +110,9 @@ export const buildLayouts = () => src(Entry.LAYOUTS)
 	.pipe(gulpIf(process.env.NODE_ENV !== 'test', dest(Destination.ROOT)));
 
 export const buildStyles = () => src(Entry.STYLES)
+	.pipe(less())
 	.pipe(postcss((() => {
 		const plugins = [
-			postcssImport(),
-			customMedia({ importFrom: Entry.MEDIAQUERIES }),
-			postcssNested(),
 			mqpacker(),
 			autoprefixer()
 		];
@@ -161,7 +157,7 @@ export const lintStyles = () => src(Watch.STYLES)
 		stylelint(),
 		postcssBemLinter(),
 		postcssReporter({ clearAllMessages: true, throwError: !IS_DEV })
-	]));
+	], { syntax: lessSyntax }));
 
 export const lintScripts = () => src([...Watch.ENGINE, Watch.SCRIPTS])
 	.pipe(checkLintspaces())
