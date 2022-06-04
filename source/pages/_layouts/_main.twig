@@ -1,5 +1,3 @@
-{% from '../common/macro.twig' import component %}
-
 <!DOCTYPE html>
 <html lang="{{ lang }}">
 	<head>
@@ -11,19 +9,19 @@
 		</title>
 
 		<link rel="icon" href="{{ root }}favicon.ico">
-		<link href="{{ root }}styles/styles.min.css" rel="stylesheet">
+		<link href="{{ root }}styles/main.min.css" rel="stylesheet">
 		{# <link rel="preload" href="{{ root }}fonts/ptsans.woff2" as="font" crossorigin="anonymous"> #}
 	</head>
 	<body class="page">
-		{{ component('page-header', {}, 'page__header') }}
+		{% include '../_components/_page-header.twig' with { cssMix: 'page__header' } %}
 
 		{% block main %}{% endblock %}
 
-		{{ component('page-footer', {}, 'page__footer') }}
+		{% include '../_components/_page-footer.twig' with { cssMix: 'page__footer' } %}
 
 		{% if IS_DEV %}
 			<script src="{{ root }}scripts/dev.min.js"></script>
 		{% endif %}
-		<script src="{{ root }}scripts/scripts.min.js"></script>
+		<script src="{{ root }}scripts/main.min.js"></script>
 	</body>
 </html>

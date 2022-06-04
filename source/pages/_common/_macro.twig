@@ -1,7 +1,3 @@
-{% macro component(is, data = {}, cssMix = '') %}
-	{% include '../components/' ~ is ~ '.twig' with data|merge({ cssMix: cssMix }) %}
-{% endmacro %}
-
 {% macro getSrcset(srcset, start = 1) -%}
 	{% for item in srcset -%}
 		{% if loop.index >= start -%}

@@ -40,15 +40,15 @@ let store = {};
 const Entry = {
 	ICONS: 'source/icons/**/*.svg',
 	IMAGES: 'source/images/**/*.{jpg,png,svg}',
-	LAYOUTS: 'source/layouts/pages/**/*.twig',
-	SCRIPTS: ['source/scripts/*.js'],
+	PAGES: ['source/pages/**/*.twig', '!source/pages/**/_*.twig'],
+	SCRIPTS: ['source/scripts/**/*.js', '!source/scripts/**/_*.js'],
 	STATIC: ['source/static/**/*', '!source/static/**/*.md'],
-	STYLES: 'source/styles/*.less'
+	STYLES: ['source/styles/**/*.less', '!source/styles/**/_*.less']
 };
 const Watch = {
 	API: 'api/restart.log',
 	ENGINE: ['api/**/*.js', '*.{js,cjs}'],
-	LAYOUTS: 'source/**/*.twig',
+	PAGES: 'source/pages/**/*.twig',
 	SCRIPTS: 'source/scripts/**/*.js',
 	STYLES: 'source/styles/**/*.less'
 };
@@ -72,7 +72,7 @@ const optimizeImages = () => imagemin([
 	pngquant()
 ]);
 
-export const buildLayouts = () => src(Entry.LAYOUTS)
+export const buildLayouts = () => src(Entry.PAGES)
 	.pipe(gulpData(async (file) => {
 		const page = file.path.replace(/^.*pages(\\+|\/+)(.*)\.twig$/, '$2')
 			.replace(/\\/g, '/');
@@ -146,7 +146,7 @@ export const copyImages = () => src(Entry.IMAGES)
 export const copyStatic = () => src(Entry.STATIC)
 	.pipe(dest(Destination.ROOT));
 
-export const lintLayouts = () => src([Watch.LAYOUTS, Entry.ICONS])
+export const lintLayouts = () => src([Watch.PAGES, Entry.ICONS])
 	.pipe(checkLintspaces())
 	.pipe(reportLintspaces());
 
@@ -186,7 +186,7 @@ export const startServer = (done) => {
 	watch(Entry.STATIC, series(copyStatic, reload));
 	watch(Watch.API, series(buildLayouts, reload));
 	watch(Watch.ENGINE, lintScripts);
-	watch(Watch.LAYOUTS, series(lintLayouts, buildLayouts, reload));
+	watch(Watch.PAGES, series(lintLayouts, buildLayouts, reload));
 	watch(Watch.SCRIPTS, series(lintScripts, buildScripts, reload));
 	watch(Watch.STYLES, series(lintStyles, buildStyles, reload));
 
