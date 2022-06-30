@@ -14,21 +14,37 @@
 }
 
 .adaptive-bg(@bg, @ext: 'jpg') {
-	@supports not (background-image: url("../img/@{bg}.webp")) {
-		background-image: url("../img/@{bg}.@{ext}");
+	@supports not (background-image: url("../images/@{bg}.webp")) {
+		background-image: url("../images/@{bg}.@{ext}");
 	}
 
-	@supports (background-image: url("../img/@{bg}.webp")) {
-		background-image: url("../img/@{bg}.webp");
+	@supports (background-image: url("../images/@{bg}.webp")) {
+		background-image: url("../images/@{bg}.webp");
 	}
 
 	@media @retina {
-		@supports not (background-image: url("../img/@{bg}@2x.webp")) {
-			background-image: url("../img/@{bg}@2x.@{ext}");
+		@supports not (background-image: url("../images/@{bg}@2x.webp")) {
+			background-image: url("../images/@{bg}@2x.@{ext}");
 		}
 
-		@supports (background-image: url("../img/@{bg}@2x.webp")) {
-			background-image: url("../img/@{bg}@2x.webp");
+		@supports (background-image: url("../images/@{bg}@2x.webp")) {
+			background-image: url("../images/@{bg}@2x.webp");
 		}
 	}
+}
+
+.sprite-bg(@icon) {
+	background-image: url("../images/sprite.min.svg#@{icon}");
+}
+
+.sprite-mask(@icon) {
+	mask-image: url("../images/sprite.min.svg#@{icon}");
+}
+
+.icon-bg(@icon) {
+	background-image: url("../images/@{icon}.svg");
+}
+
+.icon-mask(@icon) {
+	mask-image: url("../images/@{icon}.svg");
 }
