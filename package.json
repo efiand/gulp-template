@@ -20,7 +20,6 @@
 		"gulp": "4.0.2",
 		"gulp-data": "1.3.1",
 		"gulp-eslint": "6.0.0",
-		"gulp-html-bem-validator": "1.0.5",
 		"gulp-if": "3.0.0",
 		"gulp-imagemin": "8.0.0",
 		"gulp-less": "5.0.0",
@@ -37,7 +36,7 @@
 		"imagemin-pngquant": "9.0.2",
 		"imagemin-svgo": "10.0.1",
 		"node-fetch": "3.2.3",
-		"pineglade-config": "0.2.5",
+		"pineglade-config": "0.2.6",
 		"pineglade-pp": "1.1.4",
 		"pineglade-w3c": "1.0.2",
 		"postcss-bem-linter": "3.3.0",
@@ -56,7 +55,7 @@
 		"http-status-codes": "2.2.0"
 	},
 	"name": "gulp-template",
-	"pre-commit": "lint",
+	"pre-commit": "test",
 	"private": true,
 	"scripts": {
 		"build": "cross-env NODE_ENV=production gulp build",

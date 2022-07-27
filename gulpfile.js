@@ -1,6 +1,5 @@
 import { API_URL } from './api/common/const.js';
 import autoprefixer from 'autoprefixer';
-import bemValidator from 'gulp-html-bem-validator';
 import cssnano from 'cssnano';
 import del from 'del';
 import eslint from 'gulp-eslint';
@@ -106,7 +105,6 @@ export const buildLayouts = () => src(Entry.PAGES)
 		]
 	}))
 	.pipe(posthtml())
-	.pipe(bemValidator())
 	.pipe(gulpIf(process.env.NODE_ENV !== 'test', dest(Destination.ROOT)));
 
 export const buildStyles = () => src(Entry.STYLES)

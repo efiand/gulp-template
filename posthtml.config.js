@@ -1,19 +1,25 @@
+const getSourceName = (filename) => filename.replace(/^.*pages(\\+|\/+)(.*)$/, '$2').replace(/\\/g, '/');
+const exit = process.env.NODE_ENV !== 'development';
+
 module.exports = () => {
 	const plugins = [
 		require('pineglade-w3c').getPosthtmlW3c({
-			exit: process.env.NODE_ENV !== 'development',
+			exit,
 			forceOffline: true,
-			getSourceName: (filename) => filename
-				.replace(/^.*pages(\\+|\/+)(.*)$/, '$2')
-				.replace(/\\/g, '/')
+			getSourceName
+		}),
+		require('pineglade-config').getPosthtmlBemLinter({
+			exit,
+			getSourceName
 		})
 	];
 
 	if (process.env.NODE_ENV === 'production') {
-		plugins.push(require('htmlnano')({
+		const minify = require('htmlnano')({
 			collapseWhitespace: 'aggressive',
 			minifySvg: false
-		}));
+		});
+		plugins.push(minify);
 	}
 
 	return { plugins };
