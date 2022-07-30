@@ -38,7 +38,7 @@
 		"node-fetch": "3.2.3",
 		"pineglade-config": "0.2.7",
 		"pineglade-pp": "1.1.4",
-		"pineglade-w3c": "1.0.2",
+		"pineglade-w3c": "1.0.3",
 		"postcss-bem-linter": "3.3.0",
 		"postcss-less": "6.0.0",
 		"postcss-reporter": "7.0.5",
