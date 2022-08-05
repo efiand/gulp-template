@@ -1,6 +1,6 @@
 {% from '../_common/macro.twig' import getSrcset %}
 
-<picture {{ cssMix ? 'class="' ~ cssMix ~ '"' }}>
+<picture {{ mixedClassName ? 'class="' ~ mixedClassName ~ '"' }}>
 	{% if webpset.length %}
 		<source type="image/webp" srcset="{{ getSrcset(webpset, 1) }}">
 	{% endif %}

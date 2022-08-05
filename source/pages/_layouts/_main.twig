@@ -12,12 +12,13 @@
 		<link href="{{ root }}styles/main.min.css" rel="stylesheet">
 		{# <link rel="preload" href="{{ root }}fonts/ptsans.woff2" as="font" crossorigin="anonymous"> #}
 	</head>
+
 	<body class="page">
-		{% include '../_components/_page-header.twig' with { cssMix: 'page__header' } %}
+		{% include '../_components/_page-header.twig' with { mixedClassName: 'page__header' } %}
 
 		{% block main %}{% endblock %}
 
-		{% include '../_components/_page-footer.twig' with { cssMix: 'page__footer' } %}
+		{% include '../_components/_page-footer.twig' with { mixedClassName: 'page__footer' } %}
 
 		{% if IS_DEV %}
 			<script src="{{ root }}scripts/dev.min.js"></script>
