@@ -85,6 +85,10 @@ export const buildLayouts = () => src(Entry.PAGES)
 		filters: [
 			{
 				func(str, args) {
+					if (!str) {
+						return '';
+					}
+
 					const [sign = '.'] = args || [];
 
 					if ((/(\.|\?|!|,|:|…)$/).test(str)) {
