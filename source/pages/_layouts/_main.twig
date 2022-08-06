@@ -10,7 +10,10 @@
 
 		<link rel="icon" href="{{ root }}favicon.ico">
 		<link href="{{ root }}styles/main.min.css" rel="stylesheet">
-		{# <link rel="preload" href="{{ root }}fonts/ptsans.woff2" as="font" crossorigin="anonymous"> #}
+
+		{% for font in fonts %}
+			<link rel="preload" href="{{ root }}fonts/{{ font }}" as="font" crossorigin="anonymous">
+		{% endfor %}
 	</head>
 
 	<body class="page">

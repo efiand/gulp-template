@@ -4,6 +4,7 @@ import cssnano from 'cssnano';
 import del from 'del';
 import eslint from 'gulp-eslint';
 import fetch from 'node-fetch';
+import fs from 'fs';
 import { getPageData } from './api/common/util.js';
 import gulp from 'gulp';
 import gulpData from 'gulp-data';
@@ -27,6 +28,7 @@ import stylelint from 'stylelint';
 import svgo from 'imagemin-svgo';
 import svgoConfig from './svgo.config.js';
 import twig from 'gulp-twig';
+import twigConfig from './twig.config.js';
 import vinylNamed from 'vinyl-named';
 import webp from 'gulp-webp';
 import webpack from 'webpack';
@@ -37,6 +39,7 @@ const IS_DEV = process.env.NODE_ENV === 'development';
 let store = {};
 
 const Entry = {
+	FONTS: './source/static/fonts',
 	ICONS: 'source/icons/**/*.svg',
 	IMAGES: 'source/images/**/*.{jpg,png,svg}',
 	PAGES: ['source/pages/**/*.twig', '!source/pages/**/_*.twig'],
@@ -62,111 +65,90 @@ if (!IS_DEV) {
 	Entry.SCRIPTS.push('!source/scripts/dev.js');
 }
 
+const postCssReporterConfig = { clearAllMessages: true, throwError: !IS_DEV };
+
 const { src, dest, watch, series, parallel } = gulp;
+const { readdir } = fs.promises;
+
 const checkLintspaces = () => lintspaces({ editorconfig: '.editorconfig' });
 const reportLintspaces = () => lintspaces.reporter({ breakOnWarning: !IS_DEV });
-const optimizeImages = () => imagemin([
-	svgo(svgoConfig),
-	mozjpeg({ progressive: true, quality: 75 }),
-	pngquant()
-]);
+const optimizeImages = () => imagemin([svgo(svgoConfig), mozjpeg({ progressive: true, quality: 75 }), pngquant()]);
+const getFonts = (filenames) => filenames.filter((filename) => (/\.woff2$/).test(filename));
 
-export const buildLayouts = () => src(Entry.PAGES)
-	.pipe(gulpData(async (file) => {
-		const page = file.path.replace(/^.*pages(\\+|\/+)(.*)\.twig$/, '$2')
-			.replace(/\\/g, '/');
+const getData = async (file) => {
+	const page = file.path.replace(/^.*pages(\\+|\/+)(.*)\.twig$/, '$2').replace(/\\/g, '/');
 
-		const data = await (IS_DEV ? fetch(`${API_URL}/${page}`).then((res) => res.json()) : getPageData(page));
+	const data = await (IS_DEV ? fetch(`${API_URL}/${page}`).then((res) => res.json()) : getPageData(page));
+	const fonts = await readdir(Entry.FONTS).then(getFonts);
 
-		store = { ...data, IS_DEV };
-		return store;
-	}))
-	.pipe(twig({
-		filters: [
-			{
-				func(str, args) {
-					if (!str) {
-						return '';
+	store = { ...data, IS_DEV, fonts };
+	return store;
+};
+
+export const buildLayouts = () =>
+	src(Entry.PAGES)
+		.pipe(gulpData(getData))
+		.pipe(twig(twigConfig))
+		.pipe(posthtml())
+		.pipe(gulpIf(process.env.NODE_ENV !== 'test', dest(Destination.ROOT)));
+
+export const buildStyles = () =>
+	src(Entry.STYLES)
+		.pipe(less())
+		.pipe(
+			postcss(
+				(() => {
+					const plugins = [mqpacker(), autoprefixer()];
+
+					if (!IS_DEV) {
+						plugins.push(cssnano({ preset: ['default', { cssDeclarationSorter: false }] }));
 					}
 
-					const [sign = '.'] = args || [];
+					return plugins;
+				})()
+			)
+		)
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(dest(Destination.STYLES));
 
-					if ((/(\.|\?|!|,|:|…)$/).test(str)) {
-						return str;
-					}
-					return `${str}${sign}`;
-				},
-				name: 'punctify'
-			}
-		],
-		functions: [
-			{
-				func(key) {
-					return store.Term[key];
-				},
-				name: 'Term'
-			}
-		]
-	}))
-	.pipe(posthtml())
-	.pipe(gulpIf(process.env.NODE_ENV !== 'test', dest(Destination.ROOT)));
+export const buildScripts = () =>
+	src(Entry.SCRIPTS).pipe(vinylNamed()).pipe(webpackStream(webpackConfig, webpack)).pipe(dest(Destination.SCRIPTS));
 
-export const buildStyles = () => src(Entry.STYLES)
-	.pipe(less())
-	.pipe(postcss((() => {
-		const plugins = [
-			mqpacker(),
-			autoprefixer()
-		];
+export const buildSprite = () =>
+	src(Entry.ICONS)
+		.pipe(gulpIf(!IS_DEV, optimizeImages()))
+		.pipe(stackSprite({ mode: { stack: true } }))
+		.pipe(rename('sprite.min.svg'))
+		.pipe(dest(Destination.IMAGES));
 
-		if (!IS_DEV) {
-			plugins.push(cssnano({ preset: ['default', { cssDeclarationSorter: false }] }));
-		}
+export const copyImages = () =>
+	src(Entry.IMAGES)
+		.pipe(gulpIf(!IS_DEV, optimizeImages()))
+		.pipe(dest(Destination.IMAGES))
+		.pipe(webp({ quality: 80 }))
+		.pipe(dest(Destination.IMAGES));
 
-		return plugins;
-	})()))
-	.pipe(rename({ suffix: '.min' }))
-	.pipe(dest(Destination.STYLES));
+export const copyStatic = () => src(Entry.STATIC).pipe(dest(Destination.ROOT));
 
-export const buildScripts = () => src(Entry.SCRIPTS)
-	.pipe(vinylNamed())
-	.pipe(webpackStream(webpackConfig, webpack))
-	.pipe(dest(Destination.SCRIPTS));
+export const lintLayouts = () => src([Watch.PAGES, Entry.ICONS]).pipe(checkLintspaces()).pipe(reportLintspaces());
 
-export const buildSprite = () => src(Entry.ICONS)
-	.pipe(gulpIf(!IS_DEV, optimizeImages()))
-	.pipe(stackSprite({ mode: { stack: true } }))
-	.pipe(rename('sprite.min.svg'))
-	.pipe(dest(Destination.IMAGES));
+export const lintStyles = () =>
+	src(Watch.STYLES)
+		.pipe(checkLintspaces())
+		.pipe(reportLintspaces())
+		.pipe(
+			postcss([stylelint(), postcssBemLinter(), postcssReporter(postCssReporterConfig)], {
+				syntax: lessSyntax
+			})
+		);
 
-export const copyImages = () => src(Entry.IMAGES)
-	.pipe(gulpIf(!IS_DEV, optimizeImages()))
-	.pipe(dest(Destination.IMAGES))
-	.pipe(webp({ quality: 80 }))
-	.pipe(dest(Destination.IMAGES));
-
-export const copyStatic = () => src(Entry.STATIC)
-	.pipe(dest(Destination.ROOT));
-
-export const lintLayouts = () => src([Watch.PAGES, Entry.ICONS])
-	.pipe(checkLintspaces())
-	.pipe(reportLintspaces());
-
-export const lintStyles = () => src(Watch.STYLES)
-	.pipe(checkLintspaces())
-	.pipe(reportLintspaces())
-	.pipe(postcss([
-		stylelint(),
-		postcssBemLinter(),
-		postcssReporter({ clearAllMessages: true, throwError: !IS_DEV })
-	], { syntax: lessSyntax }));
-
-export const lintScripts = () => src([...Watch.ENGINE, Watch.SCRIPTS])
-	.pipe(checkLintspaces())
-	.pipe(reportLintspaces())
-	.pipe(eslint({ fix: false }))
-	.pipe(eslint.format())
-	.pipe(gulpIf(!IS_DEV, eslint.failAfterError()));
+export const lintScripts = () =>
+	src([...Watch.ENGINE, Watch.SCRIPTS])
+		.pipe(checkLintspaces())
+		.pipe(reportLintspaces())
+		.pipe(eslint({ fix: false }))
+		.pipe(eslint.format())
+		.pipe(gulpIf(!IS_DEV, eslint.failAfterError()));
 
 export const cleanDestination = () => del(Destination.ROOT);
 
@@ -195,11 +177,12 @@ export const startServer = (done) => {
 	done();
 };
 
-export const startApi = (done) => nodemon({
-	ext: 'js json',
-	script: './api',
-	watch: ['api']
-}).on('start', done);
+export const startApi = (done) =>
+	nodemon({
+		ext: 'js json',
+		script: './api',
+		watch: ['api']
+	}).on('start', done);
 
 export const lint = parallel(lintLayouts, lintStyles, lintScripts);
 export const test = series(lint, buildLayouts);

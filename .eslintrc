@@ -8,6 +8,12 @@
 				"max-lines": "off",
 				"max-lines-per-function": "off"
 			}
+		},
+		{
+			"files": "gulpfile.js",
+			"rules": {
+				"newline-per-chained-call": "off"
+			}
 		}
 	]
 }
