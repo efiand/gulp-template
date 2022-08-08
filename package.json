@@ -36,7 +36,7 @@
 		"imagemin-pngquant": "9.0.2",
 		"imagemin-svgo": "10.0.1",
 		"node-fetch": "3.2.3",
-		"pineglade-config": "0.2.9",
+		"pineglade-config": "1.0.0",
 		"pineglade-pp": "1.1.4",
 		"pineglade-w3c": "1.0.3",
 		"postcss-bem-linter": "3.3.0",
