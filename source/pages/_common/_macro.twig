@@ -1,7 +1,0 @@
-{% macro getSrcset(srcset, start = 1) -%}
-	{% for item in srcset -%}
-		{% if loop.index >= start -%}
-			{{ item.url }} {{ item.density }}x{{ not loop.last ? ', ' }}
-		{%- endif %}
-	{%- endfor %}
-{%- endmacro %}
