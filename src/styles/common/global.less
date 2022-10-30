@@ -1,13 +1,65 @@
-body {
-	box-sizing: border-box;
+html {
 	min-width: 320px;
+	overflow-y: scroll; // чтобы содержимое не скакало влево-вправо при быстрой смене страниц
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	-webkit-tap-highlight-color: transparent;
+}
+
+body {
 	margin: 0;
-	font-family: 'Open Sans', sans-serif;
 }
 
 img {
 	max-width: 100%;
 	height: auto;
+}
+
+a {
+	text-decoration-skip-ink: none;
+	color: inherit;
+}
+
+button {
+	font-family: inherit;
+	cursor: pointer;
+	user-select: none;
+}
+
+input,
+select,
+textarea {
+	box-sizing: border-box;
+	font-family: inherit;
+	-webkit-text-fill-color: currentColor;
+	box-shadow: none;
+	appearance: none;
+
+	&:-webkit-autofill {
+		box-shadow: none;
+	}
+}
+
+input {
+	appearance: textfield;
+
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+		appearance: none;
+	}
+
+	&::-webkit-search-decoration,
+	&::-webkit-search-cancel-button,
+	&::-webkit-search-results-button,
+	&::-webkit-search-results-decoration {
+		display: none;
+	}
+}
+
+textarea {
+	overflow: auto;
+	resize: vertical;
 }
 
 :focus-visible {

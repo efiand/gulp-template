@@ -507,7 +507,8 @@
 			"lower",
 			{
 				"ignoreKeywords": [
-					"currentColor"
+					"currentColor",
+					"optimizeLegibility"
 				]
 			}
 		],
