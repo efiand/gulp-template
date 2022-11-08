@@ -79,13 +79,13 @@ const processLayouts = () =>
 				let pageData = {};
 
 				try {
-					commonData = await import(`./src/data/_common.js?${versionId}`);
+					commonData = await import(`./src/data/common.js?${versionId}`);
 				} catch (error) {
 					// Continue regardless of error
 				}
 
 				try {
-					pageData = await import(`./src/data/${page}.js?${versionId}`);
+					pageData = await import(`./src/data/pages/${page}.js?${versionId}`);
 				} catch (error) {
 					// Continue regardless of error
 				}
