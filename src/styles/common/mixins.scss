@@ -1,0 +1,117 @@
+@mixin visuallyHidden {
+	position: fixed;
+	transform: scale(0);
+}
+
+@mixin transition($props: "color, background-color") {
+	transition-property: #{$props};
+	transition-duration: 0.3s;
+	transition-timing-function: ease-in-out;
+}
+
+@mixin defaultInteractive($active: true) {
+	@include transition("opacity");
+
+	@include hoverFocus {
+		opacity: 0.6;
+	}
+
+	@if $active {
+		@include active {
+			opacity: 0.3;
+		}
+	}
+}
+
+@mixin button() {
+	@include defaultInteractive;
+
+	box-sizing: border-box;
+	text-decoration: none;
+	text-align: center;
+	border-radius: 0;
+	user-select: none;
+}
+
+@mixin mask($icon) {
+	mask: url("../images/icons.svg##{$icon}") no-repeat center / 100%;
+}
+
+@mixin hover {
+	@media (hover: hover) {
+		&:hover {
+			@content;
+		}
+	}
+}
+
+@mixin focus {
+	&:focus-visible {
+		@content;
+	}
+
+	@supports not selector(:focus-visible) {
+		&:focus {
+			@content;
+		}
+	}
+}
+
+@mixin hoverFocus {
+	@include hover {
+		@content;
+	}
+
+	@include focus {
+		@content;
+	}
+}
+
+@mixin active {
+	@media (hover: hover) {
+		&:active,
+		&:hover:active {
+			@content;
+		}
+	}
+}
+
+@mixin mask($icon) {
+	mask: url("../img/sprite.svg##{$icon}") no-repeat center / 100%;
+}
+
+@mixin retina {
+	@media (min-resolution: 2dppx) {
+		@content;
+	}
+}
+
+@mixin vpMobile {
+	@media (max-width: 767px) {
+		@content;
+	}
+}
+
+@mixin vpTablet {
+	@media (min-width: 768px) and (max-width: 1259px) {
+		@content;
+	}
+}
+
+@mixin vpMobileTablet {
+	@media (max-width: 1259px) {
+		@content;
+	}
+}
+
+@mixin vpTabletDesktop {
+	@media (min-width: 768px) {
+		@content;
+	}
+}
+
+@mixin vpDesktop {
+	@media (min-width: 1260px) {
+		@content;
+	}
+}

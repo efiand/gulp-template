@@ -1,0 +1,9 @@
+$colorPrimary: var(--colorPrimary);
+$colorBlack: var(--colorBlack);
+$colorWhite: var(--colorWhite);
+
+:root {
+	--colorBlack: #000000;
+	--colorWhite: #ffffff;
+	--colorPrimary: var(--colorBlack);
+}

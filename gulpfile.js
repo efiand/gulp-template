@@ -1,34 +1,35 @@
 import bundleScripts from 'gulp-esbuild';
 import createAutoprefixes from 'autoprefixer';
 import createHtml from 'gulp-twig';
-import createSprite from 'gulp-svg-sprite';
+import dartSass from 'sass';
 import { deleteAsync } from 'del';
 import eslint from 'gulp-eslint';
 import getData from 'gulp-data';
 import gulp from 'gulp';
-import lessSyntax from 'postcss-less';
+import gulpSass from 'gulp-sass';
 import lintspaces from 'gulp-lintspaces';
 import minifyCss from 'cssnano';
 import minifySvg from 'gulp-svgmin';
-import preprocessLess from 'gulp-less';
 import processHtml from 'gulp-posthtml';
 import processImages from 'gulp-libsquoosh';
 import processPostcss from 'gulp-postcss';
 import processStylelint from 'stylelint';
-import rename from 'gulp-rename';
 import reportStylelint from 'postcss-reporter';
+import scssSyntax from 'postcss-scss';
 import server from 'browser-sync';
 import sortMediaQueries from 'postcss-sort-media-queries';
+import { stacksvg } from 'gulp-stacksvg';
 import useCondition from 'gulp-if';
 import validateBem from 'gulp-html-bemlinter';
 
 const { dest, parallel, series, src, watch } = gulp;
 const devMode = process.env.NODE_ENV === 'development';
 const lintMode = Boolean(process.env.LINT);
+const preprocessScss = gulpSass(dartSass);
 
 const Path = {
 	DEST: 'build',
-	EDITORCONFIG: ['src/**/*.{js,less,md,twig,svg}', '*.{js,json,md}'],
+	EDITORCONFIG: ['src/**/*.{js,md,twig,scss,svg}', '*.{js,json,md}'],
 	ICONS: 'src/icons/**/*.svg',
 	Images: {
 		DEST: 'build/images',
@@ -47,9 +48,9 @@ const Path = {
 		ENTRIES: ['src/scripts/*.js']
 	},
 	Styles: {
-		ALL: 'src/styles/**/*.less',
+		ALL: 'src/styles/**/*.scss',
 		DEST: 'build/styles',
-		ENTRIES: 'src/styles/*.less'
+		ENTRIES: 'src/styles/*.scss'
 	}
 };
 const postcssPlugins = [sortMediaQueries(), createAutoprefixes()];
@@ -71,9 +72,7 @@ const processLayouts = () =>
 	src(Path.Layouts.ENTRIES)
 		.pipe(
 			getData(async ({ path }) => {
-				const page = path
-					.replace(/^.*pages(\\+|\/+)(.*)\.twig$/, '$2')
-					.replace(/\\/g, '/');
+				const page = path.replace(/^.*pages(\\+|\/+)(.*)\.twig$/, '$2').replace(/\\/g, '/');
 				const versionId = new Date();
 				let commonData = {};
 				let pageData = {};
@@ -108,7 +107,7 @@ const processLayouts = () =>
 
 const buildStyles = () =>
 	src(Path.Styles.ENTRIES)
-		.pipe(preprocessLess())
+		.pipe(preprocessScss().on('error', preprocessScss.logError))
 		.pipe(processPostcss(postcssPlugins))
 		.pipe(dest(Path.Styles.DEST));
 
@@ -132,8 +131,7 @@ const buildSvg = () => src(Path.Images.VECTORS).pipe(dest(Path.Images.DEST));
 const buildSprite = () =>
 	src(Path.ICONS)
 		.pipe(useCondition(!devMode, minifySvg()))
-		.pipe(createSprite({ mode: { stack: true } }))
-		.pipe(rename('sprite.svg'))
+		.pipe(stacksvg({ output: 'icons' }))
 		.pipe(dest(Path.Images.DEST));
 
 const copyStatic = () => src(Path.STATIC).pipe(dest(Path.DEST));
@@ -155,7 +153,7 @@ const lintStyles = () =>
 					throwError: !devMode
 				})
 			],
-			{ syntax: lessSyntax }
+			{ syntax: scssSyntax }
 		)
 	);
 
@@ -185,33 +183,11 @@ const startWatch = () => {
 	watch(Path.Images.RASTERS, series(buildWebp, reloadServer));
 	watch(Path.Images.VECTORS, series(buildSvg, reloadServer));
 	watch(Path.Layouts.ALL, series(processLayouts, reloadServer));
-	watch(
-		Path.Scripts.ALL,
-		parallel(series(buildScripts, reloadServer), lintScripts)
-	);
+	watch(Path.Scripts.ALL, parallel(series(buildScripts, reloadServer), lintScripts));
 	watch(Path.STATIC, series(copyStatic, reloadServer));
-	watch(
-		Path.Styles.ALL,
-		parallel(series(buildStyles, reloadServer), lintStyles)
-	);
+	watch(Path.Styles.ALL, parallel(series(buildStyles, reloadServer), lintStyles));
 };
 
-export const lint = parallel(
-	lintEditorconfig,
-	lintScripts,
-	lintStyles,
-	processLayouts
-);
-export const build = series(
-	cleanDist,
-	lint,
-	parallel(
-		buildScripts,
-		buildSprite,
-		buildStyles,
-		buildSvg,
-		buildWebp,
-		copyStatic
-	)
-);
+export const lint = parallel(lintEditorconfig, lintScripts, lintStyles, processLayouts);
+export const build = series(cleanDist, lint, parallel(buildScripts, buildSprite, buildStyles, buildSvg, buildWebp, copyStatic));
 export default series(build, startWatch);

@@ -7,9 +7,7 @@ const plugins = [
 		exit: !devMode,
 		forceOffline: true,
 		getSourceName(filename) {
-			return filename
-				.replace(/^.*pages(\\+|\/+)(.*)\.twig$/, '$2')
-				.replace(/\\/g, '/');
+			return filename.replace(/^.*pages(\\+|\/+)(.*)\.twig$/, '$2').replace(/\\/g, '/');
 		}
 	})
 ];

@@ -1,0 +1,15 @@
+.container {
+	width: 100%;
+	max-width: 1196px;
+	margin-right: auto;
+	margin-left: auto;
+	padding: 0 16px;
+
+	@include vpTabletDesktop {
+		padding: 0 32px;
+	}
+}
+
+.visuallyHidden {
+	@include visuallyHidden;
+}

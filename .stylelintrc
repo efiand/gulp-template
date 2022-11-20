@@ -30,10 +30,14 @@
 			true,
 			{
 				"ignoreAtRules": [
-					"mixin",
+					"add-mixin",
 					"define-mixin",
-					"mixin-content",
-					"add-mixin"
+					"else",
+					"for",
+					"include",
+					"if",
+					"mixin",
+					"mixin-content"
 				]
 			}
 		],
@@ -492,7 +496,7 @@
 		"selector-type-no-unknown": true,
 		"shorthand-property-no-redundant-values": true,
 		"string-no-newline": true,
-		"string-quotes": "single",
+		"string-quotes": "double",
 		"time-min-milliseconds": 100,
 		"unicode-bom": "never",
 		"unit-disallowed-list": [
