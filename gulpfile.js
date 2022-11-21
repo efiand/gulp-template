@@ -126,7 +126,7 @@ const buildWebp = () =>
 		.pipe(processImages({ webp: { quality: 75 } }))
 		.pipe(dest(Path.Images.DEST));
 
-const buildSvg = () => src(Path.Images.VECTORS).pipe(dest(Path.Images.DEST));
+const buildSvg = () => src(Path.Images.VECTORS).pipe(useCondition(!devMode, minifySvg())).pipe(dest(Path.Images.DEST));
 
 const buildSprite = () =>
 	src(Path.ICONS)
