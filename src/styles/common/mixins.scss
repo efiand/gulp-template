@@ -24,13 +24,14 @@
 }
 
 @mixin button() {
-	@include defaultInteractive;
-
 	box-sizing: border-box;
 	text-decoration: none;
+	overflow-wrap: anywhere;
 	text-align: center;
 	border-radius: 0;
 	user-select: none;
+
+	@include defaultInteractive;
 }
 
 @mixin mask($icon) {
