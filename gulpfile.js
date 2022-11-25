@@ -20,7 +20,6 @@ import server from 'browser-sync';
 import sortMediaQueries from 'postcss-sort-media-queries';
 import { stacksvg } from 'gulp-stacksvg';
 import useCondition from 'gulp-if';
-import validateBem from 'gulp-html-bemlinter';
 
 const { dest, parallel, series, src, watch } = gulp;
 const devMode = process.env.NODE_ENV === 'development';
@@ -100,7 +99,6 @@ const processLayouts = () =>
 		)
 		.pipe(createHtml())
 		.pipe(processHtml())
-		.pipe(validateBem())
 		.pipe(useCondition(!lintMode, dest(Path.DEST)));
 
 // Задачи сборки

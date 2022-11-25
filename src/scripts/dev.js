@@ -1,14 +1,14 @@
 import { Breakpoint } from './common/constants.js';
 import { checkModPressed } from './common/utils.js';
-import loadPP from 'pineglade-pp';
+import loadPixelperfect from '@efiand/pixelperfect';
 
-window.pinegladePP = {
+window.pixelperfect = {
 	breakpoints: [Breakpoint.MOBILE, Breakpoint.DESKTOP],
 	ext: 'webp',
 	folder: 'images'
 };
 
-loadPP();
+loadPixelperfect();
 
 // Делаем редактируемым контент по нажатию E
 document.addEventListener('keydown', (evt) => {
