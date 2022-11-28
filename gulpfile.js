@@ -42,7 +42,7 @@ const Path = {
 	MARKDOWN: ['*.md', 'src/**/*.md'],
 	STATIC: 'src/static/**',
 	Scripts: {
-		ALL: ['src/scripts/**/*.{js,svelte}', '*.js'],
+		ALL: ['src/{data,scripts}/**/*.{js,svelte}', '*.js'],
 		DEST: 'build/scripts',
 		ENTRIES: ['src/scripts/*.js']
 	},
