@@ -1,0 +1,44 @@
+<picture class="Picture {{ bemMix }}">
+	{% if webpMobile %}
+		<source
+			type="image/webp"
+			media="(max-width: {{ (webpTablet ? Breakpoint.DESKTOP : Breakpoint.TABLET) - 1}}px)"
+			srcset="{{ webpMobile }}{{ webpMobile2x ? ' 1x, ' ~ webpMobile2x ~ ' 2x' }}"
+		/>
+	{% endif %}
+	{% if webpTablet %}
+		<source
+			type="image/webp"
+			media="(max-width: {{ Breakpoint.DESKTOP - 1}}px)"
+			srcset="{{ webpTablet }}{{ webpTablet2x ? ' 1x, ' ~ webpTablet2x ~ ' 2x' }}"
+		/>
+	{% endif %}
+	{% if webp %}
+		<source
+			type="image/webp"
+			{{ webpTablet or webpMobile ? 'media="(min-width: ' ~ (webpTablet ? Breakpoint.DESKTOP : Breakpoint.TABLET) ~ 'px)"' }}
+			srcset="{{ webp }}{{ webp2x ? ' 1x, ' ~ webp2x ~ ' 2x' }}"
+		/>
+	{% endif %}
+	{% if mobile %}
+		<source
+			media="(max-width: {{ Breakpoint.TABLET - 1}}px)"
+			srcset="{{ mobile }}{{ mobile2x ? ' 1x, ' ~ mobile2x ~ ' 2x' }}"
+		/>
+	{% endif %}
+	{% if tablet %}
+		<source
+			media="(max-width: {{ Breakpoint.DESKTOP - 1}}px)"
+			srcset="{{ tablet }}{{ tablet2x ? ' 1x, ' ~ tablet2x ~ ' 2x' }}"
+		/>
+	{% endif %}
+
+	<img
+		class="Picture__image"
+		src="{{ default }}"
+		{{ default2x ? 'srcset="' ~ default2x ~ ' 2x"' }}
+		alt="{{ alt|punctify }}"
+		{{ not alt ? 'aria-hidden="true"' }}
+		{{ not immediately ? 'loading="lazy"' }}
+	/>
+</picture>
