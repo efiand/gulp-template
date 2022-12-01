@@ -77,10 +77,6 @@
 	}
 }
 
-@mixin mask($icon) {
-	mask: url("../img/sprite.svg##{$icon}") no-repeat center / 100%;
-}
-
 @mixin retina {
 	@media (min-resolution: 2dppx) {
 		@content;
