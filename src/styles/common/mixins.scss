@@ -34,6 +34,21 @@
 	@include defaultInteractive;
 }
 
+@mixin container() {
+	padding-right: 1rem;
+	padding-left: 1rem;
+
+	@include vpTabletDesktop {
+		padding-right: 2rem;
+		padding-left: 2rem;
+	}
+
+	@include vpDesktop {
+		padding-right: $paddingFluid;
+		padding-left: $paddingFluid;
+	}
+}
+
 @mixin mask($icon) {
 	mask: url("../images/icons.svg##{$icon}") no-repeat center / 100%;
 }

@@ -5,6 +5,8 @@ $colorWhite: var(--colorWhite);
 $breakpointTablet: getBreakpoint("TABLET") * 1px;
 $breakpointDesktop: getBreakpoint("DESKTOP") * 1px;
 
+$paddingFluid: calc(50% - 598px);
+
 :root {
 	--colorBlack: #000000;
 	--colorWhite: #ffffff;
