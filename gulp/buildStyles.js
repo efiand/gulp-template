@@ -1,4 +1,5 @@
 import { Path, devMode } from './constants.js';
+import { Breakpoint } from '../src/scripts/common/constants.js';
 import createAutoprefixes from 'autoprefixer';
 import dartSass from 'sass';
 import gulp from 'gulp';
@@ -23,7 +24,18 @@ const preprocessScss = gulpSass(dartSass);
 const buildStyles = () =>
 	gulp
 		.src(Path.Styles.ENTRIES)
-		.pipe(preprocessScss().on('error', preprocessScss.logError))
+		.pipe(
+			preprocessScss({
+				functions: {
+					'getBreakpoint($breakpoint)'(breakpoint) {
+						return new dartSass.types.Number(Breakpoint[breakpoint.getValue()]);
+					},
+					'isDev()'() {
+						return new dartSass.types.Boolean(devMode);
+					}
+				}
+			}).on('error', preprocessScss.logError)
+		)
 		.pipe(processPostcss(postcssPlugins))
 		.pipe(gulp.dest(Path.Styles.DEST));
 

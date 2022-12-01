@@ -2,6 +2,9 @@ $colorPrimary: var(--colorPrimary);
 $colorBlack: var(--colorBlack);
 $colorWhite: var(--colorWhite);
 
+$breakpointTablet: getBreakpoint("TABLET") * 1px;
+$breakpointDesktop: getBreakpoint("DESKTOP") * 1px;
+
 :root {
 	--colorBlack: #000000;
 	--colorWhite: #ffffff;

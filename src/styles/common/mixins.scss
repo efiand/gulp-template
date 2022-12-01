@@ -84,31 +84,31 @@
 }
 
 @mixin vpMobile {
-	@media (max-width: 767px) {
+	@media (max-width: ($breakpointTablet - 1px)) {
 		@content;
 	}
 }
 
 @mixin vpTablet {
-	@media (min-width: 768px) and (max-width: 1259px) {
+	@media (min-width: $breakpointTablet) and (max-width: ($breakpointDesktop - 1px)) {
 		@content;
 	}
 }
 
 @mixin vpMobileTablet {
-	@media (max-width: 1259px) {
+	@media (max-width: ($breakpointDesktop - 1px)) {
 		@content;
 	}
 }
 
 @mixin vpTabletDesktop {
-	@media (min-width: 768px) {
+	@media (min-width: $breakpointTablet) {
 		@content;
 	}
 }
 
 @mixin vpDesktop {
-	@media (min-width: 1260px) {
+	@media (min-width: $breakpointDesktop) {
 		@content;
 	}
 }
