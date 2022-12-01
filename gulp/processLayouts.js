@@ -3,6 +3,7 @@ import createHtml from 'gulp-twig';
 import getData from 'gulp-data';
 import gulp from 'gulp';
 import processHtml from 'gulp-posthtml';
+import { punctify } from '../src/scripts/common/utils.js';
 import useCondition from 'gulp-if';
 
 const lintMode = Boolean(process.env.LINT);
@@ -10,14 +11,7 @@ const lintMode = Boolean(process.env.LINT);
 const twigConfig = {
 	filters: [
 		{
-			func(str, args) {
-				const [sign = '.'] = args || [];
-
-				if (/(\.|\?|!|,|:|…)$/.test(str)) {
-					return str;
-				}
-				return `${str}${sign}`;
-			},
+			func: punctify,
 			name: 'punctify'
 		}
 	]
