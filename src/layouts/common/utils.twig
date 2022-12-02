@@ -1,10 +1,10 @@
 {% macro setBg(imageset, color = null) -%}
 	style="
 		{%- for key, value in imageset -%}
-			--bg-{{ key }}: url('../{{ value }}');
+			--bg{{ key|capitalizeFirst }}: url('../{{ value }}');
 		{%- endfor -%}
 		{%- if color -%}
-			--bg-color: {{ color }};
+			--bgColor: {{ color }};
 		{%- endif -%}
 	"
 {%- endmacro %}

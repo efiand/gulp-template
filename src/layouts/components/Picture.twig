@@ -13,11 +13,11 @@
 			srcset="{{ webpTablet }}{{ webpTablet2x ? ' 1x, ' ~ webpTablet2x ~ ' 2x' }}"
 		/>
 	{% endif %}
-	{% if webp %}
+	{% if webpDesktop %}
 		<source
 			type="image/webp"
 			{{ webpTablet or webpMobile ? 'media="(min-width: ' ~ (webpTablet ? Breakpoint.DESKTOP : Breakpoint.TABLET) ~ 'px)"' }}
-			srcset="{{ webp }}{{ webp2x ? ' 1x, ' ~ webp2x ~ ' 2x' }}"
+			srcset="{{ webpDesktop }}{{ webpDesktop2x ? ' 1x, ' ~ webpDesktop2x ~ ' 2x' }}"
 		/>
 	{% endif %}
 	{% if mobile %}
@@ -35,8 +35,8 @@
 
 	<img
 		class="Picture__image"
-		src="{{ default }}"
-		{{ default2x ? 'srcset="' ~ default2x ~ ' 2x"' }}
+		src="{{ desktop }}"
+		{{ desktop2x ? 'srcset="' ~ desktop2x ~ ' 2x"' }}
 		alt="{{ alt|punctify }}"
 		{{ not alt ? 'aria-hidden="true"' }}
 		{{ not immediately ? 'loading="lazy"' }}

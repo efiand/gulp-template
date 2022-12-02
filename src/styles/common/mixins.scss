@@ -92,9 +92,49 @@
 	}
 }
 
+@mixin webpBackground($webp, $fallback) {
+	@supports (background-image: $webp) {
+		background-image: $webp;
+	}
+
+	@supports not (background-image: $webp) {
+		background-image: $fallback;
+	}
+}
+
+@mixin customBackground() {
+	@include vpMobile {
+		@include webpBackground(var(--bgWebpMobile), var(--bgMobile));
+	}
+
+	@include vpTablet {
+		@include webpBackground(var(--bgWebpTablet), var(--bgTablet));
+	}
+
+	@include vpDesktop {
+		@include webpBackground(var(--bgWebpDesktop), var(--bgDesktop));
+	}
+
+	@include retina {
+		@include vpMobile {
+			@include webpBackground(var(--bgWebpMobile2x), var(--bgMobile2x));
+		}
+
+		@include vpTablet {
+			@include webpBackground(var(--bgWebpTablet2x), var(--bgTablet2x));
+		}
+
+		@include vpDesktop {
+			@include webpBackground(var(--bgWebpDesktop2x), var(--bgDesktop2x));
+		}
+	}
+}
+
 @mixin retina {
 	@media (min-resolution: 2dppx) {
-		@content;
+		html & {
+			@content;
+		}
 	}
 }
 
