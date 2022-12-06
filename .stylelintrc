@@ -19,6 +19,7 @@
 					"first-nested"
 				],
 				"ignoreAtRules": [
+					"else",
 					"import"
 				]
 			}

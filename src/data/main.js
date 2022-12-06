@@ -4,6 +4,6 @@ import { getImages } from './common/utils.js';
 export default () => ({
 	Breakpoint,
 	description: 'Описание сайта',
-	logo: getImages({ additions: { alt: 'Логотип компании.' }, file: 'logo.svg' }),
+	logo: getImages('logo.svg', { alt: 'Логотип компании' }),
 	project: 'Site'
 });

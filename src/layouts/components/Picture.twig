@@ -1,44 +1,45 @@
 <picture class="Picture {{ bemMix }}">
-	{% if webpMobile %}
+	{% if webpDesktop %}
 		<source
 			type="image/webp"
-			media="(max-width: {{ (webpTablet ? Breakpoint.DESKTOP : Breakpoint.TABLET) - 1}}px)"
-			srcset="{{ webpMobile }}{{ webpMobile2x ? ' 1x, ' ~ webpMobile2x ~ ' 2x' }}"
+			media="(min-width: {{ Breakpoint.DESKTOP }}px)"
+			srcset="{{ webpDesktop }}{{ webpDesktop2x ? ' 1x, ' ~ webpDesktop2x ~ ' 2x' }}"
 		/>
 	{% endif %}
 	{% if webpTablet %}
 		<source
 			type="image/webp"
-			media="(max-width: {{ Breakpoint.DESKTOP - 1}}px)"
+			media="(min-width: {{ webpDesktop ? Breakpoint.TABLET : Breakpoint.DESKTOP }}px)"
 			srcset="{{ webpTablet }}{{ webpTablet2x ? ' 1x, ' ~ webpTablet2x ~ ' 2x' }}"
 		/>
 	{% endif %}
-	{% if webpDesktop %}
+	{% if webpMobile %}
 		<source
 			type="image/webp"
-			{{ webpTablet or webpMobile ? 'media="(min-width: ' ~ (webpTablet ? Breakpoint.DESKTOP : Breakpoint.TABLET) ~ 'px)"' }}
-			srcset="{{ webpDesktop }}{{ webpDesktop2x ? ' 1x, ' ~ webpDesktop2x ~ ' 2x' }}"
+			srcset="{{ webpMobile }}{{ webpMobile2x ? ' 1x, ' ~ webpMobile2x ~ ' 2x' }}"
 		/>
 	{% endif %}
-	{% if mobile %}
+
+	{% if desktop %}
 		<source
-			media="(max-width: {{ Breakpoint.TABLET - 1}}px)"
-			srcset="{{ mobile }}{{ mobile2x ? ' 1x, ' ~ mobile2x ~ ' 2x' }}"
+			media="(min-width: {{ Breakpoint.DESKTOP }}px)"
+			srcset="{{ desktop }}{{ desktop2x ? ' 1x, ' ~ desktop2x ~ ' 2x' }}"
 		/>
 	{% endif %}
 	{% if tablet %}
 		<source
-			media="(max-width: {{ Breakpoint.DESKTOP - 1}}px)"
+			media="(min-width: {{ desktop ? Breakpoint.TABLET : Breakpoint.DESKTOP }}px)"
 			srcset="{{ tablet }}{{ tablet2x ? ' 1x, ' ~ tablet2x ~ ' 2x' }}"
 		/>
 	{% endif %}
 
 	<img
 		class="Picture__image"
-		src="{{ desktop }}"
-		{{ desktop2x ? 'srcset="' ~ desktop2x ~ ' 2x"' }}
-		alt="{{ alt|punctify }}"
-		{{ not alt ? 'aria-hidden="true"' }}
+		src="{{ mobile }}"
+		{{ mobile2x ? 'srcset="' ~ mobile2x ~ ' 2x"' }}
+		{{ width ? 'width="' ~ width ~ '"' }}
+		{{ height ? 'height="' ~ height ~ '"' }}
+		{{ alt ? 'alt="' ~ alt|punctify ~ '"' : 'aria-hidden="true"' }}
 		{{ not immediately ? 'loading="lazy"' }}
 	/>
 </picture>

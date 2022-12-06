@@ -35,12 +35,12 @@
 }
 
 @mixin container() {
-	padding-right: 1rem;
-	padding-left: 1rem;
+	padding-right: 30px;
+	padding-left: 30px;
 
 	@include vpTabletDesktop {
-		padding-right: 2rem;
-		padding-left: 2rem;
+		padding-right: 50px;
+		padding-left: 50px;
 	}
 
 	@include vpDesktop {
@@ -102,30 +102,38 @@
 	}
 }
 
-@mixin customBackground() {
-	@include vpMobile {
-		@include webpBackground(var(--bgWebpMobile), var(--bgMobile));
-	}
-
-	@include vpTablet {
-		@include webpBackground(var(--bgWebpTablet), var(--bgTablet));
-	}
-
-	@include vpDesktop {
-		@include webpBackground(var(--bgWebpDesktop), var(--bgDesktop));
-	}
-
-	@include retina {
+@mixin customBackground($adaptive: true) {
+	@if $adaptive {
 		@include vpMobile {
-			@include webpBackground(var(--bgWebpMobile2x), var(--bgMobile2x));
+			@include webpBackground(var(--bgWebpMobile), var(--bgMobile));
 		}
 
 		@include vpTablet {
-			@include webpBackground(var(--bgWebpTablet2x), var(--bgTablet2x));
+			@include webpBackground(var(--bgWebpTablet), var(--bgTablet));
 		}
 
 		@include vpDesktop {
-			@include webpBackground(var(--bgWebpDesktop2x), var(--bgDesktop2x));
+			@include webpBackground(var(--bgWebpDesktop), var(--bgDesktop));
+		}
+	} @else {
+		@include webpBackground(var(--bgWebpMobile), var(--bgMobile));
+	}
+
+	@include retina {
+		@if $adaptive {
+			@include vpMobile {
+				@include webpBackground(var(--bgWebpMobile2x), var(--bgMobile2x));
+			}
+
+			@include vpTablet {
+				@include webpBackground(var(--bgWebpTablet2x), var(--bgTablet2x));
+			}
+
+			@include vpDesktop {
+				@include webpBackground(var(--bgWebpDesktop2x), var(--bgDesktop2x));
+			}
+		} @else {
+			@include webpBackground(var(--bgWebpMobile2x), var(--bgMobile2x));
 		}
 	}
 }
