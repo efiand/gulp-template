@@ -1,5 +1,5 @@
 import { Path, devMode } from './constants.js';
-import { Breakpoint } from '../src/scripts/common/constants.js';
+import { Breakpoint } from '../src/scripts/constants.js';
 import createAutoprefixes from 'autoprefixer';
 import dartSass from 'sass';
 import gulp from 'gulp';
@@ -30,8 +30,8 @@ const buildStyles = () =>
 					'getBreakpoint($breakpoint)'(breakpoint) {
 						return new dartSass.types.Number(Breakpoint[breakpoint.getValue()]);
 					},
-					'isDev()'() {
-						return new dartSass.types.Boolean(devMode);
+					'devMode()'() {
+						return dartSass.types.Boolean[devMode ? 'TRUE' : 'FALSE'];
 					}
 				}
 			}).on('error', preprocessScss.logError)

@@ -1,0 +1,19 @@
+{% extends '../../layouts/theme.twig' %}
+
+{% block page %}
+	<div class="Page">
+		{% include component('PageHeader') %}
+
+		<main>
+			{% if pageHeading %}
+				{% include component('MainHeader') with pageHeading %}
+			{% endif %}
+
+			{% block main %}{% endblock %}
+
+			{{ rendered.Form }}
+		</main>
+
+		{% include component('PageFooter') %}
+	</div>
+{% endblock %}

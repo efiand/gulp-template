@@ -1,16 +1,27 @@
 import { Path, devMode } from './constants.js';
 import bundleScripts from 'gulp-esbuild';
 import gulp from 'gulp';
+import processSvelte from 'esbuild-svelte';
 
-const buildScripts = () =>
+const bundle = (ENTRIES, DEST, ssr) =>
 	gulp
-		.src(Path.Scripts.ENTRIES)
+		.src(ENTRIES)
 		.pipe(
 			bundleScripts({
 				bundle: true,
-				minify: !devMode
+				format: ssr ? 'esm' : 'iife',
+				minify: !ssr && !devMode,
+				plugins: [
+					processSvelte({
+						compilerOptions: {
+							hydratable: !ssr,
+							generate: ssr ? 'ssr' : 'dom'
+						}
+					})
+				]
 			})
 		)
-		.pipe(gulp.dest(Path.Scripts.DEST));
+		.pipe(gulp.dest(DEST));
 
-export default buildScripts;
+export const buildScripts = () => bundle(Path.Scripts.ENTRIES, Path.Scripts.DEST, false);
+export const buildSvelteSsr = () => bundle(Path.Scripts.SSR_ENTRIES, Path.Scripts.SSR_DEST, true);

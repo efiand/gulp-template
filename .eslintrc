@@ -19,6 +19,12 @@
 			}
 		},
 		{
+			"files": "src/data/**/*.js",
+			"rules": {
+				"max-lines-per-function": "off"
+			}
+		},
+		{
 			"files": "*.svelte",
 			"processor": "svelte3/svelte3",
 			"rules": {

@@ -1,0 +1,215 @@
+@mixin visuallyHidden {
+	position: fixed;
+	transform: scale(0);
+}
+
+@mixin transition($props: "color, background-color") {
+	transition-property: #{$props};
+	transition-duration: 0.3s;
+	transition-timing-function: ease-in-out;
+}
+
+@mixin defaultInteractive($active: true) {
+	@include transition("opacity");
+
+	@include hoverFocus {
+		opacity: 0.6;
+	}
+
+	@if $active {
+		@include active {
+			opacity: 0.3;
+		}
+	}
+}
+
+@mixin custom-scrollbar($colorThumb: currentColor, $colorTrack: transparent, $scrollbarWidth: 8px) {
+	scrollbar-color: $colorThumb $colorTrack;
+	scrollbar-width: thin;
+
+	&::-webkit-scrollbar {
+		width: $scrollbarWidth;
+		height: $scrollbarWidth;
+		background-color: $colorTrack;
+	}
+
+	&::-webkit-scrollbar-track {
+		background-color: $colorTrack;
+		border: 3px solid $colorThumb;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: $colorThumb;
+		border: none;
+		border-radius: 2px;
+	}
+}
+
+@mixin viewport {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	overflow-x: hidden;
+	overflow-y: scroll; // Предотвращение скачков вправо-влево при переполнении
+
+	@include custom-scrollbar;
+}
+
+@mixin button() {
+	box-sizing: border-box;
+	text-decoration: none;
+	overflow-wrap: anywhere;
+	text-align: center;
+	border-radius: 0;
+	user-select: none;
+
+	@include defaultInteractive;
+}
+
+@mixin container() {
+	padding-right: 30px;
+	padding-left: 30px;
+
+	@include vpTabletDesktop {
+		padding-right: 50px;
+		padding-left: 50px;
+	}
+
+	@include vpDesktop {
+		padding-right: $paddingFluid;
+		padding-left: $paddingFluid;
+	}
+}
+
+@mixin mask($icon) {
+	mask: url("../images/icons.svg##{$icon}") no-repeat center / 100%;
+}
+
+@mixin hover {
+	@media (hover: hover) {
+		&:hover {
+			@content;
+		}
+	}
+}
+
+@mixin focus {
+	&:focus-visible {
+		@content;
+	}
+
+	@supports not selector(:focus-visible) {
+		&:focus {
+			@content;
+		}
+	}
+}
+
+@mixin hoverFocus {
+	@include hover {
+		@content;
+	}
+
+	@include focus {
+		@content;
+	}
+}
+
+@mixin active {
+	@media (hover: hover) {
+		&:active,
+		&:hover:active {
+			@content;
+		}
+	}
+}
+
+@mixin webpBackground($webp, $fallback) {
+	@if devMode() {
+		background-image: $fallback;
+	} @else {
+		@supports (background-image: $webp) {
+			background-image: $webp;
+		}
+
+		@supports not (background-image: $webp) {
+			background-image: $fallback;
+		}
+	}
+}
+
+@mixin customBackground($adaptive: true) {
+	@if $adaptive {
+		@include vpMobile {
+			@include webpBackground(var(--bgWebpMobile), var(--bgMobile));
+		}
+
+		@include vpTablet {
+			@include webpBackground(var(--bgWebpTablet), var(--bgTablet));
+		}
+
+		@include vpDesktop {
+			@include webpBackground(var(--bgWebpDesktop), var(--bgDesktop));
+		}
+	} @else {
+		@include webpBackground(var(--bgWebpMobile), var(--bgMobile));
+	}
+
+	@include retina {
+		@if $adaptive {
+			@include vpMobile {
+				@include webpBackground(var(--bgWebpMobile2x), var(--bgMobile2x));
+			}
+
+			@include vpTablet {
+				@include webpBackground(var(--bgWebpTablet2x), var(--bgTablet2x));
+			}
+
+			@include vpDesktop {
+				@include webpBackground(var(--bgWebpDesktop2x), var(--bgDesktop2x));
+			}
+		} @else {
+			@include webpBackground(var(--bgWebpMobile2x), var(--bgMobile2x));
+		}
+	}
+}
+
+@mixin retina {
+	@media (min-resolution: 2dppx) {
+		html & {
+			@content;
+		}
+	}
+}
+
+@mixin vpMobile {
+	@media (max-width: ($breakpointTablet - 1px)) {
+		@content;
+	}
+}
+
+@mixin vpTablet {
+	@media (min-width: $breakpointTablet) and (max-width: ($breakpointDesktop - 1px)) {
+		@content;
+	}
+}
+
+@mixin vpMobileTablet {
+	@media (max-width: ($breakpointDesktop - 1px)) {
+		@content;
+	}
+}
+
+@mixin vpTabletDesktop {
+	@media (min-width: $breakpointTablet) {
+		@content;
+	}
+}
+
+@mixin vpDesktop {
+	@media (min-width: $breakpointDesktop) {
+		@content;
+	}
+}

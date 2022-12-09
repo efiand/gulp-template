@@ -1,4 +1,8 @@
 .DS_Store
+.temp/**/*.jpg
+.temp/**/*.js
+.temp/**/*.png
+.temp/**/*.svg
 Thumbs.db
 build
 node_modules

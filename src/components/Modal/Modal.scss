@@ -1,0 +1,12 @@
+.Modal {
+	display: flex;
+	padding: 3rem;
+	background-color: rgba(0, 0, 0, 0.5);
+
+	@include viewport;
+}
+
+.Modal__content {
+	margin: auto;
+	background-color: $colorWhite;
+}

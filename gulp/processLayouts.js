@@ -3,7 +3,7 @@ import createHtml from 'gulp-twig';
 import getData from 'gulp-data';
 import gulp from 'gulp';
 import processHtml from 'gulp-posthtml';
-import { capitalizeFirst, punctify } from '../src/scripts/common/utils.js';
+import { capitalizeFirst, punctify } from '../src/scripts/utils.js';
 import useCondition from 'gulp-if';
 
 const lintMode = Boolean(process.env.LINT);
@@ -17,6 +17,17 @@ const twigConfig = {
 		{
 			func: punctify,
 			name: 'punctify'
+		}
+	],
+	functions: [
+		{
+			name: 'component',
+			func(name) {
+				const relative = name.slice(0, 1) === '~' ? '../components/' : '';
+				const Component = name.replace(/^~/, '');
+
+				return `../${relative}${Component}/${Component}.twig`;
+			}
 		}
 	]
 };
@@ -32,8 +43,17 @@ const enrichData = async (data, fileName) => {
 	}
 };
 
+const renderWidget = async (widget, data = {}, { version }) => {
+	if (data.spaOnly) {
+		return `<div data-widget="${widget}"></div>`;
+	}
+
+	const Widget = (await import(`../.temp/svelte-ssr/${widget}.js${version}`)).default;
+	return Widget.render({ data }).html;
+};
+
 const createData = async ({ path }) => {
-	const page = path.replace(/\\/g, '/').replace(/^.*pages\/(.*)\.twig$/, '$1');
+	const page = path.replace(/\\/g, '/').replace(/^.*entries\/(.*)\.twig$/, '$1');
 	const versionId = new Date().getTime();
 	const rootPath = page
 		.split('/')
@@ -41,15 +61,31 @@ const createData = async ({ path }) => {
 		.join('../');
 
 	let data = {
+		body: `${rootPath}../../components/Page/Page.twig`,
 		devMode,
 		page,
+		pageData: {
+			devMode,
+			page,
+			rootPath
+		},
+		rendered: {},
 		rootPath,
-		theme: `${rootPath}../themes/default.twig`,
-		version: devMode ? `?${versionId}` : ''
+		version: devMode ? `?${versionId}` : '',
+		widgets: []
 	};
 
 	data = await enrichData(data, 'main');
-	data = await enrichData(data, `pages/${page}`);
+	data = await enrichData(data, `entries/${page}`);
+
+	await Promise.all(
+		data.widgets.map(async ([widget, widgetData]) => {
+			data.rendered[widget] = await renderWidget(widget, widgetData, data);
+		})
+	);
+
+	data.pageData.widgets = data.widgets ? data.widgets.filter(([widget, { ssrOnly } = {}]) => !ssrOnly) : [];
+	data.pageData = JSON.stringify(data.pageData);
 
 	return data;
 };
