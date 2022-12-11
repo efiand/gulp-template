@@ -12,18 +12,18 @@
 	grid-column-end: span 12;
 
 	@for $i from 1 through 12 {
-		&_mob-#{$i} {
+		&_mob#{$i} {
 			grid-column-end: span $i;
 		}
 
 		@include vpTabletDesktop {
-			&_tab-#{$i} {
+			&_tab#{$i} {
 				grid-column-end: span $i;
 			}
 		}
 
 		@include vpDesktop {
-			&_start-#{$i} {
+			&_start#{$i} {
 				grid-column-start: $i;
 			}
 

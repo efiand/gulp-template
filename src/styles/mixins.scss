@@ -57,12 +57,14 @@
 	@include custom-scrollbar;
 }
 
-@mixin button() {
+@mixin button($background: transparent, $border: none, $radius: 0) {
 	box-sizing: border-box;
 	text-decoration: none;
 	overflow-wrap: anywhere;
 	text-align: center;
-	border-radius: 0;
+	background-color: $background;
+	border: $border;
+	border-radius: $radius;
 	user-select: none;
 
 	@include defaultInteractive;

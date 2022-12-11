@@ -31,6 +31,7 @@ export const Path = {
 	},
 	Styles: {
 		ALL: 'src/{components,styles}/**/*.scss',
+		BLOCKS: 'src/components/**/*.scss',
 		DEST: 'build/styles',
 		ENTRIES: 'src/styles/entries/**/*.scss'
 	}
