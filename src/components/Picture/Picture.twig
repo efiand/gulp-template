@@ -1,47 +1,42 @@
 <picture class="Picture {{ bemMix }}">
 	{% if not devMode %}
-		{% if webpDesktop %}
+		{% if adaptive %}
 			<source
 				type="image/webp"
 				media="(min-width: {{ Breakpoint.DESKTOP }}px)"
-				srcset="{{ webpDesktop }}{{ webpDesktop2x ? ' 1x, ' ~ webpDesktop2x ~ ' 2x' }}"
+				srcset="{{ rootPath }}/images/{{ filename }}-desktop.webp 1x, {{ rootPath }}/images/{{ filename }}-desktop@2x.webp 2x"
 			/>
-		{% endif %}
-		{% if webpTablet %}
 			<source
 				type="image/webp"
-				media="(min-width: {{ webpDesktop ? Breakpoint.TABLET : Breakpoint.DESKTOP }}px)"
-				srcset="{{ webpTablet }}{{ webpTablet2x ? ' 1x, ' ~ webpTablet2x ~ ' 2x' }}"
+				media="(min-width: {{ Breakpoint.TABLET }}px)"
+				srcset="{{ rootPath }}/images/{{ filename }}-tablet.webp 1x, {{ rootPath }}/images/{{ filename }}-tablet@2x.webp 2x"
 			/>
 		{% endif %}
-		{% if webpMobile %}
-			<source
-				type="image/webp"
-				srcset="{{ webpMobile }}{{ webpMobile2x ? ' 1x, ' ~ webpMobile2x ~ ' 2x' }}"
-			/>
-		{% endif %}
-	{% endif %}
 
-	{% if desktop %}
 		<source
-			media="(min-width: {{ Breakpoint.DESKTOP }}px)"
-			srcset="{{ desktop }}{{ desktop2x ? ' 1x, ' ~ desktop2x ~ ' 2x' }}"
+			type="image/webp"
+			srcset="{{ rootPath }}/images/{{ filename }}.webp 1x, {{ rootPath }}/images/{{ filename }}@2x.webp 2x"
 		/>
 	{% endif %}
-	{% if tablet %}
+
+	{% if adaptive %}
 		<source
-			media="(min-width: {{ desktop ? Breakpoint.TABLET : Breakpoint.DESKTOP }}px)"
-			srcset="{{ tablet }}{{ tablet2x ? ' 1x, ' ~ tablet2x ~ ' 2x' }}"
+			media="(min-width: {{ Breakpoint.DESKTOP }}px)"
+			srcset="{{ rootPath }}/images/{{ filename }}-desktop.{{ ext ?? 'jpg' }} 1x, {{ rootPath }}/images/{{ filename }}-desktop@2x.{{ ext ?? 'jpg' }} 2x"
+		/>
+		<source
+			media="(min-width: {{ Breakpoint.TABLET }}px)"
+			srcset="{{ rootPath }}/images/{{ filename }}-tablet.{{ ext ?? 'jpg' }} 1x, {{ rootPath }}/images/{{ filename }}-tablet@2x.{{ ext ?? 'jpg' }} 2x"
 		/>
 	{% endif %}
 
 	<img
 		class="Picture__image"
-		src="{{ mobile }}"
-		{{ mobile2x ? 'srcset="' ~ mobile2x ~ ' 2x"' }}
+		src="{{ rootPath }}/images/{{ filename }}.{{ ext ?? 'jpg' }}"
+		srcset="{{ rootPath }}/images/{{ filename }}@2x.{{ ext ?? 'jpg' }} 2x"
 		{{ width ? 'width="' ~ width ~ '"' }}
 		{{ height ? 'height="' ~ height ~ '"' }}
-		{{ alt ? 'alt="' ~ alt|punctify ~ '"' : 'aria-hidden="true"' }}
+		{{ alt ? 'alt="' ~ alt|punctify ~ '"' : 'alt="" aria-hidden="true"' }}
 		{{ not immediately ? 'loading="lazy"' }}
 	/>
 </picture>

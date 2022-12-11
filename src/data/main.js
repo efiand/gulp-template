@@ -1,10 +1,9 @@
 import { Breakpoint } from '../scripts/constants.js';
-import { getImages } from './utils.js';
 
 export default () => ({
 	Breakpoint,
 	description: 'Описание сайта',
-	logo: getImages('logo.svg', { alt: 'Логотип компании' }),
+	logo: { alt: 'Логотип компании', ext: 'svg', filename: 'logo' },
 	project: 'Site',
 	widgets: [['Form']]
 });

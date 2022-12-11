@@ -3,17 +3,13 @@ import createHtml from 'gulp-twig';
 import getData from 'gulp-data';
 import gulp from 'gulp';
 import processHtml from 'gulp-posthtml';
-import { capitalizeFirst, punctify } from '../src/scripts/utils.js';
+import { punctify } from '../src/scripts/utils.js'
 import useCondition from 'gulp-if';
 
 const lintMode = Boolean(process.env.LINT);
 
 const twigConfig = {
 	filters: [
-		{
-			func: capitalizeFirst,
-			name: 'capitalizeFirst'
-		},
 		{
 			func: punctify,
 			name: 'punctify'
