@@ -2,6 +2,7 @@ html {
 	min-width: 320px;
 	overflow-y: scroll; // чтобы содержимое не скакало влево-вправо при быстрой смене страниц
 	overflow-anchor: none;
+	font-family: "Open Sans", serif;
 	scroll-behavior: smooth;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -13,7 +14,8 @@ body {
 	margin: 0;
 }
 
-img {
+img,
+video {
 	max-width: 100%;
 	height: auto;
 }

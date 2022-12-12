@@ -1,13 +1,17 @@
-@mixin font-face($font-family, $alias, $font-weight) {
-	$url: "../fonts/#{$alias}-#{$font-weight}";
+// https://gwfh.mranftl.com/fonts
 
-	@font-face {
-		font-weight: $font-weight;
-		font-style: normal;
-		font-family: $font-family;
-		font-display: swap;
-		src: url("#{$url}.woff2") format("woff2");
+@mixin font-face($family, $weights: 400, $styles: normal) {
+	@each $style in $styles {
+		@each $weight in $weights {
+			@font-face {
+				font-weight: $weight;
+				font-style: $style;
+				font-family: $family;
+				font-display: swap;
+				src: url("../fonts/#{aliasify($family)}-#{$style}-#{$weight}.woff2") format("woff2");
+			}
+		}
 	}
 }
 
-@include font-face("Roboto", "roboto", 400);
+@include font-face("Open Sans", (400, 700));

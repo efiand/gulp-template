@@ -1,7 +1,8 @@
 import { Path, devMode } from './constants.js';
 import { Breakpoint } from '../src/scripts/constants.js';
+import { aliasify } from '../src/scripts/utils.js';
 import createAutoprefixes from 'autoprefixer';
-import dartSass from 'sass';
+import sass from 'sass';
 import { globby } from 'globby';
 import gulp from 'gulp';
 import gulpSass from 'gulp-sass';
@@ -21,7 +22,7 @@ if (!devMode) {
 	);
 }
 
-const preprocessScss = gulpSass(dartSass);
+const preprocessScss = gulpSass(sass);
 
 const buildStyles = async () => {
 	const bemBlocks = (await globby(Path.Styles.BLOCKS)).map((path) => {
@@ -35,11 +36,14 @@ const buildStyles = async () => {
 		.pipe(
 			preprocessScss({
 				functions: {
+					'aliasify($str)'(str) {
+						return new sass.SassString(aliasify(str.getValue()));
+					},
 					'devMode()'() {
-						return dartSass.types.Boolean[devMode ? 'TRUE' : 'FALSE'];
+						return sass.types.Boolean[devMode ? 'TRUE' : 'FALSE'];
 					},
 					'getBreakpoint($breakpoint)'(breakpoint) {
-						return new dartSass.types.Number(Breakpoint[breakpoint.getValue()]);
+						return new sass.types.Number(Breakpoint[breakpoint.getValue()]);
 					}
 				}
 			}).on('error', preprocessScss.logError)

@@ -33,6 +33,7 @@
 				"ignoreAtRules": [
 					"add-mixin",
 					"define-mixin",
+					"each",
 					"else",
 					"for",
 					"include",
