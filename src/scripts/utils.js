@@ -13,8 +13,9 @@ export const punctify = (str, args) => {
 	return `${str}${sign}`;
 };
 
+// Универсальный метод инициализации нативных и svelte-компонентов
 export const initApp = (App, target = null, props = {}) => {
-	if (!App || !target) {
+	if (!App) {
 		return null;
 	}
 

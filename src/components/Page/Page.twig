@@ -2,18 +2,12 @@
 
 {% block page %}
 	<div class="Page">
-		{% include component('PageHeader') %}
+		{% include component('PageHeader') with { bemMix: 'Page__header' } %}
 
-		<main>
-			{% if pageHeading %}
-				{% include component('MainHeader') with pageHeading %}
-			{% endif %}
-
+		<main class="Page__main">
 			{% block main %}{% endblock %}
-
-			{{ rendered.Form }}
 		</main>
 
-		{% include component('PageFooter') %}
+		{% include component('PageFooter') with { bemMix: 'Page__footer' } %}
 	</div>
 {% endblock %}

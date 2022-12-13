@@ -1,6 +1,6 @@
 // https://www.htmlcsscolor.com/hex/000000
-$colorPrimary: var(--colorPrimary);
 $colorBlack: var(--colorBlack);
+$colorPrimary: var(--colorPrimary);
 $colorWhite: var(--colorWhite);
 
 $breakpointTablet: getBreakpoint("TABLET") * 1px;
@@ -10,6 +10,6 @@ $paddingFluid: calc(50% - 598px);
 
 :root {
 	--colorBlack: #000000;
-	--colorWhite: #ffffff;
 	--colorPrimary: var(--colorBlack);
+	--colorWhite: #ffffff;
 }

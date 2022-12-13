@@ -1,4 +1,5 @@
 import Form from '../../components/Form/Form.svelte';
+import PageHeader from '../../components/PageHeader/PageHeader.js';
 import { initApp } from '../utils.js';
 
 const apps = {
@@ -14,3 +15,5 @@ widgets.forEach(([widget, data = {}]) => {
 
 	initApp(apps[widget], document.querySelector(`[data-widget="${widget}"]`), data);
 });
+
+initApp(PageHeader, document.querySelector('.PageHeader'));
