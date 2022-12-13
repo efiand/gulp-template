@@ -8,6 +8,8 @@ $breakpointDesktop: getBreakpoint("DESKTOP") * 1px;
 
 $paddingFluid: calc(50% - 598px);
 
+$pathSprite: "../images/icons.svg";
+
 :root {
 	--colorBlack: #000000;
 	--colorPrimary: var(--colorBlack);

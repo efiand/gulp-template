@@ -57,17 +57,21 @@
 	@include custom-scrollbar;
 }
 
-@mixin button($background: transparent, $border: none, $radius: 0) {
+@mixin button($background: transparent, $border: none, $radius: 0, $noCustomInteractive: true) {
 	box-sizing: border-box;
+	font-family: inherit;
 	text-decoration: none;
 	overflow-wrap: anywhere;
 	text-align: center;
 	background-color: $background;
 	border: $border;
 	border-radius: $radius;
+	cursor: pointer;
 	user-select: none;
 
-	@include defaultInteractive;
+	@if $noCustomInteractive {
+		@include defaultInteractive;
+	}
 }
 
 @mixin container() {
@@ -86,7 +90,7 @@
 }
 
 @mixin mask($icon) {
-	mask: url("../images/icons.svg##{$icon}") no-repeat center / 100%;
+	mask: url("#{$pathSprite}##{$icon}") no-repeat center / 100%;
 }
 
 @mixin hover {
