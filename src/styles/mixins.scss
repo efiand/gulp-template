@@ -74,6 +74,15 @@
 	}
 }
 
+@mixin listReset($resetMargins: true, $padding: 0) {
+	@if $resetMargins {
+		margin: 0;
+	}
+
+	padding: $padding;
+	list-style: none;
+}
+
 @mixin container() {
 	padding-right: 30px;
 	padding-left: 30px;
