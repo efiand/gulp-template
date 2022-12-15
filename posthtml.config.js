@@ -19,7 +19,7 @@ const plugins = [
 
 // Изменение настроек в production-режиме
 if (!devMode) {
-	plugins.push(minifyHtml({ collapseWhitespace: 'aggressive' }));
+	plugins.push(minifyHtml({ collapseWhitespace: 'aggressive', minifySvg: false }));
 }
 
 module.exports = { plugins };
