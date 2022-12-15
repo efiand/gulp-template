@@ -1,0 +1,58 @@
+@mixin hover {
+	@media (hover: hover) {
+		&:hover {
+			@content;
+		}
+	}
+}
+
+@mixin focus {
+	&:focus-visible {
+		@content;
+	}
+
+	@supports not selector(:focus-visible) {
+		&:focus {
+			@content;
+		}
+	}
+}
+
+@mixin hoverFocus {
+	@include hover {
+		@content;
+	}
+
+	@include focus {
+		@content;
+	}
+}
+
+@mixin active {
+	@media (hover: hover) {
+		&:active,
+		&:hover:active {
+			@content;
+		}
+	}
+}
+
+@mixin transition($props: "color, background-color") {
+	transition-property: #{$props};
+	transition-duration: 0.3s;
+	transition-timing-function: ease-in-out;
+}
+
+@mixin defaultInteractive($active: true) {
+	@include transition("opacity");
+
+	@include hoverFocus {
+		opacity: 0.6;
+	}
+
+	@if $active {
+		@include active {
+			opacity: 0.3;
+		}
+	}
+}

@@ -1,0 +1,25 @@
+@mixin button($background: transparent, $border: none, $radius: 0, $noCustomInteractive: true) {
+	box-sizing: border-box;
+	font-family: inherit;
+	text-decoration: none;
+	overflow-wrap: anywhere;
+	text-align: center;
+	background-color: $background;
+	border: $border;
+	border-radius: $radius;
+	cursor: pointer;
+	user-select: none;
+
+	@if $noCustomInteractive {
+		@include defaultInteractive;
+	}
+}
+
+@mixin listReset($resetMargins: true, $padding: 0) {
+	@if $resetMargins {
+		margin: 0;
+	}
+
+	padding: $padding;
+	list-style: none;
+}

@@ -1,7 +1,7 @@
-{% macro setBg(set) %}
+{% macro setBg(set, immediately = false) %}
 	{% set ext = set.ext ?? 'jpg' -%}
 
-	style="{{- '--bgMobile: url(\'../images/' ~ set.filename ~ '.' ~ ext ~ '\');' -}}
+	{{ not immediately ? 'data-lazy-'}}style="{{- '--bgMobile: url(\'../images/' ~ set.filename ~ '.' ~ ext ~ '\');' -}}
 
 	{% if ext != 'svg' %}
 		{{- '--bgMobile2x: url(\'../images/' ~ set.filename ~ '@2x.' ~ ext ~ '\');' -}}

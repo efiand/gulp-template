@@ -4,7 +4,7 @@
 	<div class="Page">
 		{% include component('PageHeader') with { bemMix: 'Page__header' } %}
 
-		<main class="Page__main">
+		<main class="Page__main Page__main_noJs">
 			{% block main %}{% endblock %}
 		</main>
 

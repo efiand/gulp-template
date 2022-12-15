@@ -1,5 +1,6 @@
-@import "../common";
-
-@import "../../components/**/*";
-
+@import "../variables";
+//=require ../mixins/*.scss
+@import "../fonts";
+@import "../global";
+//=require ../../components/**/*.scss
 @import "../utils";

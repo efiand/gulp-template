@@ -3,12 +3,11 @@ import { Breakpoint } from '../src/scripts/constants.js';
 import { aliasify } from '../src/scripts/utils.js';
 import createAutoprefixes from 'autoprefixer';
 import sass from 'sass';
-import { globby } from 'globby';
 import gulp from 'gulp';
 import gulpSass from 'gulp-sass';
+import include from 'gulp-include';
 import minifyCss from 'cssnano';
 import processPostcss from 'gulp-postcss';
-import replace from 'gulp-replace';
 import sortMediaQueries from 'postcss-sort-media-queries';
 
 const postcssPlugins = [sortMediaQueries(), createAutoprefixes()];
@@ -25,14 +24,9 @@ if (!devMode) {
 const preprocessScss = gulpSass(sass);
 
 const buildStyles = async () => {
-	const bemBlocks = (await globby(Path.Styles.BLOCKS)).map((path) => {
-		const block = path.replace(/^.*[\\\/](.*).scss$/, '$1');
-		return `@import "../../components/${block}/${block}";`;
-	});
-
 	return gulp
 		.src(Path.Styles.ENTRIES)
-		.pipe(replace('@import "../../components/**/*";', bemBlocks.join('')))
+		.pipe(include())
 		.pipe(
 			preprocessScss({
 				functions: {

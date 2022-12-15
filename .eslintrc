@@ -21,7 +21,8 @@
 		{
 			"files": "src/data/**/*.js",
 			"rules": {
-				"max-lines-per-function": "off"
+				"max-lines-per-function": "off",
+				"no-magic-numbers": "off"
 			}
 		},
 		{

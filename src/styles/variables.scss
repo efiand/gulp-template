@@ -3,6 +3,7 @@ $colorBlack: var(--colorBlack);
 $colorPrimary: var(--colorPrimary);
 $colorWhite: var(--colorWhite);
 
+$breakpointMobile: getBreakpoint("MOBILE") * 1px;
 $breakpointTablet: getBreakpoint("TABLET") * 1px;
 $breakpointDesktop: getBreakpoint("DESKTOP") * 1px;
 
