@@ -14,7 +14,7 @@ const setLazyStyles = (lazyStyledElement) => {
 export default class Page {
 	constructor({ target, props }) {
 		this._pageElement = target;
-		this._widgets = props.widgets || [];
+		this._pageData = props;
 
 		initApp(PageHeader, this._pageElement.querySelector('.PageHeader'));
 
@@ -37,7 +37,7 @@ export default class Page {
 		this._pageElement.removeEventListener('scroll', this._scrollHandler);
 		this._pageElement.querySelectorAll('[data-lazy-style]').forEach(setLazyStyles);
 
-		this._widgets.forEach(([widget, data = {}]) => {
+		(this._pageData.widgets || []).forEach(([widget, data = {}]) => {
 			if (!apps[widget]) {
 				return;
 			}
@@ -47,6 +47,10 @@ export default class Page {
 		});
 
 		// Add native conponents here
+
+		if (typeof this._pageData.loadLazy === 'function') {
+			this._pageData.loadLazy();
+		}
 	}
 
 	_scrollHandler() {

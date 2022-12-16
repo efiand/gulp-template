@@ -1,9 +1,13 @@
-<div class="Modal" data-modal="{{ modalId }}" hidden>
+<div class="Modal {{ testPage ? 'Modal_test' }}" id="{{ modalId }}">
+	<a class="Modal__overlay" href="#page">
+		<span class="visuallyHidden">К содержимому страницы.</span>
+	</a>
+
 	<div class="Modal__content">
 		{% include component(Component) with data %}
 
-		<button class="Modal__close" type="button">
-			<span class="visually-hidden">Закрыть.</span>
-		</button>
+		<a class="Modal__close" href="#page">
+			<span class="visuallyHidden">К содержимому страницы.</span>
+		</a>
 	</div>
 </div>
