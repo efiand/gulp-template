@@ -1,4 +1,4 @@
-@mixin button($background: transparent, $border: none, $radius: 0, $noCustomInteractive: true) {
+@mixin button($background: transparent, $border: none, $radius: 0) {
 	box-sizing: border-box;
 	font-family: inherit;
 	text-decoration: none;
@@ -9,10 +9,6 @@
 	border-radius: $radius;
 	cursor: pointer;
 	user-select: none;
-
-	@if $noCustomInteractive {
-		@include defaultInteractive;
-	}
 }
 
 @mixin listReset($resetMargins: true, $padding: 0) {
