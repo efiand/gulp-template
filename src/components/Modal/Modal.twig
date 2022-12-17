@@ -6,8 +6,10 @@
 	<div class="Modal__content">
 		{% include component(Component) with data %}
 
-		<a class="Modal__close" href="#page">
-			<span class="visuallyHidden">К содержимому страницы.</span>
-		</a>
+		{% if not noCloser %}
+			<a class="Modal__close" href="#page">
+				<span class="visuallyHidden">К содержимому страницы.</span>
+			</a>
+		{% endif %}
 	</div>
 </div>

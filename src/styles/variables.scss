@@ -3,13 +3,15 @@ $colorBlack: var(--colorBlack);
 $colorPrimary: var(--colorPrimary);
 $colorWhite: var(--colorWhite);
 
-$breakpointMobile: getBreakpoint("MOBILE") * 1px;
-$breakpointTablet: getBreakpoint("TABLET") * 1px;
-$breakpointDesktop: getBreakpoint("DESKTOP") * 1px;
+$shadowPopup: 0 5px 10px rgba(0, 1, 1, 0.25);
 
 $paddingFluid: calc(50% - 598px);
 
 $pathSprite: "../images/icons.svg";
+
+$breakpointMobile: getBreakpoint("MOBILE") * 1px;
+$breakpointTablet: getBreakpoint("TABLET") * 1px;
+$breakpointDesktop: getBreakpoint("DESKTOP") * 1px;
 
 :root {
 	--colorBlack: #000000;

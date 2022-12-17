@@ -1,8 +1,11 @@
 .Modal {
 	display: none;
-	padding: 3rem;
 
 	@include viewport;
+
+	@include vpTabletDesktop {
+		padding: 3rem;
+	}
 
 	&:target {
 		display: flex;
@@ -20,8 +23,11 @@
 
 .Modal__content {
 	position: relative;
+	width: 100%;
+	max-width: 50%;
 	margin: auto;
 	background-color: $colorWhite;
+	box-shadow: $shadowPopup;
 }
 
 .Modal_test {

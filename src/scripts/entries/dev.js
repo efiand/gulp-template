@@ -3,7 +3,7 @@ import { checkModPressed } from '../utils.js';
 import loadPixelperfect from 'pixelperfect-tool';
 
 window.pixelperfect = {
-	breakpoints: [Breakpoint.MOBILE, Breakpoint.DESKTOP],
+	breakpoints: [Breakpoint.MOBILE, Breakpoint.TABLET, Breakpoint.DESKTOP],
 	ext: 'jpg',
 	selector: '.Page'
 };
