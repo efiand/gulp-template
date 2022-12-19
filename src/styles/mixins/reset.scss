@@ -1,13 +1,11 @@
 @mixin button($background: transparent, $border: none, $radius: 0) {
 	box-sizing: border-box;
-	font-family: inherit;
 	text-decoration: none;
 	overflow-wrap: anywhere;
 	text-align: center;
 	background-color: $background;
 	border: $border;
 	border-radius: $radius;
-	cursor: pointer;
 	user-select: none;
 }
 

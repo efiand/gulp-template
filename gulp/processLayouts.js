@@ -3,7 +3,7 @@ import createHtml from 'gulp-twig';
 import getData from 'gulp-data';
 import gulp from 'gulp';
 import processHtml from 'gulp-posthtml';
-import { punctify } from '../src/scripts/utils.js'
+import { punctify } from '../src/scripts/utils.js';
 import useCondition from 'gulp-if';
 
 const lintMode = Boolean(process.env.LINT);
@@ -13,17 +13,23 @@ const twigConfig = {
 		{
 			func: punctify,
 			name: 'punctify'
+		},
+		{
+			func(str, [pattern]) {
+				return str.includes(pattern);
+			},
+			name: 'includes'
 		}
 	],
 	functions: [
 		{
-			name: 'component',
 			func(name) {
 				const relative = name.slice(0, 1) === '~' ? '../components/' : '';
 				const Component = name.replace(/^~/, '');
 
 				return `../${relative}${Component}/${Component}.twig`;
-			}
+			},
+			name: 'component'
 		}
 	]
 };

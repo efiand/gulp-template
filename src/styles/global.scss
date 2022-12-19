@@ -21,6 +21,16 @@ video {
 a {
 	text-decoration-skip-ink: none;
 	color: inherit;
+
+	&:not([href]) {
+		pointer-events: none;
+	}
+}
+
+button {
+	font-family: inherit;
+	cursor: pointer;
+	user-select: none;
 }
 
 input,
@@ -58,6 +68,10 @@ textarea {
 	resize: vertical;
 }
 
+:disabled {
+	pointer-events: none;
+}
+
 :focus-visible {
 	outline: 2px solid $colorPrimary;
 	outline-offset: 2px;
@@ -68,8 +82,4 @@ textarea {
 		outline: 2px solid $colorPrimary;
 		outline-offset: 2px;
 	}
-}
-
-:disabled {
-	cursor: not-allowed;
 }
