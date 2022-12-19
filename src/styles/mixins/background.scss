@@ -1,8 +1,6 @@
 @mixin retina {
 	@media (min-resolution: 2dppx) {
-		html & {
-			@content;
-		}
+		@content;
 	}
 }
 
@@ -24,33 +22,31 @@
 	@if $adaptive {
 		@include vpMobile {
 			@include webpBackground(var(--bgWebpMobile), var(--bgMobile));
+
+			@include retina {
+				@include webpBackground(var(--bgWebpMobile2x), var(--bgMobile2x));
+			}
 		}
 
 		@include vpTablet {
 			@include webpBackground(var(--bgWebpTablet), var(--bgTablet));
+
+			@include retina {
+				@include webpBackground(var(--bgWebpTablet2x), var(--bgTablet2x));
+			}
 		}
 
 		@include vpDesktop {
 			@include webpBackground(var(--bgWebpDesktop), var(--bgDesktop));
+
+			@include retina {
+				@include webpBackground(var(--bgWebpDesktop2x), var(--bgDesktop2x));
+			}
 		}
 	} @else {
 		@include webpBackground(var(--bgWebpMobile), var(--bgMobile));
-	}
 
-	@include retina {
-		@if $adaptive {
-			@include vpMobile {
-				@include webpBackground(var(--bgWebpMobile2x), var(--bgMobile2x));
-			}
-
-			@include vpTablet {
-				@include webpBackground(var(--bgWebpTablet2x), var(--bgTablet2x));
-			}
-
-			@include vpDesktop {
-				@include webpBackground(var(--bgWebpDesktop2x), var(--bgDesktop2x));
-			}
-		} @else {
+		@include retina {
 			@include webpBackground(var(--bgWebpMobile2x), var(--bgMobile2x));
 		}
 	}
