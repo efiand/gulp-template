@@ -9,7 +9,20 @@
 			{{ project }}
 		</title>
 		<meta name="description" content="{{ description|punctify }}">
-		<link href="{{ rootPath }}styles/main.css{{ version }}" rel="stylesheet">
+		<link rel="stylesheet" href="{{ rootPath }}styles/main.css{{ version }}">
+
+		{% for font in ['opensans-normal-400', 'opensans-normal-700'] %}
+			<link rel="preload" href="{{ rootPath }}fonts/{{ font }}.woff2" as="font" crossorigin="anonymous">
+		{% endfor %}
+
+		{# https://realfavicongenerator.net/ #}
+		<link rel="apple-touch-icon" sizes="180x180" href="{{ rootPath }}apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="{{ rootPath }}favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="{{ rootPath }}favicon-16x16.png">
+		<link rel="manifest" href="{{ rootPath }}site.webmanifest">
+		<link rel="mask-icon" href="{{ rootPath }}safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="msapplication-TileColor" content="#63d1bb">
+		<meta name="theme-color" content="#ffffff">
 	</head>
 
 	<body>
