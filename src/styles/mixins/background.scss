@@ -5,7 +5,7 @@
 }
 
 @mixin webpBackground($webp, $fallback) {
-	@if devMode() {
+	@if isDev() {
 		background-image: $fallback;
 	} @else {
 		@supports (background-image: $webp) {
@@ -21,33 +21,33 @@
 @mixin customBackground($adaptive: true) {
 	@if $adaptive {
 		@include vpMobile {
-			@include webpBackground(var(--bgWebpMobile), var(--bgMobile));
+			@include webpBackground(var(--bgWebpMobile), var(--bgMobile, none));
 
 			@include retina {
-				@include webpBackground(var(--bgWebpMobile2x), var(--bgMobile2x));
+				@include webpBackground(var(--bgWebpMobile2x), var(--bgMobile2x, none));
 			}
 		}
 
 		@include vpTablet {
-			@include webpBackground(var(--bgWebpTablet), var(--bgTablet));
+			@include webpBackground(var(--bgWebpTablet), var(--bgTablet, none));
 
 			@include retina {
-				@include webpBackground(var(--bgWebpTablet2x), var(--bgTablet2x));
+				@include webpBackground(var(--bgWebpTablet2x), var(--bgTablet2x, none));
 			}
 		}
 
 		@include vpDesktop {
-			@include webpBackground(var(--bgWebpDesktop), var(--bgDesktop));
+			@include webpBackground(var(--bgWebpDesktop), var(--bgDesktop, none));
 
 			@include retina {
-				@include webpBackground(var(--bgWebpDesktop2x), var(--bgDesktop2x));
+				@include webpBackground(var(--bgWebpDesktop2x), var(--bgDesktop2x, none));
 			}
 		}
 	} @else {
-		@include webpBackground(var(--bgWebpMobile), var(--bgMobile));
+		@include webpBackground(var(--bgWebpMobile), var(--bgMobile, none));
 
 		@include retina {
-			@include webpBackground(var(--bgWebpMobile2x), var(--bgMobile2x));
+			@include webpBackground(var(--bgWebpMobile2x), var(--bgMobile2x, none));
 		}
 	}
 }

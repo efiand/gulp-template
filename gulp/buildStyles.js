@@ -33,7 +33,7 @@ const buildStyles = async () => {
 					'aliasify($str)'(str) {
 						return new sass.SassString(aliasify(str.getValue()));
 					},
-					'devMode()'() {
+					'isDev()'() {
 						return sass.types.Boolean[devMode ? 'TRUE' : 'FALSE'];
 					},
 					'getBreakpoint($breakpoint)'(breakpoint) {
