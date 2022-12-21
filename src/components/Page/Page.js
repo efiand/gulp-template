@@ -1,6 +1,6 @@
 import Form from '../Form/Form.svelte';
 import PageHeader from '../PageHeader/PageHeader.js';
-import { initApp } from '../../scripts/utils.js';
+import initApp from '../../scripts/utils/initApp.js';
 
 const apps = {
 	Form

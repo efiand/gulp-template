@@ -1,5 +1,5 @@
 import { Breakpoint } from '../constants.js';
-import { checkModPressed } from '../utils.js';
+import checkModPressed from '../utils/checkModPressed.js';
 import loadPixelperfect from 'pixelperfect-tool';
 
 window.pixelperfect = {

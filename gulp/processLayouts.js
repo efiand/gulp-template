@@ -3,7 +3,7 @@ import createHtml from 'gulp-twig';
 import getData from 'gulp-data';
 import gulp from 'gulp';
 import processHtml from 'gulp-posthtml';
-import { punctify } from '../src/scripts/utils.js';
+import punctify from '../src/scripts/utils/punctify.js';
 import useCondition from 'gulp-if';
 
 const lintMode = Boolean(process.env.LINT);

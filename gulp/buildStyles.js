@@ -1,6 +1,6 @@
 import { Path, devMode } from './constants.js';
 import { Breakpoint } from '../src/scripts/constants.js';
-import { aliasify } from '../src/scripts/utils.js';
+import aliasify from '../src/scripts/utils/aliasify.js';
 import createAutoprefixes from 'autoprefixer';
 import sass from 'sass';
 import gulp from 'gulp';

@@ -1,5 +1,5 @@
 <script context="module">
-	import { punctify } from '../../scripts/utils.js';
+	import punctify from '../../scripts/utils/punctify.js';
 </script>
 
 <script>
