@@ -1,6 +1,5 @@
 const { getPosthtmlBemLinter } = require('posthtml-bem-linter');
 const { getPosthtmlW3cValidator } = require('posthtml-w3c-validator');
-const minifyHtml = require('htmlnano');
 
 const getSourceName = (filename) => filename.replace(/\\/g, '/').replace(/^.*entries\/(.*)$/, '$1');
 
@@ -19,7 +18,21 @@ const plugins = [
 
 // Изменение настроек в production-режиме
 if (!devMode) {
+	const minifyHtml = require('htmlnano');
+	const render = require('posthtml-render');
+	const parser = require('posthtml-parser');
+
 	plugins.push(minifyHtml({ collapseWhitespace: 'aggressive', minifySvg: false }));
+	plugins.push(
+		(() => async (tree) => {
+			// Доводка после минификации
+			const html = render(tree)
+				.replace(/\/dt><dd/g, '/dt> <dd') // Инлайновые <dt> и <dd>, важен пробел между ними
+				.replace(/\/dd><dt/g, '/dd> <dt'); // И между <dd> и <dt> тоже важен
+
+			return parser(html);
+		})()
+	);
 }
 
 module.exports = { plugins };
