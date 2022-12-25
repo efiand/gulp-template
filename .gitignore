@@ -4,5 +4,6 @@
 .temp/**/*.png
 .temp/**/*.svg
 Thumbs.db
+dev
 build
 node_modules

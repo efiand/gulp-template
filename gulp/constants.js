@@ -2,12 +2,14 @@ export const devMode = process.env.NODE_ENV === 'development';
 
 export const CWD = process.cwd().replace(/\\+/g, '/');
 
+export const DEST = devMode ? 'dev' : 'build';
+
 export const Path = {
-	DEST: 'build',
+	DEST,
 	EDITORCONFIG: ['{gulp,src}/**/*.{js,md,twig,scss,svelte,svg}', '*.{js,json,md}'],
 	ICONS: 'src/icons/**/*.svg',
 	Images: {
-		DEST: 'build/images',
+		DEST: `${DEST}/images`,
 		ICONS_DEST: 'src/icons',
 		ICONS_SRC: '.temp/icons/**/*.svg',
 		PUBLIC: 'public/images',
@@ -23,7 +25,7 @@ export const Path = {
 	STATIC: ['public/**'],
 	Scripts: {
 		ALL: 'src/{components,data,scripts}/**/*.{js,svelte}',
-		DEST: 'build/scripts',
+		DEST: `${DEST}/scripts`,
 		ENTRIES: ['src/scripts/entries/*.js'],
 		LINTABLE: ['src/{components,data,scripts}/**/*.{js,svelte}', 'gulp/**/*.js', '*.js'],
 		SSR_DEST: '.temp/svelte-ssr',
@@ -31,7 +33,7 @@ export const Path = {
 	},
 	Styles: {
 		ALL: 'src/{components,styles}/**/*.scss',
-		DEST: 'build/styles',
+		DEST: `${DEST}/styles`,
 		ENTRIES: 'src/styles/entries/**/*.scss'
 	}
 };

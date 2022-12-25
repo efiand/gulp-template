@@ -30,7 +30,7 @@ export default class Page {
 	}
 
 	get _scrolledToContent() {
-		return this._pageElement.scrollTop > window.innerHeight;
+		return this._pageElement.scrollTop > window.innerHeight / 10;
 	}
 
 	_initLazy() {
