@@ -3,36 +3,9 @@ import createHtml from 'gulp-twig';
 import getData from 'gulp-data';
 import gulp from 'gulp';
 import processHtml from 'gulp-posthtml';
-import punctify from '../src/scripts/utils/punctify.js';
 import useCondition from 'gulp-if';
 
 const lintMode = Boolean(process.env.LINT);
-
-const twigConfig = {
-	filters: [
-		{
-			func: punctify,
-			name: 'punctify'
-		},
-		{
-			func(str, [pattern]) {
-				return str.includes(pattern);
-			},
-			name: 'includes'
-		}
-	],
-	functions: [
-		{
-			func(name) {
-				const relative = name.slice(0, 1) === '~' ? '../components/' : '';
-				const Component = name.replace(/^~/, '');
-
-				return `../${relative}${Component}/${Component}.twig`;
-			},
-			name: 'component'
-		}
-	]
-};
 
 const enrichData = async (data, fileName) => {
 	try {
@@ -49,51 +22,29 @@ const enrichData = async (data, fileName) => {
 	}
 };
 
-const renderWidget = async (widget, data = {}, { version }) => {
-	if (data.spaOnly) {
-		return `<div data-widget="${widget}"></div>`;
-	}
-
-	const Widget = (await import(`../.temp/svelte-ssr/${widget}.js${version}`)).default;
-	return Widget.render({ data }).html;
-};
-
 const createData = async ({ path }) => {
 	const page = path.replace(/\\/g, '/').replace(/^.*entries\/(.*)\.twig$/, '$1');
-	const versionId = new Date().getTime();
-	const rootPath = page
-		.split('/')
-		.map(() => '')
-		.join('../');
-
-	let data = {
-		body: `${rootPath}../../components/Page/Page.twig`,
+	const started = {
 		devMode,
 		page,
-		pageData: {
-			devMode,
-			page,
-			rootPath
-		},
-		rendered: {},
-		rootPath,
-		version: devMode ? `?${versionId}` : '',
-		widgets: []
+		rootPath: page
+			.split('/')
+			.map(() => '')
+			.join('../'),
+		version: devMode ? `?${new Date().getTime()}` : ''
 	};
 
-	data = await enrichData(data, 'main');
+	let data = await enrichData(started, 'main');
 	data = await enrichData(data, `entries/${page}`);
 
-	await Promise.all(
-		data.widgets.map(async ([widget, widgetData]) => {
-			data.rendered[widget] = await renderWidget(widget, widgetData, data);
-		})
-	);
+	const { head, html } = (await import(`../.temp/svelte-ssr/Page.js${data.version}`)).default.render({ data });
 
-	data.pageData.widgets = data.widgets ? data.widgets.filter(([widget, { ssrOnly } = {}]) => !ssrOnly) : [];
-	data.pageData = JSON.stringify(data.pageData);
-
-	return data;
+	return {
+		...started,
+		head,
+		html,
+		pageData: data.clientData ? JSON.stringify(data.clientData) : null
+	};
 };
 
 // Задача обработки HTML
@@ -101,7 +52,7 @@ const processLayouts = () =>
 	gulp
 		.src(Path.Layouts.ENTRIES)
 		.pipe(getData(createData))
-		.pipe(createHtml(twigConfig))
+		.pipe(createHtml())
 		.pipe(processHtml())
 		.pipe(useCondition(!lintMode, gulp.dest(Path.DEST)));
 

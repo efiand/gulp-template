@@ -29,7 +29,7 @@ export const Path = {
 		ENTRIES: ['src/scripts/entries/*.js'],
 		LINTABLE: ['src/{components,data,scripts}/**/*.{js,svelte}', 'gulp/**/*.js', '*.js'],
 		SSR_DEST: '.temp/svelte-ssr',
-		SSR_ENTRIES: ['src/scripts/entries/*.svelte']
+		SSR_ENTRIES: 'src/components/Page.svelte'
 	},
 	Styles: {
 		ALL: 'src/{components,styles}/**/*.scss',
