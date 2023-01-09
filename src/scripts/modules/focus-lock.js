@@ -1,15 +1,16 @@
 const SELECTORS = [
+	'[contenteditable]',
+	'[tabindex]:not([tabindex^="-"])',
 	'a[href]',
 	'area[href]',
-	'input:not([disabled]):not([type="hidden"]):not([aria-hidden])',
-	'select:not([disabled]):not([aria-hidden])',
-	'textarea:not([disabled]):not([aria-hidden])',
 	'button:not([disabled]):not([aria-hidden])',
-	'iframe',
-	'object',
 	'embed',
-	'[contenteditable]',
-	'[tabindex]:not([tabindex^="-"])'
+	'iframe',
+	'input:not([disabled]):not([type="hidden"]):not([aria-hidden])',
+	'object',
+	'select:not([disabled]):not([aria-hidden])',
+	'summary',
+	'textarea:not([disabled]):not([aria-hidden])'
 ];
 const TIMEOUT = 33;
 
