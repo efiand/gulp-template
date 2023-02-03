@@ -1,5 +1,5 @@
 {
-	"printWidth": 140,
+	"printWidth": 100,
 	"singleQuote": true,
 	"trailingComma": "none",
 	"useTabs": true,
@@ -8,6 +8,12 @@
 			"files": "*.scss",
 			"options": {
 				"singleQuote": false
+			}
+		},
+		{
+			"files": "*.md",
+			"options": {
+				"useTabs": false
 			}
 		}
 	]

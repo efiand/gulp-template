@@ -1,0 +1,38 @@
+html {
+	font-size: 16px;
+	line-height: 1.5;
+	font-family: "PT Sans", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	-webkit-tap-highlight-color: transparent;
+}
+
+body {
+	margin: 0;
+}
+
+img,
+video {
+	max-width: 100%;
+	height: auto;
+}
+
+a {
+	text-decoration-skip-ink: none;
+	color: inherit;
+
+	&:not([href]) {
+		pointer-events: none;
+	}
+}
+
+:focus-visible {
+	@include focus-outline;
+}
+
+@supports not selector(:focus-visible) {
+	:focus {
+		@include focus-outline;
+	}
+}

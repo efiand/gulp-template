@@ -1,34 +1,39 @@
 const { getPosthtmlBemLinter } = require('posthtml-bem-linter');
 const { getPosthtmlW3cValidator } = require('posthtml-w3c-validator');
 
-const getSourceName = (filename) => filename.replace(/\\/g, '/').replace(/^.*entries\/(.*)$/, '$1');
+const getSourceName = (filename) => filename.replace(/\\/g, '/').replace(/^.*pages\/(.*)$/, '$1');
 
-const devMode = process.env.NODE_ENV === 'development';
+const isDev = process.argv.includes('--dev');
+
 const plugins = [
 	getPosthtmlW3cValidator({
-		exit: !devMode,
+		exit: !isDev,
 		forceOffline: true,
 		getSourceName
 	}),
 	getPosthtmlBemLinter({
-		getSourceName,
-		modifier: '_'
+		getSourceName
 	})
 ];
 
+const getTool = (toolName) => {
+	const tool = require(`posthtml-${toolName}`);
+	return typeof tool === 'function' ? tool : tool[toolName];
+};
+
 // Изменение настроек в production-режиме
-if (!devMode) {
+if (!isDev) {
 	const minifyHtml = require('htmlnano');
-	const render = require('posthtml-render');
-	const parser = require('posthtml-parser');
+	const render = getTool('render');
+	const parser = getTool('parser');
 
 	plugins.push(minifyHtml({ collapseWhitespace: 'aggressive', minifySvg: false }));
 	plugins.push(
-		(() => async (tree) => {
+		(() => (tree) => {
 			// Доводка после минификации
 			const html = render(tree)
-				.replace(/\/dt><dd/g, '/dt> <dd') // Инлайновые <dt> и <dd>, важен пробел между ними
-				.replace(/\/dd><dt/g, '/dd> <dt'); // И между <dd> и <dt> тоже важен
+				.replace(/\/dt><dd/g, '/dt> <dd')
+				.replace(/\/dd><dt/g, '/dd> <dt');
 
 			return parser(html);
 		})()

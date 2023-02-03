@@ -32,6 +32,7 @@
 			{
 				"ignoreAtRules": [
 					"add-mixin",
+					"content",
 					"define-mixin",
 					"each",
 					"else",
@@ -108,6 +109,7 @@
 		"declaration-block-semicolon-space-after": "always-single-line",
 		"declaration-block-semicolon-space-before": "never",
 		"declaration-block-trailing-semicolon": "always",
+		"declaration-colon-newline-after": "always-multi-line",
 		"declaration-colon-space-after": "always",
 		"declaration-colon-space-before": "never",
 		"declaration-empty-line-before": [
@@ -148,6 +150,7 @@
 		"function-comma-space-before": "never",
 		"function-linear-gradient-no-nonstandard-direction": true,
 		"function-max-empty-lines": 1,
+		"function-name-case": "lower",
 		"function-parentheses-newline-inside": "always-multi-line",
 		"function-parentheses-space-inside": "never",
 		"function-url-quotes": "always",

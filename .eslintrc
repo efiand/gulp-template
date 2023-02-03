@@ -15,23 +15,15 @@
 				"node": true
 			},
 			"rules": {
+				"global-require": "off",
 				"no-process-env": "off"
 			}
 		},
 		{
-			"files": "src/data/**/*.js",
+			"files": "source/data/**/*.js",
 			"rules": {
 				"max-lines-per-function": "off",
 				"no-magic-numbers": "off"
-			}
-		},
-		{
-			"files": "*.svelte",
-			"processor": "svelte3/svelte3",
-			"rules": {
-				"one-var": "off",
-				"prefer-const": "off",
-				"require-atomic-updates": "off"
 			}
 		},
 		{
@@ -49,9 +41,6 @@
 		"ecmaVersion": 2020,
 		"sourceType": "module"
 	},
-	"plugins": [
-		"svelte3"
-	],
 	"root": true,
 	"rules": {
 		"array-element-newline": [
@@ -95,6 +84,8 @@
 			"error",
 			"never"
 		],
+		"no-async-promise-executor": "off",
+		"no-await-in-loop": "off",
 		"no-console": [
 			"warn",
 			{
@@ -153,6 +144,7 @@
 			"error",
 			"as-needed"
 		],
+		"require-atomic-updates": "off",
 		"require-unicode-regexp": "off",
 		"semi": [
 			"error",

@@ -1,0 +1,15 @@
+@mixin visually-hidden {
+	position: fixed;
+	transform: scale(0);
+}
+
+@mixin focus-outline {
+	outline: 2px solid;
+	outline-offset: 2px;
+}
+
+@mixin mobile {
+	@media (max-width: 1199px) {
+		@content;
+	}
+}

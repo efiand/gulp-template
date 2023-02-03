@@ -1,6 +1,6 @@
 # gulp-template
 
-[Опубликованная версия](https://efiand.github.io/gulp-template/).
+Стартовый шаблон для сборки сайта, основанного на HTML-файлах.
 
 ## Инструкция по применению
 
@@ -19,11 +19,11 @@ npm run build
 ### Запуск в режиме разработки
 
 ```bash
-npm run dev
+npm start
 ```
 
 ### Запуск линтеров и валидаторов
 
 ```bash
-npm run lint
+npm test
 ```
