@@ -13,6 +13,7 @@ import lintScripts from './gulp/lint-scripts.js';
 import lintStyles from './gulp/lint-styles.js';
 import placeFavicons from './gulp/place-favicons.js';
 import placeImages from './gulp/place-images.js';
+import placePixelperfectImages from './gulp/place-pixelperfect-images.js';
 import placeSpriteIcons from './gulp/place-sprite-icons.js';
 import watch from './gulp/watch.js';
 
@@ -29,10 +30,11 @@ const build = gulp.series(
 		lint,
 		placeFavicons,
 		placeImages,
+		placePixelperfectImages,
 		placeSpriteIcons
 	),
 	gulp.parallel(buildSprite, buildWebp),
 	isDev ? watch : copyStatic
 );
 
-export default isTest ? gulp.parallel(lint, buildPages) : build;
+export default isTest ? gulp.parallel(lint, buildPages, buildStyles) : build;

@@ -22,17 +22,19 @@ a {
 	text-decoration-skip-ink: none;
 	color: inherit;
 
+	@include interactive-transitions;
+
 	&:not([href]) {
 		pointer-events: none;
 	}
 }
 
 :focus-visible {
-	@include focus-outline;
+	@include interactive-outline;
 }
 
 @supports not selector(:focus-visible) {
 	:focus {
-		@include focus-outline;
+		@include interactive-outline;
 	}
 }

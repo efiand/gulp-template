@@ -2,7 +2,7 @@ import gulp from 'gulp';
 import { isDev } from './common/constants.js';
 import processPostcss from 'gulp-postcss';
 import processStylelint from 'stylelint';
-import reportStylelint from 'postcss-reporter';
+import report from 'postcss-reporter';
 import scssSyntax from 'postcss-scss';
 
 const lintStyles = () =>
@@ -10,7 +10,7 @@ const lintStyles = () =>
 		processPostcss(
 			[
 				processStylelint(),
-				reportStylelint({
+				report({
 					clearAllMessages: true,
 					throwError: !isDev
 				})

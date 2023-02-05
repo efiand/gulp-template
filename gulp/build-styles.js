@@ -1,12 +1,13 @@
+import { isDev, isTest } from './common/constants.js';
 import createAutoprefixes from 'autoprefixer';
 import gulp from 'gulp';
 import gulpSass from 'gulp-sass';
-import { isDev } from './common/constants.js';
 import minifyCss from 'cssnano';
 import processPostcss from 'gulp-postcss';
 import sass from 'sass';
 import server from 'browser-sync';
 import sortMediaQueries from 'postcss-sort-media-queries';
+import useCondition from 'gulp-if';
 
 const postcssPlugins = [sortMediaQueries(), createAutoprefixes()];
 
@@ -21,12 +22,23 @@ if (!isDev) {
 
 const preprocessScss = gulpSass(sass);
 
+const logError = function (error) {
+	preprocessScss.logError.bind(this)(error);
+
+	if (isTest) {
+		process.exitCode = 1;
+	} else if (!isDev) {
+		throw new Error('');
+	}
+};
+
 const buildStyles = () =>
 	gulp
 		.src('source/styles/main.scss')
-		.pipe(preprocessScss().on('error', preprocessScss.logError))
+		.pipe(preprocessScss({}).on('error', logError))
 		.pipe(processPostcss(postcssPlugins))
-		.pipe(gulp.dest('build/styles'))
-		.pipe(server.stream());
+		.pipe(gulp.dest('build'))
+		.pipe(useCondition(!isTest, gulp.dest('build/styles')))
+		.pipe(useCondition(isDev, server.stream()));
 
 export default buildStyles;

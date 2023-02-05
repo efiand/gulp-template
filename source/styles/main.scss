@@ -1,5 +1,13 @@
 @import "common/variables";
-@import "common/mixins";
+
+@import "common/mixins/graphic";
+@import "common/mixins/interactive";
+@import "common/mixins/media";
+@import "common/mixins/visibility";
+
+@import "common/fonts";
 @import "common/global";
+
 @import "blocks/page";
+
 @import "common/utils";
