@@ -37,7 +37,6 @@ const buildStyles = () =>
 		.src('source/styles/main.scss')
 		.pipe(preprocessScss({}).on('error', logError))
 		.pipe(processPostcss(postcssPlugins))
-		.pipe(gulp.dest('build'))
 		.pipe(useCondition(!isTest, gulp.dest('build/styles')))
 		.pipe(useCondition(isDev, server.stream()));
 

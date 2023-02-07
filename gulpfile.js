@@ -24,7 +24,6 @@ const lint = gulp.parallel(lintEditorconfig, lintMarkdown, lintScripts, lintStyl
 const build = gulp.series(
 	clean,
 	gulp.parallel(
-		buildPages,
 		buildScripts,
 		buildStyles,
 		lint,
@@ -34,7 +33,7 @@ const build = gulp.series(
 		placeSpriteIcons
 	),
 	gulp.parallel(buildSprite, buildWebp),
-	isDev ? watch : copyStatic
+	isDev ? watch : gulp.parallel(buildPages, copyStatic)
 );
 
 export default isTest ? gulp.parallel(lint, buildPages, buildStyles) : build;

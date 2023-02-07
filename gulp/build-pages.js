@@ -1,51 +1,25 @@
-import { isDev, isTest } from './common/constants.js';
-import createHtml from 'gulp-twig';
-import getData from 'gulp-data';
+import { isTest } from './common/constants.js';
 import gulp from 'gulp';
-import processHtml from 'gulp-posthtml';
+import path from 'node:path';
+import renderPage from './common/render-page.js';
+import through2 from 'gulp-through2';
 import useCondition from 'gulp-if';
 
-const run = async (fileName, data = {}) => {
-	if (typeof data.version === 'undefined') {
-		data.version = data.isDev ? `?${new Date().getTime()}` : '';
-	}
-
-	try {
-		return {
-			...data,
-			...(await (await import(`../source/data/${fileName}.js${data.version}`)).default(data))
-		};
-	} catch (error) {
-		if (error.code !== 'ENOENT') {
-			console.error(error.message || error);
-			process.exitCode = 1;
-		}
-
-		return data;
-	}
-};
-
-const createData = async ({ path }) => {
-	const pageName = path.replace(/\\/g, '/').replace(/^.*pages\/(.*)\.twig$/, '$1');
-	const started = {
-		isDev,
-		pageName,
-		rootPath: pageName
-			.split('/')
-			.map(() => '')
-			.join('../'),
-		version: isDev ? `?${new Date().getTime()}` : ''
-	};
-
-	return await run(`pages/${pageName}`, await run('main', started));
-};
+// const pageName = path.replace(/\\/g, '/').replace(/^.*pages\/(.*)\.twig$/, '$1');
 
 const buildPages = () =>
 	gulp
 		.src('source/layouts/pages/**/*.twig')
-		.pipe(getData(createData))
-		.pipe(createHtml())
-		.pipe(processHtml())
+		.pipe(
+			through2(async (content, file) => {
+				const code = await renderPage(
+					path.relative(`${process.cwd()}/source/layouts/pages`, file.path).replace(/\\+/g, '/')
+				);
+
+				file.extname = '';
+				return code;
+			})
+		)
 		.pipe(useCondition(!isTest, gulp.dest('build')));
 
 export default buildPages;
