@@ -1,5 +1,5 @@
+import { STATIC_FILES, StatusCode } from './common/constants.js';
 import lintEditorconfig, { EDITORCONFIG_FILES } from './lint-editorconfig.js';
-import { STATIC_FILES } from './common/constants.js';
 import buildScripts from './build-scripts.js';
 import buildSprite from './build-sprite.js';
 import buildStyles from './build-styles.js';
@@ -27,16 +27,20 @@ const watch = () => {
 				return next();
 			}
 
-			try {
-				const code = await renderPage(`${url.slice(1) || 'index.html'}.twig`);
+			const { code, error } = await renderPage(`${url.slice(1) || 'index.html'}.twig`);
 
-				return res.end(code);
-			} catch (error) {
-				if (error.code !== 'ENOENT') {
-					console.error(error);
-				}
-				return next();
+			if (error) {
+				const status = StatusCode[error.includes('Unable to find') ? 'NOT_FOUND' : 'ERROR'];
+				res.writeHead(status);
+
+				const { code: errorPageCode, error: errorPageError } = await renderPage(
+					`${status}.html.twig`,
+					{ error }
+				);
+				return res.end(errorPageError ? error : errorPageCode);
 			}
+
+			return res.end(code);
 		},
 		reloadThrottle: 500,
 		server: ['build', 'source/static']
@@ -44,8 +48,8 @@ const watch = () => {
 
 	gulp.watch(EDITORCONFIG_FILES, lintEditorconfig);
 	gulp.watch(['*.md', '{gulp,source}/**/*.md'], lintMarkdown);
-	gulp.watch('*.js', lintScripts);
-	gulp.watch('source/**/*.js', gulp.parallel(buildScripts, lintScripts));
+	gulp.watch(['*.js', '{gulp,source}/**/*.{js,svelte}'], lintScripts);
+	gulp.watch('source/scripts/**/*.{js,svelte}', gulp.parallel(buildScripts, lintScripts));
 	gulp.watch('source/{data,layouts}/**/*.{js,twig}', reload);
 	gulp.watch('source/place/favicons/**/*.{png,svg}', placeFavicons);
 	gulp.watch('source/place/images/**/*.{jpg,png,svg}', placeImages);

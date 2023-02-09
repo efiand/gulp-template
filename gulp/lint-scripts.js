@@ -5,7 +5,7 @@ import useCondition from 'gulp-if';
 
 const lintScripts = () =>
 	gulp
-		.src(['*.js', 'source/**/*.js'])
+		.src(['*.js', '{gulp,source}/**/*.{js,svelte}'])
 		.pipe(eslint({ fix: false }))
 		.pipe(eslint.format())
 		.pipe(useCondition(!isDev, eslint.failAfterError()));

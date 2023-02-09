@@ -1,18 +1,16 @@
-import { isTest } from './common/constants.js';
 import gulp from 'gulp';
+import { isTest } from './common/constants.js';
 import path from 'node:path';
 import renderPage from './common/render-page.js';
 import through2 from 'gulp-through2';
 import useCondition from 'gulp-if';
-
-// const pageName = path.replace(/\\/g, '/').replace(/^.*pages\/(.*)\.twig$/, '$1');
 
 const buildPages = () =>
 	gulp
 		.src('source/layouts/pages/**/*.twig')
 		.pipe(
 			through2(async (content, file) => {
-				const code = await renderPage(
+				const { code } = await renderPage(
 					path.relative(`${process.cwd()}/source/layouts/pages`, file.path).replace(/\\+/g, '/')
 				);
 

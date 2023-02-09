@@ -1,3 +1,7 @@
 {% extends '../main.twig' %}
 
-{% block main %}{% endblock %}
+{% block main %}
+	{% if error %}
+		{{ error }}
+	{% endif %}
+{% endblock %}

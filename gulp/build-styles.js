@@ -22,20 +22,20 @@ if (!isDev) {
 
 const preprocessScss = gulpSass(sass);
 
-const logError = function (error) {
-	preprocessScss.logError.bind(this)(error);
-
-	if (isTest) {
-		process.exitCode = 1;
-	} else if (!isDev) {
-		throw new Error('');
-	}
-};
-
 const buildStyles = () =>
 	gulp
 		.src('source/styles/main.scss')
-		.pipe(preprocessScss({}).on('error', logError))
+		.pipe(
+			preprocessScss({}).on('error', function log(error) {
+				preprocessScss.logError.bind(this)(error); // eslint-disable-line
+
+				if (isTest) {
+					process.exitCode = 1;
+				} else if (!isDev) {
+					throw new Error('');
+				}
+			})
+		)
 		.pipe(processPostcss(postcssPlugins))
 		.pipe(useCondition(!isTest, gulp.dest('build/styles')))
 		.pipe(useCondition(isDev, server.stream()));

@@ -12,8 +12,9 @@ const minConfig = {
 
 Twig.cache(false);
 
-const createData = async ({ isHtml, pageName }) => {
+const createData = async ({ error = '', isHtml, pageName }) => {
 	const started = {
+		error,
 		isDev,
 		isHtml,
 		pageName,
@@ -33,7 +34,7 @@ const createData = async ({ isHtml, pageName }) => {
 };
 
 const getTemplate = (data) =>
-	new Promise(async (resolve, reject) => {
+	new Promise((resolve, reject) => {
 		Twig.renderFile(`./source/layouts/pages/${data.pageName}.twig`, data, (error, code) => {
 			if (error) {
 				reject(error);
@@ -43,13 +44,14 @@ const getTemplate = (data) =>
 		});
 	});
 
-export default async (sourceName) => {
+export default async (sourceName, payload = {}) => {
 	let code = '';
+	let error = '';
 	const pageName = sourceName.replace(/\.twig$/, '');
 	const isHtml = pageName.endsWith('.html');
 
 	try {
-		code = await getTemplate(await createData({ isHtml, pageName }));
+		code = await getTemplate(await createData({ ...payload, isHtml, pageName }));
 
 		if (isHtml) {
 			const errors = [
@@ -73,13 +75,15 @@ export default async (sourceName) => {
 				code = (await htmlnano.process(code, minConfig)).html;
 			}
 		}
-	} catch (error) {
-		console.error(error);
+	} catch ({ message }) {
+		console.error(message);
 
 		if (isTest) {
 			process.exitCode = 1;
 		}
+
+		error = message;
 	}
 
-	return code;
+	return { code, error };
 };
