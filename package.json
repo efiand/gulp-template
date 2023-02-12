@@ -9,9 +9,11 @@
 		"browser-sync": "2.27.11",
 		"cssnano": "5.1.14",
 		"del": "7.0.0",
+		"esbuild-svelte": "0.7.3",
 		"eslint": "8.32.0",
 		"eslint-config-prettier": "8.6.0",
 		"eslint-plugin-markdown": "3.0.0",
+		"eslint-plugin-svelte3": "4.0.0",
 		"gulp": "4.0.2",
 		"gulp-clean": "0.4.0",
 		"gulp-esbuild": "0.11.0",
@@ -35,20 +37,27 @@
 		"posthtml-bem-linter": "0.1.4",
 		"posthtml-w3c-validator": "1.1.2",
 		"pre-commit": "1.2.2",
+		"prettier": "2.8.4",
+		"prettier-plugin-svelte": "2.9.0",
 		"sass": "1.57.1",
 		"stylelint": "14.16.1",
 		"stylelint-config-prettier": "9.0.4",
 		"stylelint-order": "6.0.1",
+		"svelte": "3.55.1",
 		"terser": "5.16.1",
 		"twig": "1.15.4"
 	},
 	"name": "gulp-template",
-	"pre-commit": "test",
+	"pre-commit": [
+		"format",
+		"test"
+	],
 	"private": true,
 	"scripts": {
 		"build": "gulp",
 		"dev": "gulp --dev",
 		"start": "npm run dev",
+		"format": "prettier -u -w **/* --loglevel warn",
 		"test": "gulp --testing"
 	},
 	"type": "module"

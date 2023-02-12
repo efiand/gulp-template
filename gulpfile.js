@@ -2,6 +2,7 @@ import { isDev, isTest } from './gulp/common/constants.js';
 import buildPages from './gulp/build-pages.js';
 import buildScripts from './gulp/build-scripts.js';
 import buildSprite from './gulp/build-sprite.js';
+import buildSsrScript from './gulp/build-ssr-script.js';
 import buildStyles from './gulp/build-styles.js';
 import buildWebp from './gulp/build-webp.js';
 import copyStatic from './gulp/copy-static.js';
@@ -17,14 +18,22 @@ import placePixelperfectImages from './gulp/place-pixelperfect-images.js';
 import placeSpriteIcons from './gulp/place-sprite-icons.js';
 import watch from './gulp/watch.js';
 
-const clean = () => deleteAsync('build');
+const cleanOnStart = () => deleteAsync('build');
+const cleanOnEnd = () => deleteAsync('build/scripts/page.js');
 
 const lint = gulp.parallel(lintEditorconfig, lintMarkdown, lintScripts, lintStyles);
 
+const test = gulp.series(
+	buildSsrScript,
+	gulp.parallel(lint, buildPages, buildScripts, buildStyles),
+	cleanOnEnd
+);
+
 const build = gulp.series(
-	clean,
+	cleanOnStart,
 	gulp.parallel(
 		buildScripts,
+		buildSsrScript,
 		buildStyles,
 		lint,
 		placeFavicons,
@@ -33,7 +42,8 @@ const build = gulp.series(
 		placeSpriteIcons
 	),
 	gulp.parallel(buildSprite, buildWebp),
-	isDev ? watch : gulp.parallel(buildPages, copyStatic)
+	isDev ? watch : gulp.parallel(buildPages, copyStatic),
+	cleanOnEnd
 );
 
-export default isTest ? gulp.parallel(lint, buildPages, buildStyles) : build;
+export default isTest ? test : build;

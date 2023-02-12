@@ -8,6 +8,9 @@
 		"prettier",
 		"plugin:markdown/recommended"
 	],
+	"globals": {
+		"ymaps": "readonly"
+	},
 	"overrides": [
 		{
 			"files": "*.js",
@@ -27,6 +30,15 @@
 			}
 		},
 		{
+			"files": "**/*.svelte",
+			"processor": "svelte3/svelte3",
+			"rules": {
+				"one-var": "off",
+				"prefer-const": "off",
+				"require-atomic-updates": "off"
+			}
+		},
+		{
 			"files": "**/*.md",
 			"processor": "markdown/markdown"
 		},
@@ -41,6 +53,9 @@
 		"ecmaVersion": 2020,
 		"sourceType": "module"
 	},
+	"plugins": [
+		"svelte3"
+	],
 	"root": true,
 	"rules": {
 		"array-element-newline": [

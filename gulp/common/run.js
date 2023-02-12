@@ -6,8 +6,8 @@ export default async (fileName, data = {}) => {
 	try {
 		return await (await import(`../../source/${fileName}.js${data.version}`)).default(data);
 	} catch (error) {
-		if (error.code !== 'ERR_MODULE_NOT_FOUND') {
-			console.error(error.message || error);
+		if (!error.message.includes(`${fileName}.js`)) {
+			console.error(error.message);
 			process.exitCode = 1;
 		}
 

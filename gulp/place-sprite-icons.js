@@ -5,7 +5,8 @@ import optimizeSvg from 'imagemin-svgo';
 import svgoConfig from '../svgo.config.js';
 
 const placeSpriteIcons = () =>
-	gulp.src('source/place/sprite/**/*.svg')
+	gulp
+		.src('source/place/sprite/**/*.svg')
 		.pipe(optimizeImages([optimizeSvg(svgoConfig)]))
 		.pipe(clean())
 		.pipe(gulp.dest('source/sprite'));

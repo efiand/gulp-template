@@ -1,6 +1,7 @@
+import { isDev, isTest } from './common/constants.js';
 import bundleScripts from 'gulp-esbuild';
 import gulp from 'gulp';
-import { isDev } from './common/constants.js';
+import processSvelte from 'esbuild-svelte';
 import server from 'browser-sync';
 import useCondition from 'gulp-if';
 
@@ -11,10 +12,15 @@ const buildScripts = () =>
 			bundleScripts({
 				bundle: true,
 				format: 'iife',
-				minify: !isDev
+				minify: !isDev,
+				plugins: [
+					processSvelte({
+						compilerOptions: { hydratable: true }
+					})
+				]
 			})
 		)
-		.pipe(gulp.dest('build/scripts'))
+		.pipe(useCondition(!isTest, gulp.dest('build/scripts')))
 		.pipe(useCondition(isDev, server.stream()));
 
 export default buildScripts;

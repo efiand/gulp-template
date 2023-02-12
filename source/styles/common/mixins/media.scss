@@ -31,7 +31,7 @@
 }
 
 @mixin media-retina {
-  @media (min-resolution: 1.5dppx) {
-    @content;
-  }
+	@media (min-resolution: 1.5dppx) {
+		@content;
+	}
 }

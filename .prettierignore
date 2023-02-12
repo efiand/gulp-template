@@ -1,0 +1,10 @@
+*.jpg
+*.json
+*.png
+*.webp
+*.woff*
+*.yaml
+.*rc
+.DS_Store
+build
+node_modules
