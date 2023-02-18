@@ -12,16 +12,13 @@
 		{% endfor %}
 	</head>
 	<body>
-		<div class="page">
-			{% include 'blocks/page-header.twig' %}
-			<main>
-				{% block main %}{% endblock %}
-			</main>
-			{% include 'blocks/page-footer.twig' %}
-		</div>
+		{# For svelte #}{# <div class="page">{{ app.page }}</div> #}
 
-		{% block modal %}{% endblock %}
+		{# For vue #}{# {{ app.page }} #}
 
+		<script>
+			window.appData = {{ appData|json_encode() }};
+		</script>
 		<script src="{{ rootPath }}scripts/main.js{{ version }}"></script>
 
 		{% if isDev %}

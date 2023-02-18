@@ -6,6 +6,7 @@
 	"extends": [
 		"eslint:all",
 		"prettier",
+		"plugin:vue/essential",
 		"plugin:markdown/recommended"
 	],
 	"globals": {
@@ -39,6 +40,12 @@
 			}
 		},
 		{
+			"files": "**/*.vue",
+			"rules": {
+				"sort-keys": "off"
+			}
+		},
+		{
 			"files": "**/*.md",
 			"processor": "markdown/markdown"
 		},
@@ -49,12 +56,14 @@
 			}
 		}
 	],
+	"parser": "vue-eslint-parser",
 	"parserOptions": {
 		"ecmaVersion": 2020,
 		"sourceType": "module"
 	},
 	"plugins": [
-		"svelte3"
+		"svelte3",
+		"vue"
 	],
 	"root": true,
 	"rules": {
@@ -86,6 +95,7 @@
 				]
 			}
 		],
+		"implicit-arrow-linebreak": "off",
 		"indent": [
 			"error",
 			"tab"
@@ -111,6 +121,7 @@
 				]
 			}
 		],
+		"no-invalid-this": "off",
 		"no-magic-numbers": [
 			"error",
 			{

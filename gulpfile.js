@@ -19,7 +19,7 @@ import placeSpriteIcons from './gulp/place-sprite-icons.js';
 import watch from './gulp/watch.js';
 
 const cleanOnStart = () => deleteAsync('build');
-const cleanOnEnd = () => deleteAsync('build/scripts/page.js');
+const cleanOnEnd = () => deleteAsync('build/scripts/apps');
 
 const lint = gulp.parallel(lintEditorconfig, lintMarkdown, lintScripts, lintStyles);
 

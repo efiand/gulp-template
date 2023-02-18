@@ -1,6 +1,7 @@
 import { isDev, isTest } from './constants.js';
 import Twig from 'twig';
 import bemLinter from 'posthtml-bem-linter';
+import { createRenderer } from 'vue-server-renderer';
 import htmlValidator from 'posthtml-w3c-validator';
 import htmlnano from 'htmlnano';
 import run from './run.js';
@@ -12,13 +13,13 @@ const minConfig = {
 
 Twig.cache(false);
 
+const vueRenderer = createRenderer({
+	runInNewContext: false
+});
+
 const createData = async ({ error = '', isHtml, pageName, status = null }) => {
 	let data = {
-		appData: {
-			error,
-			pageName,
-			status
-		},
+		app: {},
 		error,
 		isDev,
 		isHtml,
@@ -27,16 +28,31 @@ const createData = async ({ error = '', isHtml, pageName, status = null }) => {
 			.split('/')
 			.map(() => '')
 			.join('../'),
+		status,
 		version: isDev ? `?${new Date().getTime()}` : ''
 	};
 
 	data = { ...data, ...(await run('data/main', data)) };
 	data = { ...data, ...(await run(`data/pages/${pageName}`, data)) };
 
-	if (data.isHtml && global.app) {
-		const { head, html } = global.app.render(data);
-		data.headCode = head;
-		data.appCode = html;
+	const apps = Object.entries(global.appsConfig);
+	if (data.isHtml && apps.length) {
+		await Promise.all(
+			apps.map(async ([appName, createApp]) => {
+				const appData = data.appData[appName];
+
+				if (createApp.render) {
+					// Svelte or custom vanilla app detected
+					const { head, html } = createApp.render({ appData });
+					data.headCode = `${data.headCode || ''}${head}`;
+					data.app[appName] = html;
+				} else {
+					// Vue detected
+					const app = createApp({ appData });
+					data.app[appName] = await vueRenderer.renderToString(app);
+				}
+			})
+		);
 	}
 
 	return data;

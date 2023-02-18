@@ -53,9 +53,9 @@ const watch = () => {
 
 	gulp.watch(EDITORCONFIG_FILES, lintEditorconfig);
 	gulp.watch(['*.md', '{gulp,source}/**/*.md'], lintMarkdown);
-	gulp.watch(['*.js', '{gulp,source}/**/*.{js,svelte}'], lintScripts);
+	gulp.watch(['.eslintrc', '*.js', '{gulp,source}/**/*.{js,svelte,vue}'], lintScripts);
 	gulp.watch(
-		'source/scripts/**/*.{js,svelte}',
+		'source/scripts/**/*.{js,svelte,vue}',
 		gulp.series(gulp.parallel(buildScripts, buildSsrScript), reload)
 	);
 	gulp.watch('source/{data,layouts}/**/*.{js,twig}', reload);
@@ -66,7 +66,7 @@ const watch = () => {
 	gulp.watch('source/sprite/**/*.svg', gulp.series(buildSprite, reload));
 	gulp.watch(['source/static/**', '!source/static/images/**/*.{jpg,png}'], reload);
 	gulp.watch('source/static/images/**/*.{jpg,png}', gulp.series(buildWebp, reload));
-	gulp.watch('source/styles/**/*.scss', gulp.parallel(buildStyles, lintStyles));
+	gulp.watch(['.stylelintrc', 'source/styles/**/*.scss'], gulp.parallel(buildStyles, lintStyles));
 };
 
 export default watch;
