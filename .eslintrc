@@ -42,7 +42,30 @@
 		{
 			"files": "**/*.vue",
 			"rules": {
-				"sort-keys": "off"
+				"indent": "off",
+				"sort-keys": "off",
+				"vue/html-indent": [
+					"error",
+					"tab"
+				],
+				"vue/html-self-closing": [
+					"error",
+					{
+						"html": {
+							"void": "always",
+							"normal": "always",
+							"component": "always"
+						},
+						"svg": "always"
+					}
+				],
+				"vue/script-indent": [
+					"error",
+					"tab",
+					{
+						"baseIndent": 1
+					}
+				]
 			}
 		},
 		{

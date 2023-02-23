@@ -1,12 +1,4 @@
 {
-	"pluginSearchDirs": [
-		"."
-	],
-	"printWidth": 100,
-	"proseWrap": "never",
-	"singleQuote": true,
-	"trailingComma": "none",
-	"useTabs": true,
 	"overrides": [
 		{
 			"files": "*.md",
@@ -26,5 +18,14 @@
 				"parser": "svelte"
 			}
 		}
-	]
+	],
+	"pluginSearchDirs": [
+		"."
+	],
+	"printWidth": 100,
+	"proseWrap": "never",
+	"singleQuote": true,
+	"trailingComma": "none",
+	"useTabs": true,
+	"vueIndentScriptAndStyle": true
 }

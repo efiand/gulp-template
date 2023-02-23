@@ -17,7 +17,7 @@ const vueRenderer = createRenderer({
 	runInNewContext: false
 });
 
-const createData = async ({ error = '', isHtml, pageName, status = null }) => {
+const createData = async ({ error = '', isHtml, pageName, status = '' }) => {
 	let data = {
 		app: {},
 		error,
@@ -28,7 +28,7 @@ const createData = async ({ error = '', isHtml, pageName, status = null }) => {
 			.split('/')
 			.map(() => '')
 			.join('../'),
-		status,
+		status: status.toString(),
 		version: isDev ? `?${new Date().getTime()}` : ''
 	};
 
