@@ -121,7 +121,10 @@
 		"implicit-arrow-linebreak": "off",
 		"indent": [
 			"error",
-			"tab"
+			"tab",
+			{
+				"SwitchCase": 1
+			}
 		],
 		"max-statements": "off",
 		"multiline-comment-style": [
