@@ -36,7 +36,7 @@ const watch = () => {
 
 				try {
 					const { code: errorPageCode } = await renderPage('404.html.twig', {
-						error,
+						error: error.replace(/\[\d+?m/g, ''),
 						status
 					});
 					return res.end(errorPageCode);

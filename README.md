@@ -15,7 +15,7 @@
 ### С помощью vue
 
 ```js
-// source/apps/page.js
+// source/scripts/apps/page.js
 import Page from '../blocks/page.vue';
 import Vue from 'vue';
 export default (data) =>
@@ -24,7 +24,7 @@ export default (data) =>
     render: (cb) => cb(Page)
   });
 
-// source/main.js
+// source/scripts/main.js
 import createApp from './apps/page.js';
 createApp({ appData: window.appData.page }).$mount('.page');
 ```
@@ -32,11 +32,11 @@ createApp({ appData: window.appData.page }).$mount('.page');
 ### С помощью Svelte
 
 ```js
-// source/apps/page.js
+// source/scripts/apps/page.js
 import Page from '../blocks/page.svelte';
 export default Page;
 
-// source/main.js
+// source/scripts/main.js
 import App from './apps/page.js';
 new App({
   hydrate: true,
