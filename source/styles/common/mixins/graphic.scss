@@ -31,21 +31,21 @@
 }
 
 @mixin graphic-webp($filename, $extname: "jpg") {
-	@supports (background-image: "../img/#{$filename}.webp") {
+	@supports (background-image: url("../img/#{$filename}.webp")) {
 		@include graphic-retina($filename, "webp");
 	}
 
-	@supports not (background-image: "../img/#{$filename}.webp") {
+	@supports not (background-image: url("../img/#{$filename}.webp")) {
 		@include graphic-retina($filename, $extname);
 	}
 }
 
 @mixin graphic-webp-adaptive($filename, $extname: "jpg") {
-	@supports (background-image: "../img/#{$filename}-desktop.webp") {
+	@supports (background-image: url("../img/#{$filename}-desktop.webp")) {
 		@include graphic-adaptive($filename, "webp");
 	}
 
-	@supports not (background-image: "../img/#{$filename}-desktop.webp") {
+	@supports not (background-image: url("../img/#{$filename}-desktop.webp")) {
 		@include graphic-adaptive($filename, $extname);
 	}
 }
