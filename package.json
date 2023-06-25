@@ -63,7 +63,7 @@
 		"build": "gulp",
 		"dev": "gulp --dev",
 		"start": "npm run dev",
-		"format": "prettier -u -w **/* --loglevel warn",
+		"format": "prettier -u -w \"**/*\" --loglevel warn",
 		"test": "gulp --testing"
 	},
 	"type": "module"
