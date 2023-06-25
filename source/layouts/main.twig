@@ -5,11 +5,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>{{ projectName }}</title>
 		<meta name="description" content="{{ description }}">
-		<link rel="stylesheet" href="{{ rootPath }}styles/main.css{{ version }}">
 
 		{% for weight in [400, 700] %}
 			<link rel="preload" href="fonts/ptsans-{{ weight }}.woff2" as="font" crossorigin="anonymous">
 		{% endfor %}
+		<link rel="stylesheet" href="{{ rootPath }}styles/main.css{{ version }}">
 	</head>
 	<body>
 		{# For svelte #}{# <div class="page">{{ app.page }}</div> #}
