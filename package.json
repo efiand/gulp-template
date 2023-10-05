@@ -48,7 +48,7 @@
 		"terser-webpack-plugin": "5.3.6",
 		"twig": "1.15.4",
 		"vue": "2.7.14",
-		"vue-loader": "15.10.1",
+		"vue-loader": "17.2.2",
 		"vue-server-renderer": "2.7.14",
 		"webpack-stream": "7.0.0"
 	},
