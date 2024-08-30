@@ -6,7 +6,6 @@
 	"extends": [
 		"eslint:all",
 		"prettier",
-		"plugin:vue/essential",
 		"plugin:markdown/recommended"
 	],
 	"globals": {
@@ -32,7 +31,9 @@
 		},
 		{
 			"files": "**/*.svelte",
-			"processor": "svelte3/svelte3",
+			"extends": [
+				"plugin:svelte/recommended"
+			],
 			"rules": {
 				"one-var": "off",
 				"prefer-const": "off",
@@ -40,7 +41,14 @@
 			}
 		},
 		{
+			"extends": [
+				"plugin:vue/essential"
+			],
 			"files": "**/*.vue",
+			"parser": "vue-eslint-parser",
+			"plugins": [
+				"vue"
+			],
 			"rules": {
 				"indent": "off",
 				"sort-keys": "off",
@@ -79,15 +87,10 @@
 			}
 		}
 	],
-	"parser": "vue-eslint-parser",
 	"parserOptions": {
 		"ecmaVersion": 2020,
 		"sourceType": "module"
 	},
-	"plugins": [
-		"svelte3",
-		"vue"
-	],
 	"root": true,
 	"rules": {
 		"array-element-newline": [

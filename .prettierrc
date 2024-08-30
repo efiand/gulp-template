@@ -19,9 +19,7 @@
 			}
 		}
 	],
-	"pluginSearchDirs": [
-		"."
-	],
+	"plugins": ["prettier-plugin-svelte"],
 	"printWidth": 100,
 	"proseWrap": "never",
 	"singleQuote": true,
